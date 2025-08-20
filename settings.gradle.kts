@@ -16,8 +16,6 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // Permite que subprojetos/plugins adicionem repositórios quando necessário
-    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google {
             mavenContent {
