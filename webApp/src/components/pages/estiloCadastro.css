@@ -1,70 +1,68 @@
-body {
-  margin: 0;
-  background-color: #f0f2f5; /* cor de fallback */
+#root {
+  /* minhas tela tinha diminuido  */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.register-wrapper {
+  position: relative;
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.register-wrapper h1 {
+  position: absolute; /* fixa no topo */
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #0e0e0e; /* contraste no fundo */
+  z-index: 3;
 }
 
-.register-wrapper h1 {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333333;
-  padding-top: 20px;
+/* imagem de fundo manual */
+.background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* mantém proporção */
+  z-index: 1; /* fica atrás de tudo */
+  object-fit: cover; /* ou cover se quiser preencher */
 }
 .register-body {
-  position: relative;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  gap: 20px;
-  width: 90%;
-  max-width: 1000px;
-  margin: auto;
-  background-color: #f0f2f5;
-
-  overflow: visible; /* importante para máscara expandida */
-  align-items: baseline;
-}
-
-.register-mask {
-  position: absolute;
-  top: 50px; /* aumenta espaço para cima */
-  left: -10px; /* aumenta espaço para esquerda */
-  width: calc(100% + 20px); /* aumenta largura proporcional */
-  height: calc(100% + 100px); /* aumenta altura proporcional */
-  background: linear-gradient(180deg, #07a0cea3, #31b26565);
-  border-radius: 25px;
-
-  -webkit-mask-image: url("../../assets/Rectanglefundo.svg");
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: cover;
-
-  mask-image: url("../../assets/Rectanglefundo.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: cover;
-
-  z-index: 0;
+  gap: 50px;
+  position: relative;
+  z-index: 2; /* sobre a imagem de fundo */
 }
 
 .register-img,
 .register-form {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   top: 0px;
 }
 
 .register-img {
   max-width: 30%;
+  min-width: 150px;
   height: auto;
   border-radius: 30px;
   object-fit: contain;
-  transform: translateY(260px);
 }
 
 .register-form {
-  max-width: 55%;
+  max-width: 40%;
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -133,34 +131,45 @@ body {
 }
 
 @media (max-width: 768px) {
+  .background-img {
+    height: 100vh; /* ainda ocupa a tela */
+    object-fit: cover; /* mantém o preenchimento */
+    object-position: center; /* centraliza o foco da imagem */
+  }
   .register-body {
     flex-direction: column;
     padding: 50px 20px 20px 20px;
     align-items: center;
   }
-
-  .register-img,
-  .register-form {
-    max-width: 90%;
-    margin-top: 20px; /* espaçamento entre imagem e form */
+  .register-wrapper h1 {
+    font-size: 1.8rem;
+    top: 20px;
   }
+
   .register-img {
-    transform: none; /* <<< REMOVE o translateY */
+    max-width: 40%;
+    margin-top: 10px;
+  }
+
+  .register-form {
+    max-width: 60%;
   }
 }
 
 @media (max-width: 480px) {
   .register-wrapper h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    top: 20px;
   }
-
+  .background-img {
+    height: 100vh;
+    object-fit: cover; /* ainda cobre, mas */
+    background-position: center;
+  }
   .register-img,
   .register-form {
-    max-width: 100%;
-    margin-top: 15px;
-  }
-  .register-img {
-    transform: none; /* <<< REMOVE o translateY */
+    max-width: 60%;
+    margin-top: 0px;
   }
 
   .register-form input,

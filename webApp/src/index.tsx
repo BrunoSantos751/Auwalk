@@ -1,4 +1,6 @@
 import React from "react";
+import "./components/pages/global.css";
+
 import ReactDOM from "react-dom/client";
 import Greeting from "./components/Greeting/Greeting";
 

@@ -1,9 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
   root: ".",
   plugins: [react()],
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, "src"),
+    },
+  },
   assetsInclude: ["**/*.webp"],
   build: {
     outDir: "dist",
@@ -11,6 +17,5 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    // Serve index.html para qualquer rota (necessário para React Router)
   },
 });

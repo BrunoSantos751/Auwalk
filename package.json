@@ -9,5 +9,8 @@
   "scripts": {
     "build": "cd webApp && npm run build",
     "start": "cd webApp && npm run start"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1"
   }
 }

@@ -85,6 +85,7 @@ body {
   background-color: white;
   color: #079fce;
   border: 2px solid #079fce;
+  margin-bottom: 50px;
 }
 
 .btn-down button:hover {
@@ -94,22 +95,41 @@ body {
 
 /* === Responsividade === */
 
-/* Telas médias (tablet) */
-@media (max-width: 992px) {
+/* Telas pequenas (celular) */
+@media (max-width: 600px) {
+  /* centraliza o header acima da imagem */
+  .profile-header {
+    display: flex;
+    flex-direction: column; /* empilha verticalmente */
+    align-items: center; /* centraliza horizontalmente */
+    text-align: center; /* centraliza texto */
+    gap: 10px; /* espaço entre elementos do header */
+    margin-bottom: 20px; /* separa do restante */
+  }
+
+  /* empilha os botões e centraliza */
   .btn-group {
-    flex-wrap: wrap; /* permite que quebre para a próxima linha */
-    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* espaçamento entre os botões */
+    width: 100%;
   }
 
   .btn-up button,
   .btn-down button {
-    padding: 12px 25px;
-    font-size: 0.9rem;
+    width: 90%;
+    max-width: 250px; /* mantém proporção */
+    margin-left: 0; /* remove deslocamento */
+  }
+
+  /* inputs alinhados e responsivos */
+  .profile-form input {
+    width: 90%; /* ocupa mais espaço da tela */
+    max-width: 400px; /* limita largura máxima */
+    margin: 5px 0; /* espaçamento vertical entre inputs */
   }
 }
-
-/* Telas pequenas (celular) */
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .btn-group {
     flex-direction: column; /* empilha os botões */
     align-items: center;
@@ -119,5 +139,7 @@ body {
   .btn-down button {
     width: 90%;
     max-width: 250px; /* mantém todos iguais e centralizados */
+    margin: 0 auto; /* centraliza horizontalmente */
+    display: block;
   }
 }
