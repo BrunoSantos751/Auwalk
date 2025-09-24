@@ -34,5 +34,5 @@ O sistema também permite criar perfis completos de pets, registrar informaçõe
    Donos podem avaliar prestadores de serviços, garantindo transparência e qualidade no atendimento.
 
 6. **Notificações e Alertas:**  
-   Mantém todos informados sobre novos agendamentos, confirmações e mensagens importantes.
+   Mantém todos informados sobre novos agendamentos, confirmações e mensagens importantes...
 
