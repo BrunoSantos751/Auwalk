@@ -1,7 +1,5 @@
-/* estiloperfilTotal.css */
-
-/* Container geral do perfil */
-.perfil-tutor {
+/* Container geral */
+.dados-prestador-container {
   max-width: 800px;
   margin: 2rem auto;
   padding: 1.5rem;
@@ -9,85 +7,61 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left; /* Alinha todo texto à esquerda por padrão */
 }
 
-/* Cabeçalho */
-.profile-header {
-  margin-top: 75px;
+/* Cabeçalho com mensagem e avatar */
+.dados-prestador-header {
   display: flex;
-  text-align: center;
-  justify-content: flex-start;
-  gap: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; /* h2 centralizado */
   margin-bottom: 2rem;
 }
 
-.profile-header h2 {
-  font-size: 12px;
-  color: #333;
-  margin: 0;
-  margin-left: auto;
-}
-.profile-header h2 strong {
-  font-size: 12px;
+.dados-prestador-header h2 {
+  font-size: 0.9rem;
   color: #87130a;
+  margin-bottom: 1rem;
 }
 
-.profile-avatar {
-  width: 250px;
-  height: 250px;
+/* Avatar */
+.dados-prestador-avatar {
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ccc;
+  margin-bottom: 1rem;
 }
 
-/* Formulário */
-.profile-actions {
-  display: flex;
-  flex-direction: center;
-  gap: 1rem;
-}
-.btn-salvar {
-  display: block; /* transforma em elemento de bloco */
-  /* top 1rem, auto horizontal (centraliza), bottom 0 */
-  padding: 25px 15px;
-  border-radius: 6px;
-  border: none;
-  background-color: #87130a;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.95rem;
-  margin: 0 center;
-}
-
-.btn-salvar:hover {
-  background-color: #a4160e;
-}
-
-/* Grupos de inputs */
-.btn-group {
+/* Grupos de formulário */
+.dados-prestador-group-up,
+.dados-prestador-group-down {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  gap: 1rem 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  text-align: left; /* labels e inputs alinhados à esquerda */
 }
 
-/* Título do grupo */
-.btn-group h2 {
-  grid-column: 1 / -1;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: #555;
-  text-align: center;
+.dados-prestador-group-up {
+  grid-template-columns: 400px 200px;
 }
 
-/* Labels e inputs */
-label {
+.dados-prestador-group-down {
+  grid-template-columns: 200px 400px;
+}
+
+.dados-prestador-group label {
   display: flex;
   flex-direction: column;
   font-size: 0.9rem;
   color: #333;
+  text-align: left; /* garante alinhamento à esquerda nos labels */
 }
 
-input {
+.dados-prestador-group label input {
   margin-top: 0.3rem;
   padding: 0.5rem 0.6rem;
   border-radius: 6px;
@@ -95,53 +69,74 @@ input {
   font-size: 0.95rem;
   background-color: #f5f5f5;
   color: #555;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Estilo específico para inputs desabilitados */
 input:disabled {
   background-color: #e9ecef;
   color: #666;
   cursor: not-allowed;
 }
 
-/* Pequena sombra e borda ao passar o mouse (mesmo desabilitado, só visual) */
 input:not(:disabled):hover {
   border-color: #999;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsivo */
-/* Responsivo para telas pequenas */
-@media (max-width: 600px) {
-  .profile-header {
-    flex-direction: column; /* empilha os elementos */
-    align-items: center; /* centraliza horizontalmente */
-    text-align: center; /* centraliza o texto */
-  }
-
-  .btn-group {
-    grid-template-columns: 1fr; /* inputs ocupam toda a largura */
-  }
-
-  .profile-avatar {
-    margin-bottom: 1rem; /* espaço entre a imagem e os inputs */
-  }
+/* Botões */
+.dados-prestador-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* mantém os botões centralizados */
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-/* Responsivo para telas médias */
-@media (max-width: 900px) and (min-width: 601px) {
-  .profile-header {
-    flex-direction: row; /* mantém elementos em linha */
-    align-items: center; /* centraliza verticalmente */
-    justify-content: flex-start; /* alinha à esquerda */
+.dados-prestador-btn-salvar,
+.dados-prestador-edit-profile-btn {
+  padding: 0.8rem 2rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  width: 200px;
+  text-align: center; /* mantém centralizado apenas os botões */
+}
+
+.dados-prestador-btn-salvar {
+  background-color: #00aaff;
+  color: #fff;
+}
+
+.dados-prestador-edit-profile-btn {
+  background-color: #fff;
+  border: 1px solid #00aaff;
+  color: #00aaff;
+}
+
+.dados-prestador-btn-salvar:hover {
+  background-color: #008fcc;
+}
+
+.dados-prestador-edit-profile-btn:hover {
+  background-color: #e6f7ff;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .dados-prestador-group-up,
+  .dados-prestador-group-down {
+    grid-template-columns: 1fr;
   }
 
-  .btn-group {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  .dados-prestador-avatar {
+    width: 120px;
+    height: 120px;
   }
 
-  .profile-avatar {
-    width: 200px;
-    height: 200px;
+  .dados-prestador-btn-salvar,
+  .dados-prestador-edit-profile-btn {
+    width: 100%;
   }
 }

@@ -4,21 +4,17 @@ import avatarExemplo from "../../../assets/dog3.webp";
 import { useNavigate } from "react-router-dom";
 
 interface PerfilTutorProps {
-  name: string;
+  name?: string;
   avatarUrl?: string; // imagem do backend
-  onEditProfile: () => void;
-  onMeusDados: () => void;
-  onDadosPet: () => void;
-  onHistorico: () => void;
-  onNovoAgendamento: () => void;
-  onEditarSenha: () => void;
+  onMeusDados?: () => void;
+  onHistorico?: () => void;
+  onNovoAgendamento?: () => void;
+  onEditarSenha?: () => void;
 }
 
 const PerfilTutor: React.FC<PerfilTutorProps> = ({
   name,
   avatarUrl,
-  onEditProfile,
-  onDadosPet,
   onHistorico,
   onNovoAgendamento,
   onEditarSenha,
@@ -37,16 +33,13 @@ const PerfilTutor: React.FC<PerfilTutorProps> = ({
         />
         {/* se name estiver vazio, mostra "Nome do Tutor" */}
         <h1 className="profile-name">{name || "Nome do Tutor"}</h1>
-        <button onClick={onEditProfile} className="edit-profile-button">
-          Editar Perfil
-        </button>
       </header>
 
       {/* Ações do usuário */}
       <nav className="profile-actions">
         <div className="btn-group btn-up">
-          <button onClick={() => navigate("/dadosTutor")}>Meus Dados</button>
-          <button onClick={onDadosPet}>Dados do Pet</button>
+          <button onClick={() => navigate("/dadostutor")}>Meus Dados</button>
+          <button onClick={() => navigate("/perfilpet")}>Dados do Pet</button>
           <button onClick={onHistorico}>Histórico</button>
         </div>
         <div className="btn-group btn-down">

@@ -11,7 +11,11 @@ const Header: React.FC = () => {
     <header className="header">
       <nav className="navbar">
         <div className="navbar-left">
-          <h1>AuWalk</h1>
+          <h1>
+            <Link to="/" className="logo-link">
+              AuWalk
+            </Link>
+          </h1>
           <ul>
             {!isLoggedIn ? (
               <>
@@ -25,7 +29,7 @@ const Header: React.FC = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/Home">Início</Link>
+                  <Link to="/">Início</Link>
                 </li>
                 <li>
                   <Link to="/passeiopesquisa">Passeio</Link>

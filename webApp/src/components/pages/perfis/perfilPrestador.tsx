@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 interface PerfilPrestadorProps {
   name: string;
   avatarUrl?: string; // agora pode ser opcional
-  onEditProfile: () => void;
-  onMeusDados: () => void;
-  onDadosPet: () => void;
   onHistorico: () => void;
   onNovoAgendamento: () => void;
   onEditarSenha: () => void;
@@ -17,9 +14,6 @@ interface PerfilPrestadorProps {
 const PerfilPrestador: React.FC<PerfilPrestadorProps> = ({
   name,
   avatarUrl,
-  onEditProfile,
-  onMeusDados,
-  onDadosPet,
   onHistorico,
   onNovoAgendamento,
   onEditarSenha,
@@ -38,17 +32,16 @@ const PerfilPrestador: React.FC<PerfilPrestadorProps> = ({
         />
         {/* se name estiver vazio, mostra "Nome do Tutor" */}
         <h1 className="profile-name">{name || "Nome do Tutor"}</h1>
-        <button onClick={onEditProfile} className="edit-profile-button">
-          Editar Perfil
-        </button>
       </header>
 
       {/* Ações do usuário */}
       <nav className="profile-actions">
         <div className="btn-group btn-up">
-          <button onClick={onMeusDados}>Meus Dados</button>
-          <button onClick={onDadosPet}>Dados do Pet</button>{" "}
-          {/*deixo ou tiro?*/}
+          <button onClick={() => navigate("/dadosprestador")}>
+            Meus Dados
+          </button>
+          <button onClick={() => navigate("/perfilpet")}>Perfil do Pet</button>
+
           <button onClick={onHistorico}>Histórico</button>
         </div>
         <div className="btn-group btn-down">

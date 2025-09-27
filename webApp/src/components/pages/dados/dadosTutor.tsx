@@ -2,7 +2,7 @@ import React from "react";
 import "./dadosTotal.css";
 import avatarExemplo from "../../../assets/dog3.webp";
 
-interface DadosTutorProps {
+interface DadosPrestadorProps {
   name?: string;
   email?: string;
   cpf?: string;
@@ -17,9 +17,10 @@ interface DadosTutorProps {
   numero?: string;
   complemento?: string;
   avatarUrl?: string;
+  onEditProfile?: () => void;
 }
 
-const DadosTutor: React.FC<DadosTutorProps> = ({
+const DadosPrestador: React.FC<DadosPrestadorProps> = ({
   name = "",
   email = "",
   cpf = "",
@@ -34,10 +35,11 @@ const DadosTutor: React.FC<DadosTutorProps> = ({
   numero = "",
   complemento = "",
   avatarUrl,
+  onEditProfile,
 }) => {
   return (
-    <div className="perfil-tutor">
-      <header className="profile-header">
+    <div className="dados-prestador-container">
+      <header className="dados-prestador-header">
         <h2>
           <strong>Primeira vez aqui?</strong> Complete seu cadastro e aproveite
           todos os recursos.
@@ -45,20 +47,15 @@ const DadosTutor: React.FC<DadosTutorProps> = ({
         <img
           src={avatarUrl || avatarExemplo}
           alt={`${name} avatar`}
-          className="profile-avatar"
+          className="dados-prestador-avatar"
         />
       </header>
 
-      <form className="profile-actions">
-        <div className="btn-group btn-up">
+      <form className="dados-prestador-form">
+        <div className="dados-prestador-group dados-prestador-group-up">
           <label>
             Nome completo
             <input type="text" value={name} disabled />
-          </label>
-
-          <label>
-            E-mail
-            <input type="email" value={email} disabled />
           </label>
 
           <label>
@@ -67,17 +64,22 @@ const DadosTutor: React.FC<DadosTutorProps> = ({
           </label>
 
           <label>
-            Nascimento
-            <input type="date" value={nascimento} disabled />
+            E-mail
+            <input type="email" value={email} disabled />
           </label>
 
           <label>
             Celular
             <input type="tel" value={celular} disabled />
           </label>
+
+          <label>
+            Nascimento
+            <input type="date" value={nascimento} disabled />
+          </label>
         </div>
 
-        <div className="btn-group btn-down">
+        <div className="dados-prestador-group dados-prestador-group-down">
           <h2>Endereço de Residência</h2>
 
           <label>
@@ -119,8 +121,16 @@ const DadosTutor: React.FC<DadosTutorProps> = ({
             Complemento
             <input type="text" value={complemento} disabled />
           </label>
-          <button type="button" className="btn-salvar">
+
+          <button type="button" className="dados-prestador-btn-salvar">
             Salvar
+          </button>
+          <button
+            type="button"
+            onClick={onEditProfile}
+            className="dados-prestador-edit-profile-btn"
+          >
+            Editar Perfil
           </button>
         </div>
       </form>
@@ -128,4 +138,4 @@ const DadosTutor: React.FC<DadosTutorProps> = ({
   );
 };
 
-export default DadosTutor;
+export default DadosPrestador;

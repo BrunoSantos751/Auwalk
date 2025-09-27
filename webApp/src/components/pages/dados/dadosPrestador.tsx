@@ -38,8 +38,8 @@ const DadosPrestador: React.FC<DadosPrestadorProps> = ({
   onEditProfile,
 }) => {
   return (
-    <div className="perfil-tutor">
-      <header className="profile-header">
+    <div className="dados-prestador-container">
+      <header className="dados-prestador-header">
         <h2>
           <strong>Primeira vez aqui?</strong> Complete seu cadastro e aproveite
           todos os recursos.
@@ -47,12 +47,12 @@ const DadosPrestador: React.FC<DadosPrestadorProps> = ({
         <img
           src={avatarUrl || avatarExemplo}
           alt={`${name} avatar`}
-          className="profile-avatar"
+          className="dados-prestador-avatar"
         />
       </header>
 
-      <form className="profile-actions">
-        <div className="btn-group-btn-up">
+      <form className="dados-prestador-form">
+        <div className="dados-prestador-group dados-prestador-group-up">
           <label>
             Nome completo
             <input type="text" value={name} disabled />
@@ -79,7 +79,7 @@ const DadosPrestador: React.FC<DadosPrestadorProps> = ({
           </label>
         </div>
 
-        <div className="btn-group-btn-down">
+        <div className="dados-prestador-group dados-prestador-group-down">
           <h2>Endereço de Residência</h2>
 
           <label>
@@ -121,10 +121,15 @@ const DadosPrestador: React.FC<DadosPrestadorProps> = ({
             Complemento
             <input type="text" value={complemento} disabled />
           </label>
-          <button type="button" className="btn-salvar">
+
+          <button type="button" className="dados-prestador-btn-salvar">
             Salvar
           </button>
-          <button onClick={onEditProfile} className="edit-profile-button">
+          <button
+            type="button"
+            onClick={onEditProfile}
+            className="dados-prestador-edit-profile-btn"
+          >
             Editar Perfil
           </button>
         </div>
