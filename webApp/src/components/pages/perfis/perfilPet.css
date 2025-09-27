@@ -1,0 +1,82 @@
+/* Avatar do perfil */
+.pet-avatar {
+  max-width: 250px; /* limite de largura */
+  height: auto; /* mantém proporção */
+  object-fit: cover;
+  display: block;
+  margin: 45px auto; /* centraliza */
+  border-radius: 50%; /* opcional: deixa redondo */
+  border: none;
+}
+
+/* Header do perfil */
+.pet-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza tudo */
+  justify-content: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Nome do perfil */
+.pet-name h1 {
+  font-family: var(--fonte-tituloP);
+  font-weight: var(--fonte-tituloP01-weight);
+  font-style: var(--fonte-tituloP-style);
+  font-size: 24px;
+  color: var(--cor-opcoes-fonte01);
+  margin-top: 12px;
+}
+
+/* Grupo de botões */
+.pet-btn-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center; /* centraliza */
+  flex-wrap: wrap; /* quebra em telas menores */
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Select */
+.pet-select {
+  width: 200px;
+  height: 52px;
+  border-radius: 12px;
+  font-size: 1rem;
+  text-align: center;
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
+  border: 2px solid var(--cor-botao-perfil-hover);
+  cursor: pointer;
+}
+
+.pet-select:hover {
+  background-color: var(--cor-botao-perfil);
+  color: var(--cor-botao-perfil-hover);
+  border: 2px solid var(--cor-botao-perfil-hover);
+}
+
+/* Botão */
+.pet-btn {
+  width: 200px;
+  height: 52px;
+  background-color: var(--cor-botao-perfil);
+  color: var(--cor-botao-perfil-hover);
+  border: 2px solid var(--cor-botao-perfil-hover);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pet-btn:hover {
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
+  border: 2px solid var(--cor-botao-perfil-hover02);
+}
+
+.pet-actions {
+  margin-bottom: 200px;
+}

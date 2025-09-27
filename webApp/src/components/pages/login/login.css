@@ -1,0 +1,154 @@
+/* Estilo geral da página */
+.login-page {
+  display: flex; /* Usa Flexbox para criar as duas colunas */
+  width: 100vw; /* 100% da largura da tela */
+  height: 100vh; /* 100% da altura da tela */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* Impede barras de rolagem */
+}
+
+/* Coluna da Esquerda */
+.left-side {
+  flex: 1; /* Ocupa metade do espaço disponível */
+  background-color: #fff;
+  position: relative; /* Necessário para posicionar a imagem do cachorro */
+  display: flex;
+  align-items: flex-end; /* Alinha o conteúdo na parte de baixo */
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+}
+
+/* Imagem do cachorro (opcional) */
+.dog-image {
+  width: 250px; /* Ajuste o tamanho conforme necessário */
+  margin-bottom: 50px; /* Espaço da parte de baixo */
+}
+
+/* Coluna da Direita */
+.right-side {
+  flex: 1; /* Ocupa a outra metade do espaço */
+  background: linear-gradient(135deg, #89e0ff, #00a8e8); /* Gradiente de azul */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Necessário para o formato de seta */
+  color: #fff;
+}
+
+/* Efeito de "seta" usando um pseudo-elemento */
+.right-side::before {
+  content: "";
+  position: absolute;
+  left: -50px; /* Puxa o elemento para a esquerda */
+  top: 0;
+  width: 100px; /* Largura do triângulo */
+  height: 100%;
+  background: linear-gradient(135deg, #89e0ff, #00a8e8); /* Mesmo gradiente */
+  transform: skewX(-15deg); /* Inclina o elemento para criar o ângulo */
+  z-index: 1;
+}
+
+/* Contêiner do formulário de login */
+.login-form-container {
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  padding: 20px;
+  z-index: 2; /* Garante que o formulário fique na frente da "seta" */
+  position: relative; /* Garante que o z-index funcione */
+}
+
+.login-form-container h1 {
+  font-size: 56px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #000; /* Cor preta para "AuWalk" */
+}
+
+.login-form-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #000; /* Cor preta */
+}
+
+.login-form-container p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #000; /* Cor preta */
+}
+
+/* Botão de login com Google */
+.google-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 25px; /* Bordas bem arredondadas */
+  font-size: 16px;
+  cursor: pointer;
+  gap: 10px; /* Espaço entre o logo e o texto */
+}
+
+.google-login-btn img {
+  width: 20px; /* Tamanho do logo do Google */
+}
+
+/* Divisor "ou" */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #fff;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #fff;
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+/* Campos de input */
+form input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 25px; /* Bordas bem arredondadas */
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: center;
+}
+
+form input::placeholder {
+  color: #999;
+}
+
+/* Botão de ENTRAR */
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #004a61; /* Azul escuro */
+  color: #fff;
+  border: none;
+  border-radius: 25px; /* Bordas bem arredondadas */
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #003545; /* Um pouco mais escuro no hover */
+}
