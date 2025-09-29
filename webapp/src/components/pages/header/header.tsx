@@ -48,34 +48,9 @@ const Header: React.FC = () => {
               <Link to="/cadastro">
                 <button className="navbar-button-estilo">Cadastrar</button>
               </Link>
-              <div className="dropdown">
-                <button
-                  className="navbar-button"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                >
-                  Acessar conta
-                </button>
-                {dropdownOpen && (
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link
-                        to="/perfiltutor"
-                        onClick={() => setDropdownOpen(false)}
-                      >
-                        Tutor
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/perfilprestador"
-                        onClick={() => setDropdownOpen(false)}
-                      >
-                        Pet sitter
-                      </Link>
-                    </li>
-                  </ul>
-                )}
-              </div>
+              <Link to="/Login">
+                <button className="navbar-button">Login</button>
+              </Link>
             </>
           ) : (
             <>
