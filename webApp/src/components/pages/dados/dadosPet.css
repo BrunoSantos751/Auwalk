@@ -1,0 +1,148 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap");
+
+/* Variáveis de cores e fontes */
+:root {
+  --cor-header: #e9ebef;
+  --cor-de-fundo: #f0f2f5;
+  --cor-de-fundo02: #f9f9f9;
+  --cor-opcoes-fonte01: #0e0e0e;
+  --cor-opcoes-fonte02: #666;
+  --cor-opcoes-destaque01: #980909;
+  --fonte-titulo01: "Pridi", serif;
+  --fonte-titulo01-weight: 500;
+  --fonte-titulo02-weight: 200;
+  --fonte-titulo01-style: normal;
+  --fonte-texto: "Montserrat", sans-serif;
+  --cor-botao-perfil: #f6f6fc;
+  --cor-botao-perfil-hover: #079fce;
+  --cor-botao-perfil-hover02: #0b7fa8;
+  --cor-botao-perfil-fonte01: #333;
+  --cor-botao-perfil-fonte02: white;
+}
+
+/* Container principal */
+.dados-pet-container {
+  max-width: 800px;
+  margin: 32px auto;
+  padding: 24px;
+  background-color: var(--cor-de-fundo02);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: var(--fonte-titulo01);
+  font-weight: var(--fonte-titulo02-weight);
+  font-style: var(--fonte-titulo01-style);
+}
+
+/* Cabeçalho */
+.dados-pet-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.dados-pet-header h2 {
+  font-size: 14px;
+  color: var(--cor-opcoes-fonte02);
+}
+
+.palavra-destaque-dados {
+  color: var(--cor-opcoes-destaque01);
+}
+
+/* Avatar */
+.dados-pet-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  margin: 10px 0;
+}
+
+/* Formulário em uma coluna */
+.dados-pet-form {
+  display: grid;
+  grid-template-columns: 400px;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Labels e inputs */
+.dados-pet-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: var(--cor-opcoes-fonte01);
+}
+
+.dados-pet-form input,
+.dados-pet-form select {
+  margin-top: 0.3rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  background-color: var(--cor-de-fundo);
+  color: var(--cor-opcoes-fonte02);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:disabled,
+select:disabled {
+  background-color: var(--cor-header);
+  color: var(--cor-opcoes-fonte02);
+  cursor: not-allowed;
+}
+
+input:not(:disabled):hover,
+select:not(:disabled):hover {
+  border-color: var(--cor-opcoes-fonte02);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Botões */
+button {
+  padding: 0.8rem 2rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  width: 200px;
+  justify-self: center;
+  margin-top: 10px;
+}
+
+.pet-edit {
+  background-color: var(--cor-botao-perfil-fonte02);
+  color: var(--cor-botao-perfil-hover);
+  border: 1px solid var(--cor-botao-perfil-hover);
+}
+
+.pet-edit:hover {
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
+}
+
+.pet-salvar {
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
+}
+
+.pet-salvar:hover {
+  background-color: var(--cor-botao-perfil-hover02);
+}
+/* RESPONSIVIDADE */
+@media (max-width: 450px) {
+  .dados-pet-form {
+    grid-template-columns: 80%;
+  }
+
+  .dados-pet-avatar {
+    width: 150px;
+    height: 150px;
+  }
+}

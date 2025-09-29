@@ -5,6 +5,7 @@
   height: 100vh; /* 100% da altura da tela */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   overflow: hidden; /* Impede barras de rolagem */
+  margin: 0 100px;
 }
 
 /* Coluna da Esquerda */

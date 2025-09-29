@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
           <h4>Sobre nós</h4>
           <ul>
             <li>
-              <Link to="/Home">Como Funciona</Link>
+              <Link to="/comofunciona">Como Funciona</Link>
             </li>
             <li>
               <Link to="/Home">Onde Estamos</Link>

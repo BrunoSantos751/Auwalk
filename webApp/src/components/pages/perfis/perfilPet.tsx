@@ -32,10 +32,14 @@ const PerfilPet: React.FC = () => {
                 <option value="1">Rex</option>
                 <option value="2">Luna</option>
               </select>
+
               <button
                 className="pet-btn"
-                onClick={() => navigate("/perfilTutor")}
+                onClick={() => navigate("/cadastropet")}
               >
+                Cadastrar Pet
+              </button>
+              <button className="pet-btn" onClick={() => navigate("/perfil")}>
                 Voltar ao Perfil
               </button>
             </div>

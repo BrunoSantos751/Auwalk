@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./estiloCadastro.css";
 import dogImage from "../../../assets/dog3.webp";
 
-const CadastroTutor: React.FC = () => {
+const Cadastro: React.FC = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -31,7 +31,7 @@ const CadastroTutor: React.FC = () => {
 
   return (
     <div className="register-wrapper">
-      <h1>Cadastro Tutor</h1>
+      <h1>Cadastro</h1>
       <img src={fundoImage} alt="Fundo" className="background-img" />
       <div className="register-body">
         <div className="register-mask"></div>
@@ -72,10 +72,7 @@ const CadastroTutor: React.FC = () => {
             <input type="password" placeholder="Senha Novamente" />
             <small>
               Finalize seu cadastro em
-              <span className="password-palavra-destaque">
-                {" "}
-                Meus Dados
-              </span>{" "}
+              <span className="password-palavra-destaque"> Meus Dados </span>
               para liberar todos
               <span className="password-palavra-destaque"> os recursos.</span>
             </small>
@@ -94,4 +91,4 @@ const CadastroTutor: React.FC = () => {
   );
 };
 
-export default CadastroTutor;
+export default Cadastro;

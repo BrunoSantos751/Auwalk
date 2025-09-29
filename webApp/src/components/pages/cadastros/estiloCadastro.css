@@ -12,9 +12,6 @@
   --cor-header-fonte: #333333;
   --cor-header-fonte-ul-hover: #666b71;
   --cor-de-fundo: #f0f2f5;
-  --cor-botao: #079fce;
-  --cor-botao-hover: #0b7fa8;
-  --cor-botao-fonte: #e6f4ff;
   --cor-opcoes-fonte01: #0e0e0e;
   --cor-opcoes-fonte02: #666;
   --cor-opcoes-fonte03: white;
@@ -22,8 +19,15 @@
   --cor-opcoes-destaque02: #474747;
   --fonte-titulo01: "Pridi", serif;
   --fonte-titulo01-weight: 500;
+  --fonte-titulo02-weight: 200;
+  --fonte-titulo03-weight: 300;
   --fonte-titulo01-style: normal;
   --fonte-texto: "Montserrat", sans-serif;
+  --cor-botao-perfil: #f6f6fc;
+  --cor-botao-perfil-hover: #079fce;
+  --cor-botao-perfil-hover02: #0b7fa8;
+  --cor-botao-perfil-fonte01: #333;
+  --cor-botao-perfil-fonte02: white;
 }
 .register-wrapper {
   position: relative;
@@ -144,8 +148,8 @@
   font-family: "roboto";
   font-size: 16px;
   padding: 12px;
-  background-color: var(--cor-botao);
-  color: var(--cor-botao-fonte);
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
   border: none;
   border-radius: 20px;
   cursor: pointer;
@@ -155,7 +159,8 @@
 }
 
 .register-form button:hover {
-  background-color: var(--cor-botao-hover);
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
 }
 
 @media (max-width: 768px) {
@@ -244,8 +249,8 @@
 /* Botão do pet */
 .register-form-pet button {
   padding: 12px;
-  background-color: var(--cor-botao);
-  color: var(--cor-botao-fonte);
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
   border: none;
   border-radius: 20px;
   cursor: pointer;
@@ -255,13 +260,31 @@
 }
 .register-form-pet button:hover {
   padding: 12px;
-  background-color: var(--cor-botao-hover);
-  color: var(--cor-botao-fonte);
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
   width: 100%;
+}
+/* Select */
+.pet-select-op {
+  width: 200px;
+  height: 52px;
+  border-radius: 20px;
+  font-size: 1rem;
+  text-align: center;
+  background-color: var(--cor-botao-perfil);
+  color: var(--cor-opcoes-fonte02);
+  border: 2px solid var(--cor-botao-perfil-hover02);
+  cursor: pointer;
+}
+
+.pet-select-op:hover {
+  background-color: var(--cor-botao-perfil);
+  color: var(--cor-botao-perfil-hover);
+  border: 2px solid var(--cor-botao-perfil-hover);
 }
 /* Responsivo para telas menores */
 @media (max-width: 768px) {

@@ -1,3 +1,30 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  --cor-header: #e9ebef;
+  --cor-header-fonte: #333333;
+  --cor-header-fonte-ul-hover: #666b71;
+  --cor-de-fundo: #f0f2f5;
+  --cor-de-fundo02: #f9f9f9;
+  --cor-opcoes-fonte01: #0e0e0e;
+  --cor-opcoes-fonte02: #666;
+  --cor-opcoes-fonte03: white;
+  --cor-opcoes-fonte04: #999;
+  --cor-opcoes-destaque01: #980909;
+  --cor-opcoes-destaque02: #474747;
+  --fonte-titulo01: "Pridi", serif;
+  --fonte-titulo01-weight: 500;
+  --fonte-titulo02-weight: 200;
+  --fonte-titulo03-weight: 300;
+  --fonte-titulo01-style: normal;
+  --fonte-texto: "Montserrat", sans-serif;
+  --cor-botao-perfil: #f6f6fc;
+  --cor-botao-perfil-hover: #079fce;
+  --cor-botao-perfil-hover02: #0b7fa8;
+  --cor-botao-perfil-fonte01: #333;
+  --cor-botao-perfil-fonte02: white;
+}
 html,
 body {
   margin: 0;
@@ -15,7 +42,7 @@ body {
   padding: 15px 20px;
   background-color: var(--cor-header); /* tom mais escuro que o body */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  font-family: Arial, sans-serif;
+  font-family: var(--fonte-titulo01);
 }
 
 /* Título do site */
@@ -23,7 +50,7 @@ body {
   margin: 0;
   font-size: 50px;
   color: var(--cor-header-fonte);
-  font-weight: bold;
+  font-weight: var(--fonte-titulo01-weight);
   gap: 20px;
 }
 
@@ -43,6 +70,7 @@ body {
   display: flex;
   align-items: center;
   gap: 100px;
+  color: var(--cor-header-fonte);
 }
 
 .navbar-left ul {
@@ -51,7 +79,7 @@ body {
   padding: 10px;
   margin: 0;
   gap: 15px;
-  color: var(--cor-botao-fonte);
+  color: var(--cor-header-fonte-ul-hover);
 }
 
 /* Bloco dos botões à direita */
@@ -59,12 +87,12 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  color: var(--cor-botao);
+  color: var(--cor-botao-perfil-hover);
 }
 /* Links do menu */
 .navbar ul li a {
   text-decoration: none;
-  color: var(--cor-botao);
+  color: var(--cor-botao-perfil-hover);
   font-weight: 500;
   transition: color 0.2s;
 }
@@ -72,7 +100,7 @@ body {
 .navbar ul li a:hover {
   color: var(--cor-header-fonte-ul-hover);
 }
-.navbar-button,
+.navbar-button-lo,
 .navbar-button-estilo {
   padding: 8px 16px;
   border: none;
@@ -84,52 +112,22 @@ body {
 /*botão cadastro*/
 .navbar-button-estilo {
   background-color: var(--cor-opcoes-fonte03);
-  color: var(--cor-botao);
-  border: 1px solid var(--cor-botao);
+  color: var(--cor-botao-perfil-hover);
+  border: 1px solid var(--cor-botao-perfil-hover);
 }
 .navbar-button-estilo:hover {
-  background-color: var(--cor-botao);
+  background-color: var(--cor-botao-perfil-hover);
   color: var(--cor-opcoes-fonte03);
 }
-/*botão acessar conta*/
-.navbar-button {
-  background-color: var(--cor-botao);
-  color: var(--cor-opcoes-fonte03);
-  border: 1px solid var(--cor-botao);
+
+.navbar-button-lo {
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
 }
 
-.navbar-button:hover {
-  background-color: var(--cor-botao-hover);
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block; /* botão alinhado */
-}
-
-/* Menu dropdown */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: var(--cor-opcoes-fonte03);
-  border-radius: 5px;
-  list-style: none;
-  padding: 0;
-  margin: 2px 0 0 0;
-  z-index: 200;
-  border: 1px solid var(--cor-botao);
-}
-
-/* Itens do menu */
-.dropdown-menu li {
-  border-bottom: 1px solid var(--cor-botao);
-  text-align: center;
-}
-
-.dropdown-menu li:hover {
-  background-color: var(--cor-opcoes-fonte03);
+.navbar-button-lo:hover {
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
 }
 
 @media (max-width: 768px) {

@@ -3,7 +3,7 @@ import "./perfilTotal.css";
 import avatarExemplo from "../../../assets/dog3.webp";
 import { useNavigate } from "react-router-dom";
 
-interface PerfilTutorProps {
+interface PerfilTotalProps {
   name?: string;
   avatarUrl?: string; // imagem do backend
   onMeusDados?: () => void;
@@ -12,7 +12,7 @@ interface PerfilTutorProps {
   onEditarSenha?: () => void;
 }
 
-const PerfilTutor: React.FC<PerfilTutorProps> = ({
+const PerfilTotal: React.FC<PerfilTotalProps> = ({
   name,
   avatarUrl,
   onHistorico,
@@ -38,15 +38,13 @@ const PerfilTutor: React.FC<PerfilTutorProps> = ({
       {/* Ações do usuário */}
       <nav className="profile-actions">
         <div className="btn-group btn-up">
-          <button onClick={() => navigate("/dadostutor")}>Meus Dados</button>
+          <button onClick={() => navigate("/dados")}>Meus Dados</button>
           <button onClick={() => navigate("/perfilpet")}>Dados do Pet</button>
           <button onClick={onHistorico}>Histórico</button>
         </div>
         <div className="btn-group btn-down">
           <button onClick={onNovoAgendamento}>Novo Agendamento</button>
-          <button onClick={() => navigate("/cadastroPet")}>
-            Cadastrar Novo Pet
-          </button>
+          <button onClick={() => navigate("/")}>Quero ser prestador</button>
           <button onClick={onEditarSenha}>Editar Senha</button>
         </div>
       </nav>
@@ -54,4 +52,4 @@ const PerfilTutor: React.FC<PerfilTutorProps> = ({
   );
 };
 
-export default PerfilTutor;
+export default PerfilTotal;
