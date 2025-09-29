@@ -4,7 +4,6 @@ import { PiUserBold } from "react-icons/pi";
 import "./header.css";
 
 const Header: React.FC = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
