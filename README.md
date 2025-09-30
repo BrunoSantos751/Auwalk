@@ -4,7 +4,7 @@ O **Auwalk** é uma plataforma pensada para facilitar a vida de donos de pets e 
 
 ---
 
-## Descrição do Projeto
+## Descrição do Projeto.
 
 Muitos donos de pets enfrentam dificuldades em encontrar profissionais de confiança para cuidar de seus animais, especialmente em horários específicos ou para serviços recorrentes. O Auwalk surge para preencher essa lacuna, permitindo que:
 
