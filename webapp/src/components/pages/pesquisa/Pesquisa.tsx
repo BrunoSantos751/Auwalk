@@ -2,6 +2,19 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Pesquisa.css';
 import profilePic from "../../../assets/profile-pic.png";
+import React from 'react'; // Import React para usar seus tipos
+
+interface Servico {
+    idServico: number;
+    tipoServico: string;
+    descricao: string | null;
+    preco: number | null;
+}
+
+interface SearchPayload {
+    data?: string;
+    tipoServico?: string;
+}
 
 export default function Pesquisa() {
     const location = useLocation();
@@ -9,7 +22,10 @@ export default function Pesquisa() {
     const [servico, setServico] = useState(filtros.servico || "");
     const [entrada, setEntrada] = useState(filtros.entrada || "");
     const [saida, setSaida] = useState(filtros.saida || "");
-    const [servicosEncontrados, setServicosEncontrados] = useState([]);
+
+    // CORREÇÃO: Tipa o estado para ser um array de objetos 'Servico'
+    const [servicosEncontrados, setServicosEncontrados] = useState<Servico[]>([]);
+
     const dataAtual = new Date().toISOString().split("T")[0];
 
     // busca automática quando a página carrega com filtros
@@ -20,7 +36,8 @@ export default function Pesquisa() {
     }, []);
 
     async function handleFetch() {
-        const payload = {};
+        // CORREÇÃO: Tipa o objeto 'payload'
+        const payload: SearchPayload = {};
         if (entrada) payload.data = entrada;
         if (servico) payload.tipoServico = servico;
 
@@ -34,7 +51,7 @@ export default function Pesquisa() {
         setServicosEncontrados(data.data?.servicos || []);
     }
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         handleFetch();
     }

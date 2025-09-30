@@ -1,6 +1,7 @@
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import React from 'react';
 
 export default function Home() {
   const dataAtual = new Date().toISOString().split("T")[0];
@@ -9,7 +10,8 @@ export default function Home() {
   const [entrada, setEntrada] = useState("");
   const [saida, setSaida] = useState("");
 
-  function handleSubmit(e) {
+  // CORREÇÃO: Adicionado o tipo para o evento 'e'
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // envia filtros para a página de pesquisa
     navigate('/search', {
@@ -89,9 +91,9 @@ export default function Home() {
         <h2 className="info-title">Seu pet merece mais atenção e cuidado!</h2>
         <div className="info-background">
           <p className='info-texto'>
-            No <span className='palavra-destaque'>Auwalk</span>, você encontra passeadores e pet sitters de confiança, 
+            No <span className='palavra-destaque'>Auwalk</span>, você encontra passeadores e pet sitters de confiança,
             agenda serviços com <span className="palavra-destaque">poucos cliques</span> e acompanha tudo de forma segura e prática.
-          </p>    
+          </p>
         </div>
         <div className="imagem-gato"></div>
       </div>
