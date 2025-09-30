@@ -2,25 +2,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap");
 
 :root {
+  --cor-header: #e9ebef;
+  --cor-header-fonte: #333333;
+  --cor-header-fonte-ul-hover: #666b71;
   --cor-de-fundo: #f0f2f5;
   --cor-opcoes-fonte01: #0e0e0e;
   --cor-opcoes-fonte02: #666;
+  --cor-opcoes-fonte03: white;
   --cor-opcoes-destaque01: #980909;
   --cor-opcoes-destaque02: #474747;
-  --fonte-tituloP: "Pridi", serif;
-  --fonte-tituloP01-weight: 300;
-  --fonte-tituloP02-weight: 200;
-  --fonte-tituloP-style: normal;
+  --fonte-titulo01: "Pridi", serif;
+  --fonte-titulo01-weight: 500;
+  --fonte-titulo02-weight: 200;
+  --fonte-titulo03-weight: 300;
+  --fonte-titulo01-style: normal;
+  --fonte-texto: "Montserrat", sans-serif;
   --cor-botao-perfil: #f6f6fc;
   --cor-botao-perfil-hover: #079fce;
+  --cor-botao-perfil-hover02: #0b7fa8;
   --cor-botao-perfil-fonte01: #333;
   --cor-botao-perfil-fonte02: white;
-  --cor-botao-up: white;
-  --cor-botao-up-hover: #079fce;
-  --cor-botao-up-fonte: #079fce;
-  --cor-botao-down: #079fce;
-  --cor-botao-down-hover: #0b7fa8;
-  --cor-botao-down-fonte: #e6f4ff;
 }
 body {
   margin: 0;
@@ -34,6 +35,13 @@ body {
   align-items: center;
   margin-bottom: 20px;
 }
+.profile-header h1 {
+  font-family: var(--fonte-titulo01);
+  font-weight: var(--fonte-titulo01-weight);
+  font-style: var(--fonte-titulo01-style);
+  margin: 10px 0;
+  font-size: 24px;
+}
 
 .profile-avatar {
   width: 250px;
@@ -45,29 +53,11 @@ body {
 }
 
 .profile-name h1 {
-  font-family: var(--fonte-tituloP);
-  font-weight: var(--fonte-tituloP01-weight);
-  font-style: var(--fonte-tituloP-style);
+  font-family: var(--fonte-titulo01);
+  font-weight: var(--fonte-titulo02-weight);
+  font-style: var(--fonte-titulo01-style);
   margin: 10px 0;
-  font-size: 24px;
-}
-/* Botão de editar perfil */
-
-.edit-profile-button {
-  font-family: var(--fonte-tituloP);
-  font-weight: var(--fonte-tituloP02-weight);
-  font-style: var(--fonte-tituloP-style);
-  padding: 12px 16px;
-  background-color: var(--cor-botao-perfil);
-  color: var(--cor-botao-perfil-fonte01);
-  border: 1px solid #cbcdcf;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
-.edit-profile-button:hover {
-  background-color: var(--cor-botao-perfil-hover);
-  color: var(--cor-botao-perfil-fonte02);
+  font-size: 14px;
 }
 
 /* === Ações do usuário === */
@@ -101,26 +91,27 @@ body {
 
 /* Botões superiores */
 .btn-up button {
-  background-color: var(--cor-botao-up);
-  color: var(--cor-botao-up-fonte);
-  border: 2px solid #079fce;
+  background-color: var(--cor-botao-perfil-fonte02);
+  color: var(--cor-botao-perfil-hover);
+  border: 2px solid var(--cor-botao-perfil-hover);
 }
 
 .btn-up button:hover {
-  background-color: var(--cor-botao-up-hover);
-  color: white;
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
 }
 
 /* Botões inferiores */
 .btn-down button {
-  background-color: var(--cor-botao-down);
-  color: var(--cor-botao-down-fonte);
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
   margin-bottom: 50px;
   border: none;
 }
 
 .btn-down button:hover {
-  background-color: var(--cor-botao-down-hover);
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
 }
 
 /* === Responsividade === */

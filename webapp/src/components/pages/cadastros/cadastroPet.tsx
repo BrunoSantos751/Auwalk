@@ -19,7 +19,7 @@ const CadastroPet: React.FC = () => {
           <input type="text" placeholder="Nome" />
           <input type="idade" placeholder="idade" />
           <input type="sexo" placeholder="Macho ou Fêmea?" />
-          <select name="pet" id="pet">
+          <select className="pet-select-op" name="pet" id="pet">
             <option value="" disabled selected>
               Selecione seu pet
             </option>

@@ -1,3 +1,27 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap");
+:root {
+  --cor-header: #e9ebef;
+  --cor-header-fonte: #333333;
+  --cor-header-fonte-ul-hover: #666b71;
+  --cor-de-fundo: #f0f2f5;
+  --cor-opcoes-fonte01: #0e0e0e;
+  --cor-opcoes-fonte02: #666;
+  --cor-opcoes-fonte03: white;
+  --cor-opcoes-destaque01: #980909;
+  --cor-opcoes-destaque02: #474747;
+  --fonte-titulo01: "Pridi", serif;
+  --fonte-titulo01-weight: 500;
+  --fonte-titulo02-weight: 200;
+  --fonte-titulo03-weight: 300;
+  --fonte-titulo01-style: normal;
+  --fonte-texto: "Montserrat", sans-serif;
+  --cor-botao-perfil: #f6f6fc;
+  --cor-botao-perfil-hover: #079fce;
+  --cor-botao-perfil-hover02: #0b7fa8;
+  --cor-botao-perfil-fonte01: #333;
+  --cor-botao-perfil-fonte02: white;
+}
 .app {
   position: relative;
   width: 100%;
@@ -5,6 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 300px;
 }
 .app h1 {
   position: absolute;
@@ -36,11 +61,11 @@
 .conteudo h2 {
   font-size: 35px;
   font-family: Arial, sans-serif;
-  color: #333333;
+  color: var(--cor-header-fonte);
   margin-bottom: 50px; /*espaço entre a frase e o botão*/
 }
 .conteudo h2 strong {
-  color: #000000c8;
+  color: var(--cor-opcoes-fonte01);
 }
 .h3-container {
   display: flex; /* texto + botão na mesma linha */
@@ -52,7 +77,7 @@
 .h3-container h3 {
   margin: 0;
   font-family: Arial, sans-serif;
-  color: #07a0ce;
+  color: var(--cor-botao-perfil-hover);
   font: bold;
 }
 
@@ -60,14 +85,14 @@
   padding: 8px 16px;
   border: none;
   border-radius: 12px;
-  background: #07a0ce;
-  color: white;
+  background: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
   font-size: 14px;
   cursor: pointer;
 }
 .h3-container button:hover {
-  background-color: #0b7fa8;
-  color: white;
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
 }
 .imagem-final {
   margin-top: 50px;

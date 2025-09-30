@@ -21,9 +21,7 @@ const PrestadoPag: React.FC = () => {
         </h2>
         <div className="h3-container">
           <h3>O primeiro passo é simples →</h3>
-          <button onClick={() => navigate("/cadastroprestador")}>
-            cadastre-se
-          </button>
+          <button onClick={() => navigate("/cadastro")}>cadastre-se</button>
         </div>
       </div>
       <div className="imagem-final">

@@ -5,13 +5,12 @@ import { AuthProvider } from './context/AuthContext';
 import Home from "./components/pages/home/Home";
 import Header from "./components/pages/header/header";
 import CadastroPet from "./components/pages/cadastros/cadastroPet";
-import CadastroPrestador from "./components/pages/cadastros/cadastroPrestador";
-import CadastroTutor from "./components/pages/cadastros/cadastroTutor";
-import DadosTutor from "./components/pages/dados/dadosTutor";
 import PrestadoPag from "./components/pages/prestador/pagPrestador";
-import PerfilPrestador from "./components/pages/perfis/perfilPrestador";
-import PerfilTutor from "./components/pages/perfis/perfilTutor";
-import Login from "./components/pages/login/login"
+import PerfilTotal from "./components/pages/perfis/perfilTotal";
+import PerfilPet from "./components/pages/perfis/perfilPet";
+import Login from "./components/pages/login/login";
+import Comofunciona from "./components/pages/footerPages/comofunciona";
+import Footer from "./components/pages/footer/footer";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
@@ -23,17 +22,17 @@ ReactDOM.createRoot(rootElement).render(
       <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/cadastro" element={<CadastroTutor />} />
+        <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/cadastropet" element={<CadastroPet />} />
-        <Route path="/cadastroprestador" element={<CadastroPrestador />} />
-        <Route path="/cadastrotutor" element={<CadastroTutor />} />
-        <Route path="/dadostutor" element={<DadosTutor />} />
+        <Route path="/dados" element={<DadosTotal />} />
+        <Route path="/dadospet" element={<DadosPet />} />
         <Route path="/pagprestador" element={<PrestadoPag />} />
-        <Route path="/perfilprestador" element={<PerfilPrestador />} />
-        <Route path="/perfiltutor" element={<PerfilTutor />} />
-        <Route path="/perfil" element={<PerfilTutor />} />
+        <Route path="/perfil" element={<PerfilTotal />} />
+        <Route path="/perfilpet" element={<PerfilPet />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/comofunciona" element={<Comofunciona />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   </AuthProvider>
   </React.StrictMode>

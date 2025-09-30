@@ -1,0 +1,110 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  --cor-header: #e9ebef;
+  --cor-header-fonte: #333333;
+  --cor-header-fonte-ul-hover: #666b71;
+  --cor-de-fundo: #f0f2f5;
+  --cor-de-fundo02: #f9f9f9;
+  --cor-opcoes-fonte01: #0e0e0e;
+  --cor-opcoes-fonte02: #666;
+  --cor-opcoes-fonte03: white;
+  --cor-opcoes-fonte04: #999;
+  --cor-opcoes-destaque01: #980909;
+  --cor-opcoes-destaque02: #474747;
+  --fonte-titulo01: "Pridi", serif;
+  --fonte-titulo01-weight: 500;
+  --fonte-titulo02-weight: 200;
+  --fonte-titulo03-weight: 300;
+  --fonte-titulo01-style: normal;
+  --fonte-texto: "Montserrat", sans-serif;
+  --cor-botao-perfil: #f6f6fc;
+  --cor-botao-perfil-hover: #079fce;
+  --cor-botao-perfil-hover02: #0b7fa8;
+  --cor-botao-perfil-fonte01: #333;
+  --cor-botao-perfil-fonte02: white;
+}
+/* Avatar do perfil */
+.pet-avatar {
+  max-width: 250px; /* limite de largura */
+  height: auto; /* mantém proporção */
+  object-fit: cover;
+  display: block;
+  margin: 45px auto; /* centraliza */
+  border-radius: 50%; /* opcional: deixa redondo */
+  border: none;
+}
+
+/* Header do perfil */
+.pet-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza tudo */
+  justify-content: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Nome do perfil */
+.pet-name h1 {
+  font-family: var(--fonte-titulo01);
+  font-weight: var(--fonte-titulo01-weight);
+  font-style: var(--fonte-titulo-style);
+  font-size: 24px;
+  color: var(--cor-opcoes-fonte01);
+  margin-top: 12px;
+}
+
+/* Grupo de botões */
+.pet-btn-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center; /* centraliza */
+  flex-wrap: wrap; /* quebra em telas menores */
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Select */
+.pet-select {
+  width: 200px;
+  height: 52px;
+  border-radius: 20px;
+  font-size: 1rem;
+  text-align: center;
+  background-color: var(--cor-botao-perfil-hover);
+  color: var(--cor-botao-perfil-fonte02);
+  border: 2px solid var(--cor-botao-perfil-hover);
+  cursor: pointer;
+}
+
+.pet-select:hover {
+  background-color: var(--cor-botao-perfil);
+  color: var(--cor-botao-perfil-hover);
+  border: 2px solid var(--cor-botao-perfil-hover);
+}
+
+/* Botão */
+.pet-btn {
+  width: 200px;
+  height: 52px;
+  background-color: var(--cor-botao-perfil);
+  color: var(--cor-botao-perfil-hover);
+  border: 2px solid var(--cor-botao-perfil-hover);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.pet-btn:hover {
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-botao-perfil-fonte02);
+  border: 2px solid var(--cor-botao-perfil-hover02);
+}
+
+.pet-actions {
+  margin-bottom: 200px;
+}
