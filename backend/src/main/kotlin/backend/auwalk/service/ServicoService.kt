@@ -10,6 +10,7 @@ data class DisponibilidadeResponse(
 )
 
 data class ServicoDisponivelResponse(
+    val idServico: Int,
     val tipoServico: String,
     val descricao: String?,
     val preco: Double?,
@@ -57,6 +58,7 @@ class ServicoService(
             val preco = rs.getDouble("preco")
             val disponibilidades = if (data != null) buscarDisponibilidades(idServico, data) else emptyList()
             ServicoDisponivelResponse(
+                idServico = idServico,
                 tipoServico = tipo,
                 descricao = descricao,
                 preco = preco,
