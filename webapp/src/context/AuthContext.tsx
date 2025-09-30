@@ -1,73 +1,48 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
-import * as jwt from "jwt-decode";
+// src/context/AuthContext.tsx
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 
+// Define o formato do valor que o contexto irá prover
 interface AuthContextType {
-  isLoggedIn: boolean;
-  userEmail: string | null;
-  login: (token: string) => void;
+  token: string | null;
+  login: (newToken: string) => void;
   logout: () => void;
 }
 
+// Cria o contexto com um valor padrão
 export const AuthContext = createContext<AuthContextType>({
-  isLoggedIn: false,
-  userEmail: null,
+  token: null,
   login: () => {},
   logout: () => {},
 });
 
+// Cria o Provedor do contexto
 interface AuthProviderProps {
   children: ReactNode;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  const updateFromStorage = () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setIsLoggedIn(false);
-      setUserEmail(null);
-      return;
-    }
-
-    try {
-      const decoded: any = (jwt as any).default(token);
-      const exp = decoded?.exp;
-      const email = decoded?.sub || decoded?.email || null;
-      const currentTime = Date.now() / 1000;
-
-      if (exp && exp < currentTime) {
-        localStorage.removeItem("token");
-        setIsLoggedIn(false);
-        setUserEmail(null);
-      } else {
-        setIsLoggedIn(true);
-        setUserEmail(email);
-      }
-    } catch {
-      localStorage.removeItem("token");
-      setIsLoggedIn(false);
-      setUserEmail(null);
-    }
-  };
-
+  // Efeito para carregar o token do localStorage ao iniciar a aplicação
   useEffect(() => {
-    updateFromStorage();
+    const storedToken = localStorage.getItem('authToken');
+    if (storedToken) {
+      setToken(storedToken);
+    }
   }, []);
 
-  const login = (token: string) => {
-    localStorage.setItem("token", token);
-    updateFromStorage();
+  const login = (newToken: string) => {
+    setToken(newToken);
+    localStorage.setItem('authToken', newToken);
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    updateFromStorage();
+    setToken(null);
+    localStorage.removeItem('authToken');
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userEmail, login, logout }}>
+    <AuthContext.Provider value={{ token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

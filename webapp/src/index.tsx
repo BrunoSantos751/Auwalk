@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from './context/AuthContext';
 import Home from "./components/pages/home/Home";
 import Header from "./components/pages/header/header";
 import CadastroPet from "./components/pages/cadastros/cadastroPet";
@@ -17,6 +18,7 @@ if (!rootElement) throw new Error("Root element not found");
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
+  <AuthProvider>
     <BrowserRouter>
       <Header />
       <Routes>
@@ -29,8 +31,10 @@ ReactDOM.createRoot(rootElement).render(
         <Route path="/pagprestador" element={<PrestadoPag />} />
         <Route path="/perfilprestador" element={<PerfilPrestador />} />
         <Route path="/perfiltutor" element={<PerfilTutor />} />
+        <Route path="/perfil" element={<PerfilTutor />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
+  </AuthProvider>
   </React.StrictMode>
 );
