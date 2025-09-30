@@ -14,6 +14,7 @@ import PerfilPet from "./components/pages/perfis/perfilPet";
 import Login from "./components/pages/login/login";
 import Comofunciona from "./components/pages/footerPages/comofunciona";
 import Footer from "./components/pages/footer/footer";
+import Pesquisa from "./components/pages/pesquisa/Pesquisa";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
@@ -34,6 +35,7 @@ ReactDOM.createRoot(rootElement).render(
         <Route path="/perfilpet" element={<PerfilPet />} />
         <Route path="/login" element={<Login />} />
         <Route path="/comofunciona" element={<Comofunciona />} />
+        <Route path="/search" element={<Pesquisa />} />
       </Routes>
       <Footer />
     </BrowserRouter>
