@@ -3,19 +3,10 @@ import "./perfilTotal.css";
 import avatarExemplo from "../../../assets/dog3.webp";
 import { useNavigate } from "react-router-dom";
 
-<<<<<<<< HEAD:webapp/src/components/pages/perfis/perfilTotal.tsx
 interface PerfilTotalProps {
   name?: string;
   avatarUrl?: string; // imagem do backend
   onMeusDados?: () => void;
-========
-interface PerfilTutorProps {
-  name?: string;
-  avatarUrl?: string; // imagem do backend
-  onEditProfile?: () => void;
-  onMeusDados?: () => void;
-  onDadosPet?: () => void;
->>>>>>>> origin/main:webapp/src/components/pages/perfis/perfilTutor.tsx
   onHistorico?: () => void;
   onNovoAgendamento?: () => void;
   onEditarSenha?: () => void;

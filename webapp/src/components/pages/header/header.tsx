@@ -63,18 +63,18 @@ const Header: React.FC = () => {
                 <button className="navbar-button-estilo">Cadastrar</button>
               </Link>
               <Link to="/Login">
-                <button className="navbar-button">Login</button>
+                <button className="navbar-button-lo">Login</button>
               </Link>
             </>
           ) : (
             <>
               <Link to="/perfil">
-                <button className="navbar-button-estilo">
+                <button className="navbar-button-lo">
                   Perfil <PiUserBold />
                 </button>
               </Link>
               <button
-                className="navbar-button"
+                className="navbar-button-lo"
                 onClick={handleLogout} // Use a função handleLogout
               >
                 Logout
