@@ -130,7 +130,6 @@ const CadastroPet: React.FC = () => {
             placeholder="Observações (sexo, alergias, etc.)"
             value={formData.observacoes}
             onChange={handleChange}
-            rows={3}
           />
 
           <button type="submit">Cadastrar Pet</button>
