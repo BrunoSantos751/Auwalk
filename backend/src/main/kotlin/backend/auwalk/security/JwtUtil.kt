@@ -9,12 +9,12 @@ object JwtUtil {
     private const val EXPIRATION_TIME = 1000 * 60 * 60 // 1 hora
     private val SECRET_KEY = Keys.hmacShaKeyFor("MinhaChaveSuperSecretaDe32Caracteres!".toByteArray())
 
-    fun generateToken(email: String): String {
+    fun generateToken(id: String): String {
         val now = Date()
         val expiration = Date(now.time + EXPIRATION_TIME)
 
         return Jwts.builder()
-            .setSubject(email)
+            .setSubject(id)
             .setIssuedAt(now)
             .setExpiration(expiration)
             .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
@@ -27,7 +27,7 @@ object JwtUtil {
                 .setSigningKey(SECRET_KEY)
                 .build()
                 .parseClaimsJws(token)
-            claims.body.subject // retorna o email
+            claims.body.subject // retorna o id
         } catch (e: Exception) {
             null
         }

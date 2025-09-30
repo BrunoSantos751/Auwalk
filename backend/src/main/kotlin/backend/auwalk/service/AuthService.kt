@@ -18,7 +18,9 @@ class AuthService(
         }
 
         return if (senhaBanco == senha) {
-            JwtUtil.generateToken(email) // retorna token JWT
+            val sql = "SELECT id_usuario FROM usuario WHERE email = ?"
+            val usuarioId = jdbcTemplate.queryForObject(sql, arrayOf(email), String::class.java)
+            JwtUtil.generateToken(usuarioId!!)
         } else {
             null
         }
