@@ -49,6 +49,12 @@
   text-align: justify;
 }
 
+hr {
+  border: none;
+  background: none;
+  height: 0;
+}
+
 .p-destaque {
   color: var(--cor-opcoes-destaque01);
 }
