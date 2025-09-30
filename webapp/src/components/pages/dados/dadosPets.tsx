@@ -163,12 +163,11 @@ const DadosPet: React.FC = () => {
           </label>
           <label>
             Observações
-            <textarea
+            <input
               name="observacoes"
               value={formData.observacoes}
               onChange={handleChange}
               placeholder="Alergias, medicamentos, cuidados especiais..."
-              rows={4}
               disabled={!isEditing}
             />
           </label>
