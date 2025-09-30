@@ -4,13 +4,15 @@
   "private": true,
   "workspaces": [],
   "scripts": {
-    "build": "cd webApp && npm run build",
-    "start": "cd webApp && npm run start"
+    "build": "cd webapp && npm run build",
+    "start": "cd webapp && npm run start"
   },
   "devDependencies": {
     "@types/node": "^24.3.1"
   },
   "dependencies": {
+    "jwt-decode": "^3.1.2",
+    "phosphor-react": "^1.4.1",
     "react-icons": "^5.5.0"
   }
 }

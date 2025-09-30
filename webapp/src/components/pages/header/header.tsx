@@ -1,10 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react"; // Importe o useContext
+import { Link, useNavigate } from "react-router-dom";
 import { PiUserBold } from "react-icons/pi";
+import { AuthContext } from "../../../context/AuthContext"; // Importe o seu AuthContext
 import "./header.css";
 
 const Header: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Consuma o contexto para obter o token e a função de logout
+  const { token, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // A variável isLoggedIn agora é derivada diretamente da existência do token
+  const isLoggedIn = !!token;
+
+  const handleLogout = () => {
+    logout(); // Chama a função de logout do contexto
+    navigate("/login"); // Redireciona o usuário para a página de login
+  };
 
   return (
     <header className="header">
@@ -28,7 +39,7 @@ const Header: React.FC = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/">Início</Link>
+                  <Link to="/Home">Início</Link>
                 </li>
                 <li>
                   <Link to="/passeiopesquisa">Passeio</Link>
@@ -51,9 +62,8 @@ const Header: React.FC = () => {
               <Link to="/cadastro">
                 <button className="navbar-button-estilo">Cadastrar</button>
               </Link>
-
-              <Link to="/login">
-                <button className="navbar-button-lo"> Acessar conta</button>
+              <Link to="/Login">
+                <button className="navbar-button">Login</button>
               </Link>
             </>
           ) : (
@@ -65,7 +75,7 @@ const Header: React.FC = () => {
               </Link>
               <button
                 className="navbar-button"
-                onClick={() => setIsLoggedIn(false)}
+                onClick={handleLogout} // Use a função handleLogout
               >
                 Logout
               </button>

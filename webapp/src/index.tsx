@@ -1,12 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from './context/AuthContext';
 import Home from "./components/pages/home/Home";
 import Header from "./components/pages/header/header";
 import CadastroPet from "./components/pages/cadastros/cadastroPet";
-import Cadastro from "./components/pages/cadastros/cadastro";
-import DadosTotal from "./components/pages/dados/dadosTotal";
-import DadosPet from "./components/pages/dados/dadosPets";
 import PrestadoPag from "./components/pages/prestador/pagPrestador";
 import PerfilTotal from "./components/pages/perfis/perfilTotal";
 import PerfilPet from "./components/pages/perfis/perfilPet";
@@ -19,6 +17,7 @@ if (!rootElement) throw new Error("Root element not found");
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
+  <AuthProvider>
     <BrowserRouter>
       <Header />
       <Routes>
@@ -35,5 +34,6 @@ ReactDOM.createRoot(rootElement).render(
       </Routes>
       <Footer />
     </BrowserRouter>
+  </AuthProvider>
   </React.StrictMode>
 );
