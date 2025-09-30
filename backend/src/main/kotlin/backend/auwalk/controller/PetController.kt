@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import backend.auwalk.service.PetService
+import org.springframework.web.bind.annotation.PathVariable
 
 data class PetRequest(
     val idUsuario: Int,
@@ -66,6 +67,34 @@ class PetController(
         } else {
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(mapOf("success" to false, "message" to "Erro ao registrar pet no banco de dados"))
+        }
+    }
+    @GetMapping("/{id}")
+    fun buscarPetPorId(@PathVariable id: Int): ResponseEntity<Map<String, Any>> {
+        val pet = petService.buscarPetPorId(id)
+        return if (pet != null) {
+            ResponseEntity.ok(mapOf("success" to true, "data" to pet))
+        } else {
+            ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(mapOf("success" to false, "message" to "Pet não encontrado"))
+        }
+    }
+    @PutMapping("/update/{id}")
+    fun updatePet(@PathVariable id: Int, @RequestBody request: PetRequest): ResponseEntity<Map<String, Any>> {
+        val sucesso = petService.updatePet(
+            id,
+            request.nome,
+            request.especie,
+            request.raca,
+            request.idade,
+            request.observacoes
+        )
+
+        return if (sucesso) {
+            ResponseEntity.ok(mapOf("success" to true, "message" to "Pet atualizado com sucesso"))
+        } else {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(mapOf("success" to false, "message" to "Erro ao atualizar pet no banco de dados"))
         }
     }
 }

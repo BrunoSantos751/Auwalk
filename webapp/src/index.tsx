@@ -28,7 +28,7 @@ ReactDOM.createRoot(rootElement).render(
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/cadastropet" element={<CadastroPet />} />
         <Route path="/dados" element={<DadosTotal />} />
-        <Route path="/dadospet" element={<DadosPet />} />
+        <Route path="/dadospets/:petId" element={<DadosPet />} />
         <Route path="/pagprestador" element={<PrestadoPag />} />
         <Route path="/perfil" element={<PerfilTotal />} />
         <Route path="/perfilpet" element={<PerfilPet />} />
