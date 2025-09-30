@@ -153,55 +153,6 @@ input:not(:disabled):hover {
   background-color: var(--cor-botao-perfil-hover);
   color: var(--cor-botao-perfil-fonte02);
 }
-/*-------------------------------parte pet--------------------*/
-.dados-pet-form {
-}
-.dados-pet-group {
-  display: grid;
-  gap: 16px;
-  margin-bottom: 32px;
-  justify-content: center;
-  text-align: left;
-  grid-template-columns: 400px;
-  border-radius: 6px;
-}
-
-.select-op {
-  height: 52px;
-  margin-top: 0.3rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-  background-color: var(--cor-de-fundo);
-  color: var(--cor-opcoes-fonte02);
-  width: 100%;
-  box-sizing: border-box;
-}
-.select-op:hover {
-  background-color: var(--cor-botao-perfil-fonte02);
-  color: var(--cor-botao-perfil-hover02);
-}
-
-.pet-salvar {
-  background-color: var(--cor-botao-perfil-hover);
-  color: var(--cor-botao-perfil-fonte02);
-  width: 400px;
-}
-.pet-salvar:hover {
-  background-color: var(--cor-botao-perfil-hover02);
-}
-.pet-edit {
-  background-color: var(--cor-botao-perfil-fonte02);
-  border: 1px solid var(--cor-botao-perfil-hover);
-  color: var(--cor-botao-perfil-hover);
-  width: 400px;
-}
-
-.pet-edit:hover {
-  background-color: var(--cor-botao-perfil-hover);
-  color: var(--cor-botao-perfil-fonte02);
-}
 
 /* Responsivo */
 @media (max-width: 600px) {

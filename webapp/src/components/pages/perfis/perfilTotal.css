@@ -64,7 +64,7 @@ body {
 .profile-actions {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px;
   align-items: center;
   width: 100%;
 }
@@ -105,13 +105,15 @@ body {
 .btn-down button {
   background-color: var(--cor-botao-perfil-hover);
   color: var(--cor-botao-perfil-fonte02);
-  margin-bottom: 50px;
   border: none;
 }
 
 .btn-down button:hover {
   background-color: var(--cor-botao-perfil-hover02);
   color: var(--cor-botao-perfil-fonte02);
+}
+.espaço-embranco {
+  margin-bottom: 50px;
 }
 
 /* === Responsividade === */
@@ -162,5 +164,8 @@ body {
     max-width: 250px; /* mantém todos iguais e centralizados */
     margin: 0 auto; /* centraliza horizontalmente */
     display: block;
+  }
+  .espaço-embranco {
+    margin-bottom: 20px;
   }
 }

@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
               <Link to="/comofunciona">Como Funciona</Link>
             </li>
             <li>
-              <Link to="/Home">Onde Estamos</Link>
+              <Link to="/ondeEstamos">Onde Estamos</Link>
             </li>
           </ul>
         </div>
@@ -38,10 +38,10 @@ const Footer: React.FC = () => {
           <h4>Central de Ajuda</h4>
           <ul>
             <li>
-              <Link to="/">Ajuda</Link>
+              <Link to="/ajuda">Ajuda</Link>
             </li>
             <li>
-              <Link to="/">Termos de Privacidade</Link>
+              <Link to="/termosdeprivacidade">Termos de Privacidade</Link>
             </li>
           </ul>
         </div>

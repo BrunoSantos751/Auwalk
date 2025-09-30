@@ -30,6 +30,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 300px;
+  font-family: var(--fonte-titulo01);
 }
 .app h1 {
   position: absolute;
@@ -38,6 +39,7 @@
   transform: translateX(-50%);
   z-index: 2;
   font-size: 40px;
+  font-weight: 500;
 }
 /* imagem de fundo manual */
 .fundo {
@@ -60,9 +62,10 @@
 
 .conteudo h2 {
   font-size: 35px;
-  font-family: Arial, sans-serif;
+  font-family: var(--fonte-texto);
+  font-weight: bold;
   color: var(--cor-header-fonte);
-  margin-bottom: 50px; /*espaço entre a frase e o botão*/
+  margin-bottom: 50px;
 }
 .conteudo h2 strong {
   color: var(--cor-opcoes-fonte01);
