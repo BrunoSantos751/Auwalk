@@ -1,70 +1,116 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./dadosPet.css";
 import avatarExemplo from "../../../assets/dog3.webp";
 
-interface DadosPetProps {
-  nome?: string;
-  idade?: string;
-  tipo?: string;
-  sexo?: string;
-  temperamento?: string;
-  gostos?: string;
-  necessidades?: string;
-  avatarUrl?: string;
-  onEditPet?: (data: any) => void;
+interface PetBackend {
+  id_pet: number;
+  nome: string;
+  especie: string;
+  raca: string;
+  idade: number;
+  observacoes: string | null;
+}
+interface PetFormData {
+  nome: string;
+  idade: string;
+  especie: string;
+  raca: string;
+  observacoes: string;
 }
 
-const DadosPet: React.FC<DadosPetProps> = ({
-  nome = "",
-  idade = "",
-  tipo = "",
-  sexo = "",
-  temperamento = "",
-  gostos = "",
-  necessidades = "",
-  onEditPet,
-  avatarUrl,
-}) => {
-  const [isEditing, setIsEditing] = useState(false);
 
-  const [formData, setFormData] = useState({
-    nome,
-    idade,
-    tipo,
-    sexo,
-    temperamento,
-    gostos,
-    necessidades,
+const DadosPet: React.FC = () => {
+  const { petId } = useParams<{ petId: string }>();
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState<PetFormData>({
+    nome: "",
+    idade: "",
+    especie: "",
+    raca: "",
+    observacoes: "",
   });
 
+  useEffect(() => {
+    if (!petId) return;
+
+    const fetchPetData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/pets/${petId}`);
+        const result = await response.json();
+
+        if (result.success) {
+          const pet: PetBackend = result.data;
+          setFormData({
+            nome: pet.nome || "",
+            idade: pet.idade.toString() || "",
+            especie: pet.especie || "",
+            raca: pet.raca || "",
+            observacoes: pet.observacoes || "",
+          });
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados do pet:", error);
+      }
+    };
+
+    fetchPetData();
+  }, [petId]);
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
-    if (onEditPet) onEditPet(formData);
-    console.log("Dados do pet salvos:", formData);
+  const handleSave = async () => {
+    if (!petId) return;
+
+    const petDataParaEnviar = {
+      ...formData,
+      idade: parseInt(formData.idade, 10) || 0,
+    };
+
+    try {
+      // URL ALTERADA AQUI
+      const response = await fetch(`http://localhost:8080/pets/update/${petId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(petDataParaEnviar),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert("Pet atualizado com sucesso!");
+        setIsEditing(false);
+      } else {
+        alert(`Erro ao atualizar o pet: ${result.message}`);
+      }
+    } catch (error) {
+      console.error("Erro de rede ao salvar dados do pet:", error);
+      alert("Erro de conexão ao salvar. Verifique o console.");
+    }
   };
 
   return (
+    // O JSX (layout do formulário) não precisa de nenhuma alteração
     <div className="dados-pet-container">
       <header className="dados-pet-header">
         <h2>
-          <span className="palavra-destaque-dados">Cadastre seu pet </span>
-          para aproveitar todos os recursos.
+          <span className="palavra-destaque-dados">Perfil do seu pet</span>
         </h2>
         <img
-          src={avatarUrl || avatarExemplo}
+          src={avatarExemplo}
           alt={`${formData.nome} avatar`}
           className="dados-pet-avatar"
         />
       </header>
-
-      <form className="dados-pet-form">
+      <form className="dados-pet-form" onSubmit={(e) => e.preventDefault()}>
         <div className="dados-pet-group ">
           <label>
             Nome do Pet
@@ -77,7 +123,6 @@ const DadosPet: React.FC<DadosPetProps> = ({
               disabled={!isEditing}
             />
           </label>
-
           <label>
             Idade
             <input
@@ -90,71 +135,43 @@ const DadosPet: React.FC<DadosPetProps> = ({
             />
           </label>
           <label>
-            Gostos
-            <input
-              type="text"
-              name="gostos"
-              value={formData.gostos}
-              onChange={handleChange}
-              placeholder="Brincadeiras favoritas, Passeios, Comidas"
-              disabled={!isEditing}
-            />
-          </label>
-
-          <label>
-            Sexo
+            Espécie (Tipo)
             <select
               className="select-op"
-              name="sexo"
-              value={formData.sexo}
+              name="especie"
+              value={formData.especie}
               onChange={handleChange}
               disabled={!isEditing}
             >
               <option value="">Selecione</option>
-              <option value="Macho">Macho</option>
-              <option value="Fêmea">Fêmea</option>
+              <option value="cachorro">Cachorro</option>
+              <option value="gato">Gato</option>
+              <option value="ave">Ave</option>
+              <option value="outro">Outro</option>
             </select>
           </label>
-
           <label>
-            Temperamento
+            Raça
             <input
               type="text"
-              name="temperamento"
-              value={formData.temperamento}
+              name="raca"
+              value={formData.raca}
               onChange={handleChange}
-              placeholder="Calmo, Energético, Tímido"
+              placeholder="Ex.: SRD"
               disabled={!isEditing}
             />
           </label>
           <label>
-            Tipo
-            <select
-              className="select-op"
-              name="tipo"
-              value={formData.tipo}
+            Observações
+            <textarea
+              name="observacoes"
+              value={formData.observacoes}
               onChange={handleChange}
-              disabled={!isEditing}
-            >
-              <option value="">Selecione</option>
-              <option value="Cachorro">Cachorro</option>
-              <option value="Gato">Gato</option>
-              <option value="Outros">Outros</option>
-            </select>
-          </label>
-
-          <label>
-            Necessidades especiais
-            <input
-              type="text"
-              name="necessidades"
-              value={formData.necessidades}
-              onChange={handleChange}
-              placeholder="Remédios, Cuidados extras"
+              placeholder="Alergias, medicamentos, cuidados especiais..."
+              rows={4}
               disabled={!isEditing}
             />
           </label>
-
           {isEditing ? (
             <button type="button" onClick={handleSave} className="pet-salvar">
               Salvar

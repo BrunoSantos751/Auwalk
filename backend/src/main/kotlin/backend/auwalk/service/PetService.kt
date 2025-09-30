@@ -44,4 +44,39 @@ class PetService(
             false
         }
     }
+    fun buscarPetPorId(idPet: Int): Map<String, Any>? {
+        return try {
+            val sql = "SELECT * FROM pet WHERE id_pet = ?"
+            println("Executando SQL: $sql com idPet=$idPet")
+            // Usamos queryForMap pois esperamos apenas um resultado
+            jdbcTemplate.queryForMap(sql, idPet)
+        } catch (e: Exception) {
+            println("ERRO ao buscar pet por ID: ${e::class.simpleName} - ${e.message}")
+            null // Retorna nulo se não encontrar ou der erro
+        }
+    }
+    fun updatePet(
+        idPet: Int,
+        nome: String,
+        especie: String,
+        raca: String,
+        idade: Int,
+        observacoes: String?
+    ): Boolean {
+        return try {
+            val sql = """
+            UPDATE pet 
+            SET nome = ?, especie = ?, raca = ?, idade = ?, observacoes = ? 
+            WHERE id_pet = ?
+        """
+            println("Executando SQL Update: $sql com idPet=$idPet")
+
+            val rowsAffected = jdbcTemplate.update(sql, nome, especie, raca, idade, observacoes, idPet)
+            println("$rowsAffected linha(s) afetada(s)")
+            rowsAffected > 0 // Retorna true se pelo menos uma linha foi atualizada
+        } catch (e: Exception) {
+            println("ERRO ao atualizar pet: ${e::class.simpleName} - ${e.message}")
+            false
+        }
+    }
 }
