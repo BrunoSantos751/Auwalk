@@ -54,12 +54,12 @@ const DadosPet: React.FC<DadosPetProps> = ({
     <div className="dados-pet-container">
       <header className="dados-pet-header">
         <h2>
-          <span className="palavra-destaque-dados">Cadastre seu pet</span>
+          <span className="palavra-destaque-dados">Cadastre seu pet </span>
           para aproveitar todos os recursos.
         </h2>
         <img
           src={avatarUrl || avatarExemplo}
-          alt={`${formData.name} avatar`}
+          alt={`${formData.nome} avatar`}
           className="dados-pet-avatar"
         />
       </header>

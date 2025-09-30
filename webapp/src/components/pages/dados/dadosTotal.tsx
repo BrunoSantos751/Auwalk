@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import "./dadosTotal.css";
 import avatarExemplo from "../../../assets/dog3.webp";
@@ -62,7 +62,7 @@ const DadosTotal: React.FC<DadosTotalProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...FormData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
   //
   const handleSave = () => {
