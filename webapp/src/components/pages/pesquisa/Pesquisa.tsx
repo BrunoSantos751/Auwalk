@@ -36,7 +36,6 @@ export default function Pesquisa() {
     }, []);
 
     async function handleFetch() {
-        // CORREÇÃO: Tipa o objeto 'payload'
         const payload: SearchPayload = {};
         if (entrada) payload.data = entrada;
         if (servico) payload.tipoServico = servico;
