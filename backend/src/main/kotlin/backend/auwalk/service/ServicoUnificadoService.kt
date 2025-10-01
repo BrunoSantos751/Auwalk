@@ -173,7 +173,7 @@ class ServicoUnificadoService(
         val sql = """
             SELECT inicio_horario_atendimento, fim_horario_atendimento
             FROM disponibilidade
-            WHERE id_servico = ? AND inicio_horario_atendimento >= NOW()
+            WHERE id_servico = ? AND inicio_horario_atendimento >= (NOW() AT TIME ZONE 'America/Sao_Paulo')
             ORDER BY inicio_horario_atendimento
         """.trimIndent()
         return jdbcTemplate.query(sql, arrayOf(idServico)) { rs, _ ->
