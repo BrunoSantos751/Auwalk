@@ -75,4 +75,90 @@ class AgendamentoService(
         val deleteSlotSql = "DELETE FROM disponibilidade WHERE id_disponibilidade = ?"
         jdbcTemplate.update(deleteSlotSql, slotId)
     }
+
+    fun buscarComoCliente(idCliente: Int): List<Map<String, Any>> {
+        val passeiosSql = """
+            SELECT 
+                p.id_passeio AS id, 
+                'Passeio' AS tipo, 
+                p.status, 
+                p.data_hora AS data_inicio, 
+                (p.data_hora + s.duracao_estimada * interval '1 minute') AS data_fim,
+                u_prestador.nome AS nome_contraparte,
+                pet.nome AS nome_pet
+            FROM passeio p
+            JOIN pet ON p.id_pet = pet.id_pet
+            JOIN servico s ON p.id_servico = s.id_servico
+            JOIN prestador_servico ps ON s.id_prestador = ps.id_prestador
+            JOIN usuario u_prestador ON ps.id_usuario = u_prestador.id_usuario
+            WHERE pet.id_usuario = ?
+        """
+        val passeios = jdbcTemplate.queryForList(passeiosSql, idCliente)
+
+        val sittersSql = """
+            SELECT 
+                ps.id_petsitting AS id,
+                'PetSitting' AS tipo,
+                ps.status,
+                ps.data_inicio,
+                ps.data_fim,
+                u_prestador.nome AS nome_contraparte,
+                pet.nome AS nome_pet
+            FROM pet_sitting ps
+            JOIN pet ON ps.id_pet = pet.id_pet
+            JOIN servico s ON ps.id_servico = s.id_servico
+            JOIN prestador_servico p_serv ON s.id_prestador = p_serv.id_prestador
+            JOIN usuario u_prestador ON p_serv.id_usuario = u_prestador.id_usuario
+            WHERE pet.id_usuario = ?
+        """
+        val sitters = jdbcTemplate.queryForList(sittersSql, idCliente)
+
+        return passeios + sitters
+    }
+    fun buscarComoPrestador(idUsuario: Int): List<Map<String, Any>> {
+        // Primeiro, obtemos o id_prestador a partir do id_usuario
+        val idPrestador: Int? = try {
+            jdbcTemplate.queryForObject("SELECT id_prestador FROM prestador_servico WHERE id_usuario = ?", Int::class.java, idUsuario)
+        } catch (e: Exception) {
+            return emptyList() // Se não for um prestador, retorna lista vazia
+        }
+
+        if (idPrestador == null) return emptyList()
+
+        val passeiosSql = """
+            SELECT 
+                p.id_passeio AS id,
+                'Passeio' AS tipo,
+                p.status,
+                p.data_hora AS data_inicio,
+                (p.data_hora + s.duracao_estimada * interval '1 minute') AS data_fim,
+                u_cliente.nome AS nome_contraparte,
+                pet.nome AS nome_pet
+            FROM passeio p
+            JOIN servico s ON p.id_servico = s.id_servico
+            JOIN pet ON p.id_pet = pet.id_pet
+            JOIN usuario u_cliente ON pet.id_usuario = u_cliente.id_usuario
+            WHERE s.id_prestador = ?
+        """
+        val passeios = jdbcTemplate.queryForList(passeiosSql, idPrestador)
+
+        val sittersSql = """
+            SELECT
+                ps.id_petsitting AS id,
+                'PetSitting' AS tipo,
+                ps.status,
+                ps.data_inicio,
+                ps.data_fim,
+                u_cliente.nome AS nome_contraparte,
+                pet.nome AS nome_pet
+            FROM pet_sitting ps
+            JOIN servico s ON ps.id_servico = s.id_servico
+            JOIN pet ON ps.id_pet = pet.id_pet
+            JOIN usuario u_cliente ON pet.id_usuario = u_cliente.id_usuario
+            WHERE s.id_prestador = ?
+        """
+        val sitters = jdbcTemplate.queryForList(sittersSql, idPrestador)
+
+        return passeios + sitters
+    }
 }

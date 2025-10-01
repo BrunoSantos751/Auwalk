@@ -1,0 +1,112 @@
+:root {
+  --cor-de-fundo02: #f9f9f9;
+  --cor-opcoes-fonte01: #0e0e0e;
+  --cor-opcoes-fonte02: #666;
+  --fonte-titulo01: "Pridi", serif;
+  --fonte-texto: "Montserrat", sans-serif;
+  --cor-status-pendente: #ffc107; /* Amarelo */
+  --cor-status-concluido: #28a745; /* Verde */
+  --cor-status-cancelado: #dc3545; /* Vermelho */
+}
+
+.historico-container {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 24px;
+  font-family: var(--fonte-titulo01);
+}
+
+.historico-title {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--cor-opcoes-fonte01);
+  margin-bottom: 40px;
+}
+
+.agendamentos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.agendamento-card {
+  background-color: var(--cor-de-fundo02);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.agendamento-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.agendamento-info h3 {
+  font-family: var(--fonte-texto);
+  font-size: 1.2rem;
+  margin: 0 0 5px 0;
+  color: var(--cor-opcoes-fonte01);
+}
+
+.agendamento-info p {
+  font-family: var(--fonte-texto);
+  font-size: 0.9rem;
+  margin: 2px 0;
+  color: var(--cor-opcoes-fonte02);
+}
+
+.agendamento-status-role {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.agendamento-role {
+  font-family: var(--fonte-texto);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #079fce;
+  background-color: #e0f7ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.agendamento-status {
+  display: flex;
+  align-items: center;
+  font-family: var(--fonte-texto);
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+/* Bolinhas de status coloridas */
+
+
+.status-pendente {
+  color: var(--cor-status-pendente);
+}
+.status-pendente .status-dot {
+  background-color: var(--cor-status-pendente);
+}
+
+.status-concluido {
+  color: var(--cor-status-concluido);
+}
+.status-concluido .status-dot {
+  background-color: var(--cor-status-concluido);
+}
+
+.status-cancelado {
+  color: var(--cor-status-cancelado);
+}
+.status-cancelado .status-dot {
+  background-color: var(--cor-status-cancelado);
+}

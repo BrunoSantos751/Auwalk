@@ -19,6 +19,7 @@ import Termos from "./components/pages/footerPages/termos";
 import Ajuda from "./components/pages/footerPages/ajuda";
 import Footer from "./components/pages/footer/footer";
 import Pesquisa from "./components/pages/pesquisa/Pesquisa";
+import Historico from "./components/pages/historico/historico";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
@@ -43,7 +44,8 @@ ReactDOM.createRoot(rootElement).render(
           <Route path="/ondeEstamos" element={<OndeEstamos />} />
           <Route path="/ajuda" element={<Ajuda />} />
           <Route path="/termosdeprivacidade" element={<Termos />} />
-           <Route path="/search" element={<Pesquisa />} />
+          <Route path="/search" element={<Pesquisa />} />
+          <Route path="/historico" element={<Historico />} />
         </Routes>
         <Footer />
       </BrowserRouter>

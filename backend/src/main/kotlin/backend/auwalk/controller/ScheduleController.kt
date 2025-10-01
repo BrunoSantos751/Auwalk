@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
+import backend.auwalk.security.JwtUtil
 
 data class AgendamentoSlotRequest(
     val idCliente: Int,
@@ -69,6 +70,31 @@ class AgendamentoController(
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(mapOf("success" to false, "message" to "Ocorreu um erro inesperado: ${e.message}"))
+        }
+    }
+    @GetMapping("/my-appointments/client")
+    fun getAgendamentosComoCliente(@RequestHeader("Authorization") token: String): ResponseEntity<Any> {
+        return try {
+            val idUsuario = JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
+                ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("success" to false, "message" to "Token inválido"))
+
+            val agendamentos = agendamentoService.buscarComoCliente(idUsuario)
+            ResponseEntity.ok(mapOf("success" to true, "data" to agendamentos))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("success" to false, "message" to e.message))
+        }
+    }
+
+    @GetMapping("/my-appointments/provider")
+    fun getAgendamentosComoPrestador(@RequestHeader("Authorization") token: String): ResponseEntity<Any> {
+        return try {
+            val idUsuario = JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
+                ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("success" to false, "message" to "Token inválido"))
+
+            val agendamentos = agendamentoService.buscarComoPrestador(idUsuario)
+            ResponseEntity.ok(mapOf("success" to true, "data" to agendamentos))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("success" to false, "message" to e.message))
         }
     }
 }

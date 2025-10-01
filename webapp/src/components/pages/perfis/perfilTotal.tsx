@@ -41,10 +41,10 @@ const PerfilTotal: React.FC<PerfilTotalProps> = ({
         <div className="btn-group btn-up">
           <button onClick={() => navigate("/dados")}>Meus Dados</button>
           <button onClick={() => navigate("/perfilpet")}>Dados do Pet</button>
-          <button onClick={onHistorico}>Histórico</button>
+          <button onClick={() => navigate("/historico")}>Histórico</button>
         </div>
         <div className="btn-group btn-down">
-          <button onClick={onNovoAgendamento}>Novo Agendamento</button>
+          <button onClick={() => navigate("/search")}>Novo Agendamento</button>
           <button onClick={() => navigate("/upgradeprestador")}>
             Quero ser prestador
           </button>

@@ -46,8 +46,7 @@ class ServicoUnificadoService(
         val disponibilidadesResponse = mutableListOf<Map<String, Any?>>()
         val insertSlotSql = "INSERT INTO disponibilidade (id_servico, inicio_horario_atendimento, fim_horario_atendimento) VALUES (?, ?, ?)"
 
-        // --- LÓGICA DE "PICOTAR" UNIFICADA E CORRIGIDA ---
-        // A condição IF foi removida para que a lógica se aplique a TODOS os serviços
+
         if (duracaoEstimada > 0) {
             disponibilidades.forEach { janelaDeTempo ->
                 val janelaInicio = LocalDateTime.parse(janelaDeTempo.inicioHorarioAtendimento)
@@ -150,8 +149,6 @@ class ServicoUnificadoService(
         }
 
         sqlBuilder.append(" ORDER BY s.preco ASC")
-        // --- FIM DA CORREÇÃO NA SQL ---
-
         return jdbcTemplate.query(sqlBuilder.toString(), params.toTypedArray()) { rs, _ ->
             val idServico = rs.getInt("id_servico")
 
