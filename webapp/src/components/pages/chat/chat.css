@@ -40,8 +40,7 @@
   height: auto;
   background-color: transparent;
   color: var(--cor-botao-perfil-fonte02);
-  padding-top: 50px;
-  padding-right: 70px;
+  padding: 50px 0 18px 0;
   border: none;
   font-size: 13px;
   cursor: pointer;
