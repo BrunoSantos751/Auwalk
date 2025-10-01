@@ -33,6 +33,7 @@ class ProviderController(
 
     @PutMapping("/profile")
     fun editarPerfil(@RequestBody request: ProviderProfileRequest): ResponseEntity<Map<String, Any>> {
+        println("Controller recebeu a requisição para o idUsuario: ${request.idUsuario}")
         if (request.documento.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(mapOf("success" to false, "message" to "O campo documento é obrigatório"))

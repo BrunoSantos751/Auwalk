@@ -17,39 +17,40 @@ class ProviderService(
             println("Perfil encontrado: $perfil")
             perfil
         } catch (e: Exception) {
-            println("ERRO ao buscar perfil: ${e::class.simpleName} - ${e.message}")
+            // É normal não encontrar um perfil, então podemos tratar isso de forma mais silenciosa
+            // se for o caso de EmptyResultDataAccessException
+            println("Perfil não encontrado para o usuário $idUsuario: ${e.message}")
             null
         }
     }
 
     fun editarOuInserirPerfil(idUsuario: Int, bio: String?, experiencia: String?, documento: String): Boolean {
-        // Primeiro, verifique se o usuário já existe na tabela
-        val countSql = "SELECT COUNT(*) FROM prestador_servico WHERE id_usuario = ?"
-        val count = jdbcTemplate.queryForObject(countSql, Int::class.java, idUsuario)
-
-        val sql: String
-        val result: Int
-
         return try {
-            // 👇 CORREÇÃO AQUI 👇
-            // Adicionamos a verificação 'count != null'
-            if (count != null && count > 0) {
-                // Se existe, faz o UPDATE
-                println("Usuário existente. Executando UPDATE.")
-                sql = "UPDATE prestador_servico SET bio = ?, experiencia = ?, documento = ? WHERE id_usuario = ?"
-                result = jdbcTemplate.update(sql, bio, experiencia, documento, idUsuario)
-            } else {
-                // Se não existe (ou se count for 0), faz o INSERT
-                println("Novo usuário. Executando INSERT.")
-                sql = "INSERT INTO prestador_servico (id_usuario, bio, experiencia, documento) VALUES (?, ?, ?, ?)"
-                result = jdbcTemplate.update(sql, idUsuario, bio, experiencia, documento)
+            // 1. Verifique se o usuário já existe na tabela
+            val countSql = "SELECT COUNT(*) FROM prestador_servico WHERE id_usuario = ?"
+            val count = jdbcTemplate.queryForObject(countSql, Int::class.java, idUsuario)
+
+            count?.let {
+                if (it > 0) {
+                    // Se existe, faz o UPDATE
+                    println("Usuário existente (count=$count). Executando UPDATE.")
+                    val sql = "UPDATE prestador_servico SET bio = ?, experiencia = ?, documento = ? WHERE id_usuario = ?"
+                    val result = jdbcTemplate.update(sql, bio, experiencia, documento, idUsuario)
+                    println("$result linha(s) afetada(s) no UPDATE")
+                    result > 0
+                } else {
+                    // Se não existe (count é 0), faz o INSERT
+                    println("Novo usuário (count=$count). Executando INSERT.")
+                    val sql = "INSERT INTO prestador_servico (id_usuario, bio, experiencia, documento) VALUES (?, ?, ?, ?)"
+                    val result = jdbcTemplate.update(sql, idUsuario, bio, experiencia, documento)
+                    println("$result linha(s) afetada(s) no INSERT")
+                    result > 0
+                }
             }
-            println("$result linha(s) afetada(s)")
-            result > 0
         } catch (e: Exception) {
-            println("ERRO ao editar/inserir perfil: ${e.message}")
+            println("ERRO ao editar/inserir perfil: ${e::class.simpleName} - ${e.message}")
             e.printStackTrace()
             false
-        }
+        } == true
     }
 }
