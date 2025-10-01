@@ -1,12 +1,13 @@
 package backend.auwalk.controller
 
-import backend.auwalk.service.ServicoUnificadoService // Importa o novo serviço unificado
+import backend.auwalk.service.ServicoUnificadoService
 import backend.auwalk.service.ServicoDisponivelResponse
-import backend.auwalk.security.JwtUtil
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
+
+// --- Data Classes para as requisições e respostas deste controller ---
 
 data class ServicoRequest(
     val data: String? = null,
@@ -18,41 +19,40 @@ data class SearchResponse(
     val servicos: List<ServicoDisponivelResponse>
 )
 
+data class DisponibilidadeRequest(
+    val inicioHorarioAtendimento: String,
+    val fimHorarioAtendimento: String
+)
+
+data class CreateServiceRequest(
+    val idPrestador: Int,
+    val tipoServico: String,
+    val descricao: String?,
+    val preco: BigDecimal,
+    val duracaoEstimada: Int,
+    val disponibilidades: List<DisponibilidadeRequest>
+)
+
 @RestController
-@RequestMapping
 class ServicoUnificadoController(private val servicoService: ServicoUnificadoService) {
 
-    // Endpoint de controller.kt
     @PostMapping("/services")
-    fun createService(@RequestHeader("Authorization") token: String, @RequestBody request: Map<String, Any>): ResponseEntity<Map<String, Any?>> {
-        val idPrestador = JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
-            ?: return ResponseEntity(HttpStatus.UNAUTHORIZED)
-
-        val tipoServico = request["tipoServico"] as String
-        val descricao = request["descricao"] as String?
-        val preco = (request["preco"] as? Number)?.toDouble()?.toBigDecimal() ?: BigDecimal.ZERO
-        val duracaoEstimada = request["duracaoEstimada"] as Int
-        val disponibilidades = request["disponibilidades"] as List<Map<String, Any>>
-
+    fun createService(@RequestBody request: CreateServiceRequest): ResponseEntity<Map<String, Any?>> {
         val newService = servicoService.createService(
-            idPrestador,
-            tipoServico,
-            descricao,
-            preco,
-            duracaoEstimada,
-            disponibilidades
+            idPrestador = request.idPrestador,
+            tipoServico = request.tipoServico,
+            descricao = request.descricao,
+            preco = request.preco,
+            duracaoEstimada = request.duracaoEstimada,
+            disponibilidades = request.disponibilidades
         )
-        return ResponseEntity(newService, HttpStatus.CREATED)
+        return ResponseEntity(mapOf("success" to true, "data" to newService), HttpStatus.CREATED)
     }
 
-    // Endpoint de controller.kt
     @GetMapping("/services")
-    fun getServicesByPrestador(@RequestHeader("Authorization") token: String): ResponseEntity<List<Map<String, Any?>>> {
-        val idPrestador = JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
-            ?: return ResponseEntity(HttpStatus.UNAUTHORIZED)
-
+    fun getServicesByPrestador(@RequestParam idPrestador: Int): ResponseEntity<Any> {
         val services = servicoService.getServicesByPrestadorId(idPrestador)
-        return ResponseEntity(services, HttpStatus.OK)
+        return ResponseEntity.ok(mapOf("success" to true, "data" to services))
     }
 
     @PostMapping("/search")
