@@ -105,7 +105,11 @@ select:not(:disabled):hover {
 }
 
 /* Botões */
-button {
+
+.pet-edit {
+  background-color: var(--cor-botao-perfil-fonte02);
+  color: var(--cor-botao-perfil-hover);
+  border: 1px solid var(--cor-botao-perfil-hover);
   padding: 0.8rem 2rem;
   border-radius: 6px;
   border: none;
@@ -116,12 +120,6 @@ button {
   margin-top: 10px;
 }
 
-.pet-edit {
-  background-color: var(--cor-botao-perfil-fonte02);
-  color: var(--cor-botao-perfil-hover);
-  border: 1px solid var(--cor-botao-perfil-hover);
-}
-
 .pet-edit:hover {
   background-color: var(--cor-botao-perfil-hover);
   color: var(--cor-botao-perfil-fonte02);
@@ -130,6 +128,14 @@ button {
 .pet-salvar {
   background-color: var(--cor-botao-perfil-hover);
   color: var(--cor-botao-perfil-fonte02);
+  padding: 0.8rem 2rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  width: 200px;
+  justify-self: center;
+  margin-top: 10px;
 }
 
 .pet-salvar:hover {
