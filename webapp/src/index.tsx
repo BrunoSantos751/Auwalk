@@ -13,7 +13,7 @@ import UpgradePrestador from "./components/pages/upPrestador/upgradePrestador";
 import PerfilTotal from "./components/pages/perfis/perfilTotal";
 import PerfilPet from "./components/pages/perfis/perfilPet";
 import Login from "./components/pages/login/login";
-import ComoFunciona from "./components/pages/footerPages/comoFunciona";
+import ComoFunciona from "./components/pages/footerPages/comofunciona";
 import OndeEstamos from "./components/pages/footerPages/ondeEstamos";
 import Termos from "./components/pages/footerPages/termos";
 import Ajuda from "./components/pages/footerPages/ajuda";
