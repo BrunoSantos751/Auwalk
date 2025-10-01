@@ -18,37 +18,25 @@ class MessageService(
         val sql = """
             INSERT INTO mensagem (id_chat, id_remetente, conteudo, data_envio) 
             VALUES (?, ?, ?, ?) 
-            RETURNING id_mensagem
+            RETURNING id_mensagem, id_chat, id_remetente, conteudo, data_envio
         """
-        
-        val messageId = jdbcTemplate.queryForObject(sql, Int::class.java,
-            idChat,
-            idRemetente,
-            conteudo,
-            dataEnvio
-        )
-
-        return mapOf(
-            "idMensagem" to messageId,
-            "idChat" to idChat,
-            "idRemetente" to idRemetente,
-            "conteudo" to conteudo,
-            "dataEnvio" to dataEnvio
-        )
+        // Usamos queryForMap para retornar a mensagem completa
+        return jdbcTemplate.queryForMap(sql, idChat, idRemetente, conteudo, dataEnvio)
     }
 
     fun getMessagesByChatId(idChat: Int, idUsuarioLogado: Int): List<Map<String, Any?>> {
-        val checkUserInChatSql = "SELECT COUNT(*) FROM chat WHERE id_chat = ? AND (id_prestador = ? OR id_cliente = ?)"
-        
+        // --- CORREÇÃO AQUI ---
+        // A consulta agora usa as colunas corretas 'id_usuario1' e 'id_usuario2'
+        val checkUserInChatSql = "SELECT COUNT(*) FROM chat WHERE id_chat = ? AND (id_usuario1 = ? OR id_usuario2 = ?)"
+
         try {
-            // ALTERADO: Adicionado o operador Elvis (?: 0) para tratar o caso de retorno nulo.
             val count = jdbcTemplate.queryForObject(checkUserInChatSql, Int::class.java, idChat, idUsuarioLogado, idUsuarioLogado) ?: 0
-            
+
             if (count == 0) {
+                // Se o usuário não está no chat, verificamos se o chat ao menos existe antes de negar o acesso.
                 val checkChatExistsSql = "SELECT COUNT(*) FROM chat WHERE id_chat = ?"
-                // ALTERADO: Adicionado o operador Elvis (?: 0) aqui também.
                 val chatExists = (jdbcTemplate.queryForObject(checkChatExistsSql, Int::class.java, idChat) ?: 0) > 0
-                
+
                 if (!chatExists) {
                     throw NoSuchElementException("Chat com ID $idChat não encontrado.")
                 } else {
@@ -56,7 +44,7 @@ class MessageService(
                 }
             }
         } catch (e: EmptyResultDataAccessException) {
-             throw NoSuchElementException("Chat com ID $idChat não encontrado.")
+            throw NoSuchElementException("Chat com ID $idChat não encontrado.")
         }
 
         val getMessagesSql = """
@@ -65,18 +53,7 @@ class MessageService(
             WHERE id_chat = ?
             ORDER BY data_envio ASC
         """
-
-        val messages = mutableListOf<Map<String, Any?>>()
-        jdbcTemplate.query(getMessagesSql, { rs: ResultSet, _ ->
-            messages.add(mapOf(
-                "idMensagem" to rs.getInt("id_mensagem"),
-                "idChat" to rs.getInt("id_chat"),
-                "idRemetente" to rs.getInt("id_remetente"),
-                "conteudo" to rs.getString("conteudo"),
-                "dataEnvio" to rs.getObject("data_envio", LocalDateTime::class.java)
-            ))
-        }, idChat)
-
-        return messages
+        // Usamos queryForList que é mais direto para mapear os resultados
+        return jdbcTemplate.queryForList(getMessagesSql, idChat)
     }
 }
