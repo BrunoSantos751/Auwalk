@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Historico.css';
+import './historico.css';
 
 // Interface unificada para representar qualquer tipo de agendamento
 interface Agendamento {
