@@ -1,0 +1,110 @@
+/* src/components/ChatButton.css */
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap");
+/* Container geral */
+:root {
+  --cor-header: #e9ebef;
+  --cor-header-fonte: #333333;
+  --cor-header-fonte-ul-hover: #666b71;
+  --cor-de-fundo: #f0f2f5;
+  --cor-de-fundo02: #f9f9f9;
+  --cor-opcoes-fonte01: #0e0e0e;
+  --cor-opcoes-fonte02: #666;
+  --cor-opcoes-fonte03: white;
+  --cor-opcoes-fonte04: #999;
+  --cor-opcoes-destaque01: #980909;
+  --cor-opcoes-destaque02: #474747;
+  --fonte-titulo01: "Pridi", serif;
+  --fonte-titulo01-weight: 500;
+  --fonte-titulo02-weight: 200;
+  --fonte-titulo03-weight: 300;
+  --fonte-titulo01-style: normal;
+  --fonte-texto: "Montserrat", sans-serif;
+  --cor-botao-perfil: #f6f6fc;
+  --cor-botao-perfil-hover: #079fce;
+  --cor-botao-perfil-hover02: #0b7fa8;
+  --cor-botao-perfil-fonte01: #333;
+  --cor-botao-perfil-fonte02: white;
+}
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.chat-toggle-button {
+  background-image: url("../../../assets/pata.png");
+  background-size: cover;
+  background-position: center;
+  width: 90px;
+  height: auto;
+  background-color: transparent;
+  color: var(--cor-botao-perfil-fonte02);
+  padding-top: 50px;
+  padding-right: 70px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.chat-toggle-button:hover {
+  background-image: url("../../../assets/pata01.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.chat-window {
+  width: 350px;
+  height: 450px;
+  background: var(--cor-botao-perfil-fonte02);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.chat-header {
+  background-color: var(--cor-botao-perfil-hover02);
+  color: var(--cor-header);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-family: var(--fonte-titulo01);
+
+  align-items: center;
+}
+
+.chat-header h3 {
+  justify-items: center;
+  text-align: left;
+  overflow-wrap: break-word;
+  font-weight: 400;
+}
+
+.chat-close-button {
+  background: none;
+  border: none;
+  color: var(--cor-botao-perfil-fonte02);
+  font-size: 24px;
+  cursor: pointer;
+  text-align: right;
+  width: 10px;
+}
+
+.chat-body {
+  padding: 15px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+.chat-body p {
+  font-family: var(--fonte-texto);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--cor-header-fonte);
+}

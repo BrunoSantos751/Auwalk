@@ -1,11 +1,12 @@
 import "./pagesfooter.css";
-const Comofunciona: React.FC = () => {
+
+const ComoFunciona: React.FC = () => {
   return (
     <div className="dados-conteiner-footer-pages">
       <h2 className="pages-h2">Como Funciona</h2>
 
       <p className="pages-p">
-        Nossa plataforma conecta
+        Nossa plataforma conecta{" "}
         <span className="p-destaque">
           tutores de animais de estimação a prestadores de serviços de confiança
         </span>
@@ -22,4 +23,4 @@ const Comofunciona: React.FC = () => {
   );
 };
 
-export default Comofunciona;
+export default ComoFunciona;

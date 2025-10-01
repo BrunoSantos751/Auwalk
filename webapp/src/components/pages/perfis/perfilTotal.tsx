@@ -2,6 +2,7 @@ import React from "react";
 import "./perfilTotal.css";
 import avatarExemplo from "../../../assets/dog3.webp";
 import { useNavigate } from "react-router-dom";
+import ChatButton from "../chat/chat";
 
 interface PerfilTotalProps {
   name?: string;
@@ -44,9 +45,15 @@ const PerfilTotal: React.FC<PerfilTotalProps> = ({
         </div>
         <div className="btn-group btn-down">
           <button onClick={onNovoAgendamento}>Novo Agendamento</button>
-          <button onClick={() => navigate("/")}>Quero ser prestador</button>
+          <button onClick={() => navigate("/upgradeprestador")}>
+            Quero ser prestador
+          </button>
           <button onClick={onEditarSenha}>Editar Senha</button>
         </div>
+        <div className="btn-chat">
+          <ChatButton />
+        </div>
+        <div className="espaço-embranco"></div>
       </nav>
     </>
   );

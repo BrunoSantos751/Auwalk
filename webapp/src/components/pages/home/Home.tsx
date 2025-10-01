@@ -1,7 +1,6 @@
 import './Home.css';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import React from 'react';
+import ChatButton from "../chat/chat";
 
 export default function Home() {
   const dataAtual = new Date().toISOString().split("T")[0];
@@ -98,26 +97,26 @@ export default function Home() {
         <div className="imagem-gato"></div>
       </div>
 
-      <div className="melhorAvaliados">
-        <h2 className="melhorAvaliados-title">Os mais bem avaliados</h2>
-        <div className="melhorAvaliadosCards">
-          {["Laura Costa", "Maria Layanne", "Ana Paula", "João Pedro"].map((nome, index) => (
-            <div className="card" key={index}>
-              <span className="card-imagem">:)</span>
-              <p className="card-nome">{nome}</p>
-              <span className="card-estrelas">⭐⭐⭐⭐⭐</span>
-              <button className="btn-perfil">Ver perfil</button>
-            </div>
-          ))}
+        <div className="melhorAvaliados">
+          <h2 className="melhorAvaliados-title">Os mais bem avaliados</h2>
+
+          <div className="melhorAvaliadosCards">
+            {["Laura Costa", "Maria Layanne", "Ana Paula", "João Pedro"].map(
+              (nome, index) => (
+                <div className="card" key={index}>
+                  <span className="card-imagem">:)</span>
+                  <p className="card-nome">{nome}</p>
+                  <span className="card-estrelas">⭐⭐⭐⭐⭐</span>
+                  <button className="btn-perfil">Ver perfil</button>
+                </div>
+              )
+            )}
+          </div>
         </div>
       </div>
-
-      <div className="bottomSection">
-        <div className="bottomSection-img"></div>
-        <p className='topo-esquerda'>Amor e atenção fazem parte do<br /> bem-estar do seu pet.</p>
-        <p className='baixo-direita'>Baixe o app Auwalk agora!</p>
-        <div className="googleApp"></div>
+      <div className="btn-chat">
+        <ChatButton />
       </div>
-    </div>
+    </>
   );
 }

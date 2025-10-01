@@ -61,6 +61,7 @@
   display: flex;
   gap: 15px;
   justify-content: center; /* centraliza */
+  align-items: center;
   flex-wrap: wrap; /* quebra em telas menores */
   margin-top: 20px;
   width: 100%;
@@ -77,6 +78,7 @@
   color: var(--cor-botao-perfil-fonte02);
   border: 2px solid var(--cor-botao-perfil-hover);
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .pet-select:hover {
@@ -107,4 +109,8 @@
 
 .pet-actions {
   margin-bottom: 200px;
+}
+.pet-select,
+.pet-btn {
+  vertical-align: middle;
 }
