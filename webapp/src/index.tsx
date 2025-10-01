@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from './context/AuthContext';
 import Home from "./components/pages/home/Home";
 import Header from "./components/pages/header/header";
 import CadastroPet from "./components/pages/cadastros/cadastroPet";
@@ -18,10 +18,11 @@ import OndeEstamos from "./components/pages/footerPages/ondeEstamos";
 import Termos from "./components/pages/footerPages/termos";
 import Ajuda from "./components/pages/footerPages/ajuda";
 import Footer from "./components/pages/footer/footer";
+import Pesquisa from "./components/pages/pesquisa/Pesquisa";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
-Termos;
+
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <AuthProvider>
@@ -32,7 +33,7 @@ ReactDOM.createRoot(rootElement).render(
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/cadastropet" element={<CadastroPet />} />
           <Route path="/dados" element={<DadosTotal />} />
-          <Route path="/dadospet" element={<DadosPet />} />
+          <Route path="/dadospets/:petId" element={<DadosPet />} />
           <Route path="/pagprestador" element={<PrestadoPag />} />
           <Route path="/upgradeprestador" element={<UpgradePrestador />} />
           <Route path="/perfil" element={<PerfilTotal />} />
@@ -42,6 +43,7 @@ ReactDOM.createRoot(rootElement).render(
           <Route path="/ondeEstamos" element={<OndeEstamos />} />
           <Route path="/ajuda" element={<Ajuda />} />
           <Route path="/termosdeprivacidade" element={<Termos />} />
+           <Route path="/search" element={<Pesquisa />} />
         </Routes>
         <Footer />
       </BrowserRouter>

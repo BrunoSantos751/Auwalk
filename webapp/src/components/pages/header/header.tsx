@@ -39,7 +39,7 @@ const Header: React.FC = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/Home">Início</Link>
+                  <Link to="/">Início</Link>
                 </li>
                 <li>
                   <Link to="/passeiopesquisa">Passeio</Link>

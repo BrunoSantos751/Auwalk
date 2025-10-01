@@ -38,7 +38,7 @@
 }
 
 /* canto superior esquerdo */
-.topo-esquerda {
+.hero-content .topo-esquerda {
   position: absolute;
   top: 90px;
   left: 20px;
@@ -46,7 +46,7 @@
 }
 
 /* canto inferior direito */
-.baixo-direita {
+.hero-content .baixo-direita {
   position: absolute;
   bottom: 90px;
   right: 20px;
@@ -228,6 +228,7 @@
 }
 
 .card-nome {
+  font-family: var(--fonte-texto);
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -250,6 +251,59 @@
 
 .btn-perfil:hover {
   background-color: #067bb3;
+}
+
+/*********** BOTTOM-SECTION ***********/
+
+.bottomSection {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  margin-top: 50px;
+  color: var(--cor-botao-destacado);
+  font-weight: bold;
+  font-family: var(--fonte-texto);
+}
+
+.bottomSection-img{
+  width: 600px;
+  height: 100%;
+  background-image: url("../../../assets/cachorroLama.png");
+  position: relative;
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  position: relative;
+  margin-left: 125px;
+}
+
+.bottomSection .topo-esquerda {
+  position: absolute;
+  top: 150px;
+  left: 100px;
+  font-size: 1.8rem;
+}
+
+/* canto inferior direito */
+.bottomSection .baixo-direita {
+  position: absolute;
+  bottom: 50px;
+  right: 150px;
+  font-size: 1.8rem;
+}
+
+.googleApp{
+  position: absolute;
+  bottom: -5px;
+  right: 300px;
+  font-size: 1.8rem;
+  background-image: url('../../../assets/googlePlay.png');
+  width: 120px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size:contain ;
 }
 
 /* RESPONSIVIDADE */
