@@ -19,6 +19,8 @@ data class ServicoDisponivelResponse(
     val tipoServico: String,
     val descricao: String?,
     val preco: Double?,
+    val nomePrestador: String,
+    val duracaoEstimada: Int,
     val disponibilidades: List<DisponibilidadeResponse>
 )
 
@@ -41,10 +43,11 @@ class ServicoUnificadoService(
             idPrestador, tipoServico, descricao, preco, duracaoEstimada
         )
 
-        // --- LÓGICA DE "PICOTAR" UNIFICADA PARA TODOS OS SERVIÇOS ---
         val disponibilidadesResponse = mutableListOf<Map<String, Any?>>()
         val insertSlotSql = "INSERT INTO disponibilidade (id_servico, inicio_horario_atendimento, fim_horario_atendimento) VALUES (?, ?, ?)"
 
+        // --- LÓGICA DE "PICOTAR" UNIFICADA E CORRIGIDA ---
+        // A condição IF foi removida para que a lógica se aplique a TODOS os serviços
         if (duracaoEstimada > 0) {
             disponibilidades.forEach { janelaDeTempo ->
                 val janelaInicio = LocalDateTime.parse(janelaDeTempo.inicioHorarioAtendimento)
@@ -69,7 +72,7 @@ class ServicoUnificadoService(
                 }
             }
         }
-        // --- FIM DA LÓGICA UNIFICADA ---
+        // --- FIM DA LÓGICA CORRIGIDA ---
 
         return mapOf(
             "idServico" to serviceId, "idPrestador" to idPrestador, "tipoServico" to tipoServico,
@@ -114,46 +117,66 @@ class ServicoUnificadoService(
     }
 
     fun buscarServicosDisponiveis(data: LocalDate?, tipoServico: String?): List<ServicoDisponivelResponse> {
+        // --- CONSULTA SQL CORRIGIDA PARA EVITAR DUPLICAÇÃO ---
         val sqlBuilder = StringBuilder("""
-            SELECT s.id_servico, s.tipo_servico, s.descricao, s.preco
+            SELECT s.id_servico, s.tipo_servico, s.descricao, s.preco, s.duracao_estimada, u.nome as nome_prestador
             FROM servico s
-            LEFT JOIN disponibilidade d ON s.id_servico = d.id_servico
-        """.trimIndent())
-        val conditions = mutableListOf<String>()
+            JOIN prestador_servico ps ON s.id_prestador = ps.id_prestador
+            JOIN usuario u ON ps.id_usuario = u.id_usuario
+        """)
         val params = mutableListOf<Any>()
+        val conditions = mutableListOf<String>()
 
-        data?.let {
-            conditions.add("d.inicio_horario_atendimento::date = ?")
-            params.add(it)
-        }
+        // Filtro de tipo de serviço é aplicado na consulta principal
         tipoServico?.let {
-            conditions.add("s.tipo_servico = ?")
+            if (it.isNotBlank()) {
+                conditions.add("s.tipo_servico ILIKE ?") // ILIKE para não diferenciar maiúsculas/minúsculas
+                params.add(it)
+            }
+        }
+
+        // Filtro de data agora usa uma subconsulta com EXISTS para não duplicar os serviços
+        data?.let {
+            conditions.add("""
+                EXISTS (SELECT 1 FROM disponibilidade d
+                        WHERE d.id_servico = s.id_servico
+                        AND d.inicio_horario_atendimento::date = ?)
+            """)
             params.add(it)
         }
+
         if (conditions.isNotEmpty()) {
             sqlBuilder.append(" WHERE ").append(conditions.joinToString(" AND "))
         }
-        sqlBuilder.append(" GROUP BY s.id_servico, s.tipo_servico, s.descricao, s.preco ORDER BY s.preco ASC")
+
+        sqlBuilder.append(" ORDER BY s.preco ASC")
+        // --- FIM DA CORREÇÃO NA SQL ---
 
         return jdbcTemplate.query(sqlBuilder.toString(), params.toTypedArray()) { rs, _ ->
             val idServico = rs.getInt("id_servico")
-            val disponibilidades = if (data != null) buscarDisponibilidades(idServico, data) else emptyList()
+
+            val todasDisponibilidades = buscarTodasDisponibilidades(idServico)
+
             ServicoDisponivelResponse(
-                idServico = idServico, tipoServico = rs.getString("tipo_servico"),
-                descricao = rs.getString("descricao"), preco = rs.getDouble("preco"),
-                disponibilidades = disponibilidades
+                idServico = idServico,
+                tipoServico = rs.getString("tipo_servico"),
+                descricao = rs.getString("descricao"),
+                preco = rs.getDouble("preco"),
+                nomePrestador = rs.getString("nome_prestador"),
+                duracaoEstimada = rs.getInt("duracao_estimada"),
+                disponibilidades = todasDisponibilidades
             )
         }
     }
 
-    private fun buscarDisponibilidades(idServico: Int, data: LocalDate): List<DisponibilidadeResponse> {
+    private fun buscarTodasDisponibilidades(idServico: Int): List<DisponibilidadeResponse> {
         val sql = """
             SELECT inicio_horario_atendimento, fim_horario_atendimento
             FROM disponibilidade
-            WHERE id_servico = ? AND inicio_horario_atendimento::date = ?
+            WHERE id_servico = ? AND inicio_horario_atendimento >= NOW()
             ORDER BY inicio_horario_atendimento
         """.trimIndent()
-        return jdbcTemplate.query(sql, arrayOf(idServico, data)) { rs, _ ->
+        return jdbcTemplate.query(sql, arrayOf(idServico)) { rs, _ ->
             DisponibilidadeResponse(
                 inicio = rs.getTimestamp("inicio_horario_atendimento").toLocalDateTime().toString(),
                 fim = rs.getTimestamp("fim_horario_atendimento").toLocalDateTime().toString()

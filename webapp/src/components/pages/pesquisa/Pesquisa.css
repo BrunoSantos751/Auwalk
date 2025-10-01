@@ -44,6 +44,7 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
+    /* Adicione mais estilos para o form se necessário */
 }
 
 .cardsContainer {
@@ -67,12 +68,11 @@
 }
 
 .profile-pic{
-    background-image: url('../../../assets/profile-pic.png');
     width: 100px;
     height: 100px;
     border: 2px solid rgb(61, 61, 61);
     border-radius:100% ;
-    padding: 10px;
+    align-self: center; /* Centraliza a imagem */
 }
 
 .card:hover {
@@ -80,43 +80,135 @@
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
+.prestador-nome {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
 .tipoServico{
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: start;
-    margin-left: -10px; 
+    width: 100%;
+    margin-top: 10px;
 }
 
 .tipoServico-title {
-    font-size: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
     margin-bottom: 5px;
     color: #333;
 }
 
 .tipoServico-desc {
-    font-size: 12px;
-    margin-bottom: 5px;
-    color: #555; 
+    font-size: 0.9rem;
+    color: #555;
+    min-height: 40px;
+}
+
+.datas-disponiveis {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.duracao {
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 10px;
 }
 
 .card .preco {
     font-weight: bold;
     color: #2a9d8f;
+    font-size: 1.2rem;
+    margin-top: auto; /* Empurra o preço e os botões para baixo */
+    margin-bottom: 10px;
 }
 
-.btn-agendar {
+.btn-agendar, .btn-verperfil {
     padding: 10px 20px;
-    background: var(--cor-botao-destacado);
-    color: #fff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.2s;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.btn-agendar {
+    background: var(--cor-botao-destacado);
+    color: #fff;
 }
 
 .btn-agendar:hover {
     background: var(--cor-botao-destacado-hover);
 }
 
+.btn-verperfil {
+    background: #e9ecef;
+    color: #333;
+}
 
+.btn-verperfil:hover {
+    background: #ced4da;
+}
+
+.btn-criar-servico {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px; /* <-- ALTERADO */
+    background-color: #2a9d8f;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-criar-servico:hover {
+    background-color: #268a7e;
+}
+
+/* Estilos para o novo formulário dentro do modal */
+.criar-servico-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+.criar-servico-form label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.criar-servico-form input,
+.criar-servico-form select,
+.criar-servico-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.criar-servico-form .disponibilidade-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Adiciona um espaçamento vertical igual ao resto do formulário */
+}
+
+/* Não precisamos mais de regras especiais para o label dentro do grupo */
+.criar-servico-form .disponibilidade-group label {
+    /* Nenhuma regra de largura ou flex é necessária */
+}

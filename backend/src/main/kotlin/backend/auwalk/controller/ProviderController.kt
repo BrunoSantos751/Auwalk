@@ -1,9 +1,11 @@
 package backend.auwalk.controller
 
-import org.springframework.web.bind.annotation.*
+import backend.auwalk.service.ProviderService
+import backend.auwalk.security.JwtUtil // Certifique-se que o caminho para seu JwtUtil está correto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import backend.auwalk.service.ProviderService
+import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 data class ProviderProfileRequest(
     val idUsuario: Int,
@@ -31,7 +33,6 @@ class ProviderController(
 
     @PutMapping("/profile")
     fun editarPerfil(@RequestBody request: ProviderProfileRequest): ResponseEntity<Map<String, Any>> {
-        // Validação: documento é obrigatório
         if (request.documento.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(mapOf("success" to false, "message" to "O campo documento é obrigatório"))
@@ -43,6 +44,27 @@ class ProviderController(
         } else {
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(mapOf("success" to false, "message" to "Erro ao atualizar perfil"))
+        }
+    }
+    @GetMapping("/profile/me")
+    fun checkMyProfile(@RequestHeader("Authorization") token: String): ResponseEntity<Map<String, Any>> {
+        try {
+            val idUsuario = JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
+
+            if (idUsuario == null) {
+                return ResponseEntity.ok(mapOf("isPrestador" to false, "message" to "Token inválido."))
+            }
+
+            val perfil = providerService.buscarPerfil(idUsuario)
+            if (perfil != null) {
+                return ResponseEntity.ok(mapOf("isPrestador" to true, "data" to perfil))
+            } else {
+                return ResponseEntity.ok(mapOf("isPrestador" to false))
+            }
+        } catch (e: Exception) {
+            println("Erro ao verificar perfil do prestador: ${e.message}")
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(mapOf("isPrestador" to false, "message" to "Erro interno ao verificar perfil."))
         }
     }
 }
