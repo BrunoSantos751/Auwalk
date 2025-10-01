@@ -37,7 +37,7 @@ class ProviderController(
                 .body(mapOf("success" to false, "message" to "O campo documento é obrigatório"))
         }
 
-        val sucesso = providerService.editarPerfil(request.idUsuario, request.bio, request.experiencia, request.documento)
+        val sucesso = providerService.editarOuInserirPerfil(request.idUsuario, request.bio, request.experiencia, request.documento)
         return if (sucesso) {
             ResponseEntity.ok(mapOf("success" to true, "message" to "Perfil atualizado com sucesso"))
         } else {

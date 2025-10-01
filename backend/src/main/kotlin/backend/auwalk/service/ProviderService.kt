@@ -22,22 +22,32 @@ class ProviderService(
         }
     }
 
-    fun editarPerfil(idUsuario: Int, bio: String?, experiencia: String?, documento: String): Boolean {
+    fun editarOuInserirPerfil(idUsuario: Int, bio: String?, experiencia: String?, documento: String): Boolean {
+        // Primeiro, verifique se o usuário já existe na tabela
+        val countSql = "SELECT COUNT(*) FROM prestador_servico WHERE id_usuario = ?"
+        val count = jdbcTemplate.queryForObject(countSql, Int::class.java, idUsuario)
+
+        val sql: String
+        val result: Int
+
         return try {
-            val sql = """
-                UPDATE prestador_servico 
-                SET bio = ?, experiencia = ?, documento = ?
-                WHERE id_usuario = ?
-            """
-            println("Executando SQL: $sql")
-            println("Valores: bio=$bio, experiencia=$experiencia, documento=$documento, idUsuario=$idUsuario")
-
-            val result = jdbcTemplate.update(sql, bio, experiencia, documento, idUsuario)
-            println("Resultado: $result linha(s) afetada(s)")
-
+            // 👇 CORREÇÃO AQUI 👇
+            // Adicionamos a verificação 'count != null'
+            if (count != null && count > 0) {
+                // Se existe, faz o UPDATE
+                println("Usuário existente. Executando UPDATE.")
+                sql = "UPDATE prestador_servico SET bio = ?, experiencia = ?, documento = ? WHERE id_usuario = ?"
+                result = jdbcTemplate.update(sql, bio, experiencia, documento, idUsuario)
+            } else {
+                // Se não existe (ou se count for 0), faz o INSERT
+                println("Novo usuário. Executando INSERT.")
+                sql = "INSERT INTO prestador_servico (id_usuario, bio, experiencia, documento) VALUES (?, ?, ?, ?)"
+                result = jdbcTemplate.update(sql, idUsuario, bio, experiencia, documento)
+            }
+            println("$result linha(s) afetada(s)")
             result > 0
         } catch (e: Exception) {
-            println("ERRO ao editar perfil: ${e::class.simpleName} - ${e.message}")
+            println("ERRO ao editar/inserir perfil: ${e.message}")
             e.printStackTrace()
             false
         }
