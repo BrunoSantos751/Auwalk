@@ -7,17 +7,12 @@ import ChatButton from "../chat/chat";
 interface PerfilTotalProps {
   name?: string;
   avatarUrl?: string; // imagem do backend
-  onMeusDados?: () => void;
-  onHistorico?: () => void;
-  onNovoAgendamento?: () => void;
   onEditarSenha?: () => void;
 }
 
 const PerfilTotal: React.FC<PerfilTotalProps> = ({
   name,
   avatarUrl,
-  onHistorico,
-  onNovoAgendamento,
   onEditarSenha,
 }) => {
   const navigate = useNavigate();
