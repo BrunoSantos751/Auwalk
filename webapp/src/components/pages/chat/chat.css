@@ -1,4 +1,6 @@
+/* src/components/chat.css */
 @import url("https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap");
+
 :root {
   --cor-header: #e9ebef;
   --cor-header-fonte: #333333;
@@ -73,7 +75,7 @@
   font-size: 16px;
   font-family: var(--fonte-titulo01);
   align-items: center;
-  flex-shrink: 0; /* Impede que o header encolha */
+  flex-shrink: 0;
 }
 
 .chat-window .chat-header h3 {
@@ -86,13 +88,8 @@
 }
 
 .chat-window .chat-close-button {
-  background: none;
-  border: none;
-  color: var(--cor-botao-perfil-fonte02);
-  font-size: 24px;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
+  background: none; border: none; color: var(--cor-botao-perfil-fonte02);
+  font-size: 24px; cursor: pointer; padding: 0; line-height: 1;
 }
 
 .chat-window .chat-body {
@@ -102,28 +99,23 @@
 }
 
 .chat-window .chat-list-item {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
+    padding: 15px; border-bottom: 1px solid #eee; cursor: pointer;
     transition: background-color 0.2s;
 }
-.chat-window .chat-list-item:hover {
-    background-color: #f0f2f5;
-}
+.chat-window .chat-list-item:hover { background-color: #f0f2f5; }
 .chat-window .chat-list-item p {
-    margin: 0;
-    font-weight: bold;
-    font-family: var(--fonte-texto);
-    font-size: 14px;
-    color: var(--cor-header-fonte);
+    margin: 0; font-weight: bold; font-family: var(--fonte-texto);
+    font-size: 14px; color: var(--cor-header-fonte);
 }
 
-/* Estilos para a visão de mensagens */
 .chat-window .messages-view {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex-grow: 1;
+    min-height: 0;
+    overflow: hidden;
 }
+
 .chat-window .messages-container {
     flex-grow: 1;
     overflow-y: auto;
@@ -131,15 +123,11 @@
     display: flex;
     flex-direction: column;
 }
+
 .chat-window .message {
-    padding: 8px 12px;
-    border-radius: 18px;
-    margin-bottom: 10px;
-    max-width: 70%;
-    font-family: var(--fonte-texto);
-    font-size: 14px;
-    line-height: 1.4;
-    word-wrap: break-word;
+    padding: 8px 12px; border-radius: 18px; margin-bottom: 10px;
+    max-width: 70%; font-family: var(--fonte-texto); font-size: 14px;
+    line-height: 1.4; word-wrap: break-word;
 }
 .chat-window .message.sent {
     background-color: var(--cor-botao-perfil-hover);
@@ -152,36 +140,19 @@
     align-self: flex-start;
 }
 .chat-window .chat-footer {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #eee;
-    background-color: #fff;
-    flex-shrink: 0; /* Impede que o footer encolha */
+    display: flex; padding: 10px; border-top: 1px solid #eee;
+    background-color: #fff; flex-shrink: 0;
 }
 .chat-window .chat-input {
-    flex-grow: 1;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 10px 15px;
-    font-size: 14px;
-    font-family: var(--fonte-texto);
+    flex-grow: 1; border: 1px solid #ccc; border-radius: 20px;
+    padding: 10px 15px; font-size: 14px; font-family: var(--fonte-texto);
 }
 .chat-window .send-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--cor-botao-perfil-hover);
-    margin-left: 10px;
-    padding: 0 5px;
-    align-self: center;
+    background: none; border: none; font-size: 24px; cursor: pointer;
+    color: var(--cor-botao-perfil-hover); margin-left: 10px;
+    padding: 0 5px; align-self: center;
 }
 .chat-window .back-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    margin-right: 10px;
-    padding: 0;
+    background: none; border: none; color: white; font-size: 24px;
+    cursor: pointer; margin-right: 10px; padding: 0;
 }

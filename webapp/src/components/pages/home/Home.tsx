@@ -1,7 +1,6 @@
 import "./Home.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ChatButton from "../chat/chat";
 
 export default function Home() {
   const dataAtual = new Date().toISOString().split("T")[0];
@@ -121,9 +120,6 @@ export default function Home() {
             )}
           </div>
         </div>
-      </div>
-      <div className="btn-chat">
-        <ChatButton />
       </div>
     </>
   );
