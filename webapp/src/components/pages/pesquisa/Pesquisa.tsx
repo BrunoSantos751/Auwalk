@@ -139,7 +139,7 @@ export default function Pesquisa() {
             const payload = { idCliente, idServico: selectedService.idServico, idPet: petId, dataHora: horario, observacoes: 'Agendado pela plataforma.' };
 
             const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            const chat = await fetch('http://localhost:8080/chats', {
+            await fetch('http://localhost:8080/chats', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -147,7 +147,9 @@ export default function Pesquisa() {
               },
               body: JSON.stringify({idDestinatario: selectedService.idPrestador })
             });
+
             const result = await response.json();
+
 
             if (response.ok && result.success) {
                 alert('Serviço agendado com sucesso!');

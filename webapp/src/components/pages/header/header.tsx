@@ -15,6 +15,7 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     logout(); // Chama a função de logout do contexto
     navigate("/login"); // Redireciona o usuário para a página de login
+    window.location.reload();
   };
 
   return (
