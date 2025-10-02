@@ -16,6 +16,7 @@ data class DisponibilidadeResponse(
 
 data class ServicoDisponivelResponse(
     val idServico: Int,
+    val idPrestador: Int,
     val tipoServico: String,
     val descricao: String?,
     val preco: Double?,
@@ -118,7 +119,7 @@ class ServicoUnificadoService(
     fun buscarServicosDisponiveis(data: LocalDate?, tipoServico: String?): List<ServicoDisponivelResponse> {
         // --- CONSULTA SQL CORRIGIDA PARA EVITAR DUPLICAÇÃO ---
         val sqlBuilder = StringBuilder("""
-            SELECT s.id_servico, s.tipo_servico, s.descricao, s.preco, s.duracao_estimada, u.nome as nome_prestador
+            SELECT s.id_servico, s.id_prestador, s.tipo_servico, s.descricao, s.preco, s.duracao_estimada, u.nome as nome_prestador
             FROM servico s
             JOIN prestador_servico ps ON s.id_prestador = ps.id_prestador
             JOIN usuario u ON ps.id_usuario = u.id_usuario
@@ -151,11 +152,23 @@ class ServicoUnificadoService(
         sqlBuilder.append(" ORDER BY s.preco ASC")
         return jdbcTemplate.query(sqlBuilder.toString(), params.toTypedArray()) { rs, _ ->
             val idServico = rs.getInt("id_servico")
+            val idPrestador = rs.getInt("id_prestador")
+            val sqlUsuario = """
+            SELECT id_usuario 
+            FROM prestador_servico 
+            WHERE id_prestador = ?
+            """
+
+            val idUsuario = jdbcTemplate.queryForObject(sqlUsuario, arrayOf(idPrestador)) { rs2, _ ->
+                rs2.getInt("id_usuario")
+            }!!
+
 
             val todasDisponibilidades = buscarTodasDisponibilidades(idServico)
 
             ServicoDisponivelResponse(
                 idServico = idServico,
+                idPrestador = idUsuario,
                 tipoServico = rs.getString("tipo_servico"),
                 descricao = rs.getString("descricao"),
                 preco = rs.getDouble("preco"),

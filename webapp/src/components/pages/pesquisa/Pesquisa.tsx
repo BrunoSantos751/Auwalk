@@ -13,6 +13,7 @@ interface Disponibilidade {
 
 interface Servico {
     idServico: number;
+    idPrestador: number;
     tipoServico: string;
     descricao: string | null;
     preco: number | null;
@@ -138,6 +139,14 @@ export default function Pesquisa() {
             const payload = { idCliente, idServico: selectedService.idServico, idPet: petId, dataHora: horario, observacoes: 'Agendado pela plataforma.' };
 
             const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const chat = await fetch('http://localhost:8080/chats', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify({idDestinatario: selectedService.idPrestador })
+            });
             const result = await response.json();
 
             if (response.ok && result.success) {

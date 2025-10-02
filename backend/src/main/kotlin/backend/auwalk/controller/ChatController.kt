@@ -12,10 +12,6 @@ data class CreateChatRequest(val idDestinatario: Int)
 @RequestMapping("/chats")
 class ChatController(private val chatService: ChatService) {
 
-    /**
-     * Endpoint para iniciar um novo chat com outro usuário ou obter o chat existente.
-     * O ID do usuário logado vem do token.
-     */
     @PostMapping
     fun createOrGetChat(
         @RequestHeader("Authorization") token: String,
@@ -32,9 +28,6 @@ class ChatController(private val chatService: ChatService) {
         }
     }
 
-    /**
-     * Endpoint para listar todos os chats do usuário logado.
-     */
     @GetMapping
     fun getChatsForCurrentUser(@RequestHeader("Authorization") token: String): ResponseEntity<Any> {
         val idUsuario = JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
