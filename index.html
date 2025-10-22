@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapa Maceió - AuWalk</title>
+    <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="static/index.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1>Localização AuWalk</h1>
+      <div class="align">
+        <input id="input" type="text" placeholder="Buscar rua..." />
+        <button
+          id="btn1"
+          onclick="buscarRua(document.getElementById('input').value)"
+        >
+          Buscar
+        </button>
+        <button id="btn2" onclick="localizarUsuario()">
+          Minha Localização
+        </button>
+      </div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="node_modules/leaflet/dist/leaflet.js"></script>
+    <script>
+      const map = L.map("map").setView([-9.66625, -35.7351], 14);
+
+      // Camada base
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+
+      // Ponto fixo para teste
+      const pontoFixo = L.marker([-9.6483, -35.7088], {
+        icon: L.icon({
+          iconUrl: "node_modules/leaflet/dist/images/marker-icon-red.png",
+        }),
+      }).addTo(map);
+
+      // Texto ao clicar no ponto
+      pontoFixo.bindPopup("passeador").openPopup();
+
+      async function loadGeoJSON(url, color = "blue", fillColor = null) {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        return L.geoJSON(data, {
+          style: {
+            color: color,
+            fillColor: fillColor || color,
+            weight: 2,
+            fillOpacity: 0.4,
+          },
+          onEachFeature: (feature, layer) => {
+            if (feature.properties && feature.properties.name) {
+              layer.bindPopup(feature.properties.name);
+            }
+          },
+        });
+      }
+
+      let pracasLayer, praiasLayer, ruasGeoJSON;
+
+      (async () => {
+        //  Praças (verde)
+        pracasLayer = await loadGeoJSON(
+          "data/park_mcz.geojson",
+          "green",
+          "#90EE90"
+        );
+
+        //  Praias (azul claro)
+        praiasLayer = await loadGeoJSON(
+          "data/beach_mcz.geojson",
+          "red",
+          "#87CEFA"
+        );
+
+        // Controle de camadas
+        const overlays = { Praças: pracasLayer, Praias: praiasLayer };
+        L.control.layers(null, overlays, { collapsed: false }).addTo(map);
+
+        pracasLayer.addTo(map);
+        praiasLayer.addTo(map);
+
+        //  Ruas (para pesquisa, não visíveis por padrão)
+        const ruasData = await fetch("data/street_mcz.geojson").then((res) =>
+          res.json()
+        );
+        ruasGeoJSON = ruasData.features;
+
+        //  Limite do município (azul)
+        loadGeoJSON(
+          "https://servicodados.ibge.gov.br/api/v4/malhas/municipios/2704302?formato=application/vnd.geo+json",
+          "deepskyblue",
+          "#87CEFA"
+        )
+          .then((layer) => layer.addTo(map))
+          .catch((err) => console.log(err));
+      })();
+
+      //  Função de busca de rua
+      function buscarRua(name) {
+        if (!ruasGeoJSON) return;
+        let encontrado = false;
+
+        for (const feature of ruasGeoJSON) {
+          if (
+            feature.properties.name &&
+            feature.properties.name.toLowerCase().includes(name.toLowerCase())
+          ) {
+            const coords =
+              feature.geometry.type === "Point"
+                ? [
+                    feature.geometry.coordinates[1],
+                    feature.geometry.coordinates[0],
+                  ]
+                : [
+                    feature.geometry.coordinates[0][0][1],
+                    feature.geometry.coordinates[0][0][0],
+                  ];
+
+            const marker = L.marker(coords, {
+              icon: L.icon({
+                iconUrl: "node_modules/leaflet/dist/images/marker-icon-red.png",
+              }),
+            }).addTo(map);
+
+            marker.bindPopup(feature.properties.name).openPopup();
+            map.setView(coords, 17);
+            encontrado = true;
+            break;
+          }
+        }
+
+        if (!encontrado) alert("Rua não encontrada");
+      }
+    </script>
+  </body>
+</html>
