@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">AuWalk</string>
+    <string name="nome_principal">AuWalk</string>
+    <string name="text_login">Login</string>
+
+    <!--botões -->
+     <string name="botao_email">E-mail</string>
+     <string name="botao_senha">Senha</string>
+     <string name="botao_cadastro">Cadasto</string>
+     <string name="botao_nome">Nome completo</string>
+     <string name="botao_senhaConf">Confirmar Senha</string>
+     <string name="botao_proximo">Próximo</string>
+     <string name="botao_entrar">Entrar</string>
+
+     <!--texto complementar vai dentro do hint -->
+    <string name="texto_comp01">Primeira vez no <strong>AuWalk?</strong> Comece agora.</string>
+    <string name="texto_comp02">Esqueceu a senha?</string>
+    <string name="texto_comp03">Para agendar passeios e serviços para seu pet</string>
+    <string name="texto_comp04">Selecione uma opção</string>
+    <string name="texto_comp05">Já tem conta? Faça o login!</string>
+    <string name="texto_comp06">Finalize seu cadastro para liberar todos os recursos.</string>
+    <string name="texto_comp07">Digite seu nome completo</string>
+    <string name="texto_comp08">000.000.000-00</string>
+    <string name="texto_comp09">Digite seu e-mail</string>
+    <string name="texto_comp10">(00) 00000-0000</string>
+    <string name="texto_comp11">Data de Nascimento</string>
+    <string name="texto_comp12">Ex. 12345000</string>
+    <string name="texto_comp13">00/00/0000</string>
+
+    <!--texto Descritivo-->
+    <string name="Descri01">"Esta é a tela de casdastro! "</string>
+
+    <!--texto Exposição-->
+
+    <string name="texto_expos01">"Nome Completo "</string>
+    <string name="texto_expos02">CPF</string>
+    <string name="texto_expos03">Obrigatório</string>
+    <string name="texto_expos04">E-mail</string>
+    <string name="texto_expos05">DDD+Celular</string>
+
+    <string name="texto_expo07">Data de nascimento</string>
+    <string name="texto_expo08">CEP</string>
+
+
+
+</resources>

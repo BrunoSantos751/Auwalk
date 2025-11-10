@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/dog"
+        android:label="AuWalk"
+        android:roundIcon="@mipmap/dog"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Auwalk"
+        tools:ignore="ExtraText">
+        <activity
+            android:name=".CadastroCompActivity"
+            android:exported="false" />
+        <!-- Tela de escolha para prestador ou tutor (retrato também) -->
+        <activity
+            android:name=".EscolhaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- Tela de teste -->
+        <activity
+            android:name=".TestesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- Tela de cadastro (retrato também) -->
+        <activity
+            android:name=".CadastroActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- Tela de login (retrato também) -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- Tela principal (em modo retrato fixo) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

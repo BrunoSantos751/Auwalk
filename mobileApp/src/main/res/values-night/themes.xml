@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Auwalk" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <!-- cores primárias -->
+        <item name="colorPrimary">@color/primaria_escuro</item>
+        <item name="colorOnPrimary">@color/item_primario_escuro</item>
+
+        <!-- cores secundarias -->
+        <item name="colorSecondary">@color/secundaria_escuro</item>
+        <item name="colorOnSecondary">@color/item_secundaria_escuro</item>
+
+        <!-- cores barras de status -->
+        <item name="android:statusBarColor">@color/primaria_escuro</item>
+    </style>
+</resources>

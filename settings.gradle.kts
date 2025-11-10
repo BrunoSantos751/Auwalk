@@ -31,3 +31,5 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":shared")
 include(":backend")
+include(":app")
+include(":mobileApp")

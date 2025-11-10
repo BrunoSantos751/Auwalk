@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/text_Auwalk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+        android:fontFamily="@font/pridi"
+        android:text="@string/nome_principal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/text_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:fontFamily="@font/pridi_medium"
+        android:text="@string/text_login"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_Auwalk" />
+
+    <TextView
+        android:id="@+id/prirmeira_vez"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:onClick="abrirCadastro"
+        android:text="@string/texto_comp01"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_proximo" />
+
+    <EditText
+        android:id="@+id/editText_senha"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/montserrat_medium"
+        android:hint="@string/botao_senha"
+        android:inputType="textPassword"
+        android:autofillHints="password"
+        android:textAlignment="center"
+        android:textColor="@color/fonte_01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_email" />
+
+    <EditText
+        android:id="@+id/editText_email"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="44dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="@string/botao_email"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"
+        android:textAlignment="center"
+        android:textColor="@color/fonte_01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_login" />
+
+    <TextView
+        android:id="@+id/esqueceu_senha"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/texto_comp02"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_senha" />
+
+    <Button
+        android:id="@+id/button_proximo"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="@color/azul_button"
+        android:fontFamily="@font/pridi"
+        android:onClick="clique"
+        android:text="@string/botao_entrar"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_senha" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

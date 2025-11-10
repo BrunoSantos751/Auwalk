@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from "./context/AuthContext";
 import Home from "./components/pages/home/Home";
 import Header from "./components/pages/header/header";
 import CadastroPet from "./components/pages/cadastros/cadastroPet";
@@ -20,7 +20,8 @@ import Ajuda from "./components/pages/footerPages/ajuda";
 import Footer from "./components/pages/footer/footer";
 import Pesquisa from "./components/pages/pesquisa/Pesquisa";
 import Historico from "./components/pages/historico/historico";
-import ChatButton from "./components/pages/chat/chat"
+import ChatButton from "./components/pages/chat/chat";
+import TesteFront from "./components/pages/testes/TesteFront";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
@@ -47,6 +48,7 @@ ReactDOM.createRoot(rootElement).render(
           <Route path="/termosdeprivacidade" element={<Termos />} />
           <Route path="/search" element={<Pesquisa />} />
           <Route path="/historico" element={<Historico />} />
+          <Route path="/testefront" element={<TesteFront />} />
         </Routes>
         <ChatButton />
         <Footer />

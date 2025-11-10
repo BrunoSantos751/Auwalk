@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Tema base (padrão do projeto) -->
+    <style name="Base.Theme.Auwalk" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- cores primárias -->
+        <item name="colorPrimary">@color/primaria</item>
+        <item name="colorPrimaryVariant">@color/primaria_varicao</item>
+        <item name="colorOnPrimary">@color/item_primario</item>
+
+        <!-- cores secundarias -->
+        <item name="colorSecondary">@color/secundaria</item>
+        <item name="colorOnSecondary">@color/item_secundaria</item>
+
+        <!-- cores barras de status -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+
+        <!-- cor de fundo -->
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <!-- Tema principal do app (usado no Manifest) -->
+    <style name="Theme.Auwalk" parent="Base.Theme.Auwalk" />
+
+</resources>

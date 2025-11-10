@@ -1,0 +1,77 @@
+.user-page {
+  max-width: 800px;
+
+  margin: 100px auto;
+  font-family: Arial, sans-serif;
+  border: 1px solid #333;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  size: 20px;
+  margin: 15px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  size: 16px;
+  margin: 15px;
+}
+.tabela-teste {
+  border: 0.8px solid #333;
+  background-color: #f0f2f5;
+}
+.search {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+}
+.li-teste {
+  list-style-type: none;
+  margin: 10px;
+  text-align: justify;
+}
+
+input {
+  padding: 0.5rem 1rem;
+  background: #e4eaf2;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.teste-butt {
+  padding: 0.5rem 1rem;
+  background: #079fce;
+  color: #f0f2f5;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  width: 200px;
+}
+
+button:hover {
+  background: #056c91;
+}
+.form-teste {
+  display: flex;
+  justify-content: center;
+}
+
+.teste-but {
+  margin: 0 140px 100px;
+  padding: 0.5rem 1rem;
+  background: #079fce;
+  color: #f0f2f5;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  width: 200px;
+}

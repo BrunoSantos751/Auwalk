@@ -16,10 +16,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "src"
-  ],
-  "references": [{ "path": "./tsconfig.node.json"}]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

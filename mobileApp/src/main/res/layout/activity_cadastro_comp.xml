@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="@string/Descri01"
+    tools:context=".MainActivity"
+    android:fillViewport="true"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="224dp"
+            android:text="@string/texto_expos03"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+            app:layout_constraintVertical_bias="0.644" />
+
+        <EditText
+            android:id="@+id/editTextNameComp4"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:background="@color/white"
+            android:autofillHints="phoneNumber"
+            android:ems="10"
+            android:hint="@string/texto_comp10"
+            android:inputType="phone"
+            android:textAlignment="center"
+            android:textColor="@color/fonte_01"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp3"
+            tools:text="@string/texto_comp10" />
+
+        <TextView
+            android:id="@+id/texto_expos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/texto_expos05"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView9"
+            app:layout_constraintHorizontal_bias="0.133"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp3" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="212dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/texto_expos03"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNameComp3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp2"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/editTextNameComp3"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:autofillHints="emailAddress"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/texto_comp09"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textColor="@color/fonte_01"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp2"
+            tools:text="@string/texto_comp09" />
+
+        <TextView
+            android:id="@+id/texto_expos04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/texto_expos04"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView9"
+            app:layout_constraintHorizontal_bias="0.042"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp2" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="156dp"
+            android:text="@string/texto_expos03"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNameComp4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp3"
+            app:layout_constraintVertical_bias="0.644" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="108dp"
+            android:text="@string/texto_expos03"
+            app:layout_constraintBottom_toTopOf="@+id/editTextDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp4"
+            app:layout_constraintVertical_bias="0.095" />
+
+        <EditText
+            android:id="@+id/editTextNameComp2"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:autofillHints="username"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/texto_comp08"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/fonte_01"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/texto_expos02"
+            tools:text="@string/texto_comp08" />
+
+        <TextView
+            android:id="@+id/texto_expos02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/texto_expos02"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp" />
+
+        <TextView
+            android:id="@+id/text_cadastro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/pridi_medium"
+            android:text="@string/botao_cadastro"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.154"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextNameComp"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="92dp"
+            android:autofillHints="name"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/texto_comp07"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textColor="@color/fonte_01"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_cadastro"
+            tools:text="@string/texto_comp07" />
+
+        <TextView
+            android:id="@+id/texto_expos01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/texto_expos01"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNameComp"
+            app:layout_constraintEnd_toStartOf="@+id/texto_expos03"
+            app:layout_constraintHorizontal_bias="0.72"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/texto_expos03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="144dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/texto_expos03"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNameComp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/texto_expos01"
+            app:layout_constraintVertical_bias="0.666" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="232dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/texto_expos03"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNameComp2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/texto_expos02"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/texto_expo07"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.69"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp4" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/texto_comp13"
+            android:inputType="date"
+            android:textAlignment="center"
+            android:textColor="@color/fonte_01"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameComp4" />
+
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/texto_comp12"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/fonte_01"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/texto_expo08"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView6"
+            app:layout_constraintHorizontal_bias="0.707"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

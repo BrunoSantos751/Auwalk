@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background_navbar">#e9ebef</color>
+    <color name="background_info">#07bace</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="principal">#079fce</color>
+    <color name="azul_button">#079fce</color>
+    <color name="fonte_destaque_02">#980909</color>
+    <color name="fonte_01">#3C3A3A</color>
+
+    <!-- cores customizadas para o tema -->
+    <!-- cores primaria -->
+    <color name="primaria">#079fce</color>
+    <color name="primaria_varicao">#095e78</color>
+    <color name="item_primario">#FFFFFFFF</color>
+    <!-- cores primaria-escuro -->
+    <color name="primaria_escuro">#095e78</color>
+    <color name="item_primario_escuro">#FFFFFFFF</color>
+
+    <!-- cores secundarias -->
+    <color name="secundaria">#095e78</color>
+    <color name="item_secundaria">#e9ebef</color>
+
+    <!-- cores secundarias-escuro-->
+    <color name="secundaria_escuro">#07bace</color>
+    <color name="item_secundaria_escuro">#e9ebef</color>
+
+
+    <color name="background">#F6F2E7</color>
+    <!--<color name="fonte_destaque_02">#4a656e33</color>-->
+
+
+</resources>

@@ -18,4 +18,14 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  test: {
+    globals: true, // permite usar 'describe', 'test', 'expect' sem importar
+    environment: "jsdom", // simula o DOM do navegador
+    setupFiles: "./src/setupTests.ts", // arquivo de setup
+    include: ["src/**/*.test.{ts,tsx}"], // onde ficam os testes
+    coverage: {
+       provider: "v8",
+      reporter: ["text", "json", "html"], // relatórios de cobertura
+    },
+  },
 });
