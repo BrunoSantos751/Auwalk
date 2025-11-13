@@ -1,11 +1,10 @@
-package backend.auwalk.controller
+package backend.auwalk.Controller
 
 import backend.auwalk.service.ProviderService
 import backend.auwalk.security.JwtUtil // Certifique-se que o caminho para seu JwtUtil está correto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 
 data class ProviderProfileRequest(
     val idUsuario: Int,

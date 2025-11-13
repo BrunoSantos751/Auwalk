@@ -1,4 +1,4 @@
-package backend.auwalk.controller
+package backend.auwalk.Controller
 
 
 import org.springframework.web.bind.annotation.*

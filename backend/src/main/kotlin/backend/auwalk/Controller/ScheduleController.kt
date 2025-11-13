@@ -1,4 +1,4 @@
-package backend.auwalk.controller
+package backend.auwalk.Controller
 
 import backend.auwalk.service.AgendamentoService
 import com.fasterxml.jackson.annotation.JsonFormat // <-- 1. NOVO IMPORT

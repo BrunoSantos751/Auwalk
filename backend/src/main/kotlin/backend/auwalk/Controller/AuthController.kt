@@ -1,4 +1,4 @@
-package backend.auwalk.controller
+package backend.auwalk.Controller
 
 import backend.auwalk.service.AuthService
 import org.springframework.web.bind.annotation.*

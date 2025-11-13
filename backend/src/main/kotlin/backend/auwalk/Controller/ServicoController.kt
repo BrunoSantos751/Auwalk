@@ -1,4 +1,4 @@
-package backend.auwalk.controller
+package backend.auwalk.Controller
 
 import backend.auwalk.service.ServicoUnificadoService
 import backend.auwalk.service.ServicoDisponivelResponse

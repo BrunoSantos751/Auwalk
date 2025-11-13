@@ -20,14 +20,14 @@ repositories {
 }
 
 dependencies {
-    // --- SPRING PRINCIPAL ---
+
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    // --- BANCO DE DADOS ---
+
     runtimeOnly("org.postgresql:postgresql")
 
     // --- JWT ---
@@ -35,7 +35,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
-    // --- OUTROS ---
+
     implementation("org.apache.commons:commons-compress:1.26.2")
 
     // --- TESTES ---
