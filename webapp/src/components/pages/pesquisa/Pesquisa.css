@@ -212,3 +212,69 @@
 .criar-servico-form .disponibilidade-group label {
     /* Nenhuma regra de largura ou flex é necessária */
 }
+
+@media (max-width: 768px) {
+  .pesquisaSection {
+    width: 95%;
+    margin: 0 auto;
+    padding: 8px;
+  }
+
+  .formPesquisa {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .opcoes,
+  .opcoes-data {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .opcoes label,
+  .opcoes-data label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .busca-title {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .opcoes input,
+  .opcoes select,
+  .opcoes-data input {
+    width: 65%;
+    height: 32px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+
+  .btn-buscar {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .btn-criar-servico {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+}
