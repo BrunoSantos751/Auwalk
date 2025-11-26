@@ -318,7 +318,82 @@
 @media (max-width: 768px) {
   .topo-esquerda,
   .baixo-direita {
-    font-size: 1.5rem; /* reduz um pouco em tablets/celulares */
+    font-size: 1.5rem; 
+  }
+
+  .busca {
+    right: 50%;
+    width: 95%;
+    padding: 8px;
+    margin-bottom: -150px;
+    border-radius: 10px;
+    height: auto;
+  }
+
+  .formBusca {
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .opcoes,
+  .opcoes-data {
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .opcoes .labelHome,
+  .opcoes-data .labelHome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .busca-title,
+  .busca-title-e,
+  .busca-title-p {
+    margin: 0;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    padding: 0;
+  }
+
+  .opcoes input,
+  .opcoes select,
+  .opcoes-data input {
+    width: 65%;
+    height: 32px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+
+  .btn-buscar {
+    margin-top: 6px;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .info-atencao{
+    margin-top: 250px;
+  }
+
+  .info-background{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+  }
+
+    .imagem-gato{
+    right: 45%;
+    top: 85%;
+    width: 140px;
+    height: 140px;
   }
 }
 
@@ -326,5 +401,16 @@
   .topo-esquerda,
   .baixo-direita {
     font-size: 1.2rem; /* menor ainda em celular pequeno */
+  }
+
+  .info-texto{
+    font-size: 18px;
+  }
+
+  .imagem-gato{
+    right: 35%;
+    top: 90%;
+    width: 130px;
+    height: 130px;
   }
 }

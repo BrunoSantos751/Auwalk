@@ -32,7 +32,7 @@ export default function Home() {
             <div className="busca">
               <form className="formBusca" onSubmit={handleSubmit}>
                 <div className="opcoes">
-                  <label htmlFor="servicoId">
+                  <label className="labelHome" htmlFor="servicoId">
                     <p className="busca-title-p">Serviço</p>
                     <select
                       name="servicoId"
@@ -47,7 +47,7 @@ export default function Home() {
                       <option value="PetSitting">Pet sitter</option>
                     </select>
                   </label>
-                  <label htmlFor="enderecoId">
+                  <label className="labelHome" htmlFor="enderecoId">
                     <p className="busca-title-e">Endereço</p>
                     <input
                       type="text"
@@ -59,7 +59,7 @@ export default function Home() {
                 </div>
 
                 <div className="opcoes-data">
-                  <label htmlFor="entradaId">
+                  <label className="labelHome" htmlFor="entradaId">
                     <p className="busca-title">Entrada</p>
                     <input
                       type="date"
@@ -70,7 +70,7 @@ export default function Home() {
                       onChange={(e) => setEntrada(e.target.value)}
                     />
                   </label>
-                  <label htmlFor="saidaId">
+                  <label className="labelHome" htmlFor="saidaId">
                     <p className="busca-title">Saída</p>
                     <input
                       type="date"
