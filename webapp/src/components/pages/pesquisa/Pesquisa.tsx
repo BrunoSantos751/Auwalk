@@ -170,6 +170,27 @@ export default function Pesquisa() {
         handleFetch();
     };
 
+    const handleVerPerfil = async (idPrestador: number) => {
+        try {
+            // Buscar idUsuario a partir do idPrestador usando o endpoint que aceita idPrestador
+            const response = await fetch(`http://localhost:8080/provider/profile?idPrestador=${idPrestador}`);
+            if (!response.ok) {
+                alert('Erro ao carregar perfil do prestador.');
+                return;
+            }
+            const data = await response.json();
+            if (data.success && data.data) {
+                const idUsuario = data.data.id_usuario;
+                navigate(`/perfilprestador/${idUsuario}`);
+            } else {
+                alert('Perfil não encontrado.');
+            }
+        } catch (error) {
+            console.error("Erro ao buscar perfil:", error);
+            alert('Erro ao carregar perfil do prestador.');
+        }
+    };
+
     const getDatasDisponiveis = (disponibilidades: Disponibilidade[]): string => {
         if (!disponibilidades || disponibilidades.length === 0) return "Nenhuma";
         const datas = disponibilidades.map(d => d.inicio.split('T')[0]);
@@ -245,7 +266,7 @@ export default function Pesquisa() {
                             </p>
                             <p className="preco">R$ {s.preco?.toFixed(2)}</p>
                             <button className="btn-agendar" onClick={() => handleOpenModal(s)}>Agendar</button>
-                            <button className="btn-verperfil">Ver perfil</button>
+                            <button className="btn-verperfil" onClick={() => handleVerPerfil(s.idPrestador)}>Ver perfil</button>
                         </div>
                     ))
                 ) : (

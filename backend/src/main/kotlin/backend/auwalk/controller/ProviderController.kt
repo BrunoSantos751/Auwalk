@@ -21,8 +21,27 @@ class ProviderController(
 ) {
 
     @GetMapping("/profile")
-    fun visualizarPerfil(@RequestParam idUsuario: Int): ResponseEntity<Map<String, Any>> {
-        val perfil = providerService.buscarPerfil(idUsuario)
+    fun visualizarPerfil(
+        @RequestParam(required = false) idUsuario: Int?,
+        @RequestParam(required = false) idPrestador: Int?
+    ): ResponseEntity<Map<String, Any>> {
+        val idUsuarioParam = when {
+            idUsuario != null -> idUsuario
+            idPrestador != null -> {
+                val idUsuarioEncontrado = providerService.buscarIdUsuarioPorIdPrestador(idPrestador)
+                if (idUsuarioEncontrado == null) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(mapOf("success" to false, "message" to "Prestador não encontrado"))
+                }
+                idUsuarioEncontrado
+            }
+            else -> {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(mapOf("success" to false, "message" to "É necessário fornecer idUsuario ou idPrestador"))
+            }
+        }
+        
+        val perfil = providerService.buscarPerfil(idUsuarioParam)
         return if (perfil != null) {
             ResponseEntity.ok(mapOf("success" to true, "data" to perfil))
         } else {

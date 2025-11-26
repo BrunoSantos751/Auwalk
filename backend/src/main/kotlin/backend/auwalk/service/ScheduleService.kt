@@ -85,7 +85,9 @@ class AgendamentoService(
                 p.data_hora AS data_inicio, 
                 (p.data_hora + s.duracao_estimada * interval '1 minute') AS data_fim,
                 u_prestador.nome AS nome_contraparte,
-                pet.nome AS nome_pet
+                pet.nome AS nome_pet,
+                s.id_servico AS id_servico,
+                u_prestador.id_usuario AS id_usuario_prestador
             FROM passeio p
             JOIN pet ON p.id_pet = pet.id_pet
             JOIN servico s ON p.id_servico = s.id_servico
@@ -103,7 +105,9 @@ class AgendamentoService(
                 ps.data_inicio,
                 ps.data_fim,
                 u_prestador.nome AS nome_contraparte,
-                pet.nome AS nome_pet
+                pet.nome AS nome_pet,
+                s.id_servico AS id_servico,
+                u_prestador.id_usuario AS id_usuario_prestador
             FROM pet_sitting ps
             JOIN pet ON ps.id_pet = pet.id_pet
             JOIN servico s ON ps.id_servico = s.id_servico
@@ -133,7 +137,9 @@ class AgendamentoService(
                 p.data_hora AS data_inicio,
                 (p.data_hora + s.duracao_estimada * interval '1 minute') AS data_fim,
                 u_cliente.nome AS nome_contraparte,
-                pet.nome AS nome_pet
+                pet.nome AS nome_pet,
+                s.id_servico AS id_servico,
+                u_cliente.id_usuario AS id_usuario_cliente
             FROM passeio p
             JOIN servico s ON p.id_servico = s.id_servico
             JOIN pet ON p.id_pet = pet.id_pet
@@ -150,7 +156,9 @@ class AgendamentoService(
                 ps.data_inicio,
                 ps.data_fim,
                 u_cliente.nome AS nome_contraparte,
-                pet.nome AS nome_pet
+                pet.nome AS nome_pet,
+                s.id_servico AS id_servico,
+                u_cliente.id_usuario AS id_usuario_cliente
             FROM pet_sitting ps
             JOIN servico s ON ps.id_servico = s.id_servico
             JOIN pet ON ps.id_pet = pet.id_pet
@@ -160,5 +168,27 @@ class AgendamentoService(
         val sitters = jdbcTemplate.queryForList(sittersSql, idPrestador)
 
         return passeios + sitters
+    }
+
+    fun atualizarStatusPasseio(idPasseio: Int, novoStatus: String): Boolean {
+        return try {
+            val sql = "UPDATE passeio SET status = ? WHERE id_passeio = ?"
+            val linhasAfetadas = jdbcTemplate.update(sql, novoStatus, idPasseio)
+            linhasAfetadas > 0
+        } catch (e: Exception) {
+            println("Erro ao atualizar status do passeio: ${e.message}")
+            false
+        }
+    }
+
+    fun atualizarStatusPetSitting(idPetSitting: Int, novoStatus: String): Boolean {
+        return try {
+            val sql = "UPDATE pet_sitting SET status = ? WHERE id_petsitting = ?"
+            val linhasAfetadas = jdbcTemplate.update(sql, novoStatus, idPetSitting)
+            linhasAfetadas > 0
+        } catch (e: Exception) {
+            println("Erro ao atualizar status do pet sitting: ${e.message}")
+            false
+        }
     }
 }

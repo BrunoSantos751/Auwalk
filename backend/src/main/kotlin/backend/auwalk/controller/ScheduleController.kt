@@ -20,6 +20,10 @@ data class AgendamentoSlotRequest(
     val observacoes: String? = null
 )
 
+data class AtualizarStatusRequest(
+    val status: String
+)
+
 @RestController
 @RequestMapping("/schedule")
 class AgendamentoController(
@@ -95,6 +99,54 @@ class AgendamentoController(
             ResponseEntity.ok(mapOf("success" to true, "data" to agendamentos))
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("success" to false, "message" to e.message))
+        }
+    }
+
+    @PutMapping("/walk/{id}/status")
+    fun atualizarStatusPasseio(
+        @PathVariable id: Int,
+        @RequestBody request: AtualizarStatusRequest,
+        @RequestHeader("Authorization") token: String
+    ): ResponseEntity<Map<String, Any>> {
+        return try {
+            JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
+                ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(mapOf("success" to false, "message" to "Token inválido"))
+
+            val sucesso = agendamentoService.atualizarStatusPasseio(id, request.status)
+            if (sucesso) {
+                ResponseEntity.ok(mapOf("success" to true, "message" to "Status atualizado com sucesso"))
+            } else {
+                ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(mapOf("success" to false, "message" to "Passeio não encontrado"))
+            }
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(mapOf("success" to false, "message" to (e.message ?: "Erro desconhecido")))
+        }
+    }
+
+    @PutMapping("/sitter/{id}/status")
+    fun atualizarStatusPetSitting(
+        @PathVariable id: Int,
+        @RequestBody request: AtualizarStatusRequest,
+        @RequestHeader("Authorization") token: String
+    ): ResponseEntity<Map<String, Any>> {
+        return try {
+            JwtUtil.validateToken(token.substringAfter("Bearer "))?.toIntOrNull()
+                ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(mapOf("success" to false, "message" to "Token inválido"))
+
+            val sucesso = agendamentoService.atualizarStatusPetSitting(id, request.status)
+            if (sucesso) {
+                ResponseEntity.ok(mapOf("success" to true, "message" to "Status atualizado com sucesso"))
+            } else {
+                ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(mapOf("success" to false, "message" to "Pet Sitting não encontrado"))
+            }
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(mapOf("success" to false, "message" to (e.message ?: "Erro desconhecido")))
         }
     }
 }
