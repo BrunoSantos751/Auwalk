@@ -4,6 +4,7 @@ import './Pesquisa.css';
 import profilePic from "../../../assets/profile-pic.png";
 import AgendamentoModal from './AgendamentoModal';
 import CriarServicoModal from './CriarServicoModal';
+import MapaPrestadores from './MapaPrestadores';
 
 // --- INTERFACES ---
 interface Disponibilidade {
@@ -52,28 +53,142 @@ export default function Pesquisa() {
     const [prestadorProfile, setPrestadorProfile] = useState<PrestadorProfile | null>(null);
     const [isCriarServicoModalOpen, setIsCriarServicoModalOpen] = useState(false);
 
+    // Estado para o mapa
+    const [isMapaOpen, setIsMapaOpen] = useState(false);
+
+    // Estados para filtro por proximidade
+    const [raioKm, setRaioKm] = useState<string>("");
+    const [enderecoUsuario, setEnderecoUsuario] = useState<{
+        latitude: number;
+        longitude: number;
+    } | null>(null);
+    const [mostrarFiltroProximidade, setMostrarFiltroProximidade] = useState(false);
+
     const dataAtual = new Date().toISOString().split("T")[0];
 
     // --- EFEITOS (useEffect) ---
     useEffect(() => {
         handleFetch();
         checkProviderStatus();
+        carregarEnderecoUsuario();
     }, []);
+
+    // Carregar endereço do usuário logado
+    const carregarEnderecoUsuario = async () => {
+        try {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                setMostrarFiltroProximidade(false);
+                return;
+            }
+
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            const idUsuario = parseInt(payload.sub, 10);
+
+            const response = await fetch(`http://localhost:8080/enderecos?idUsuario=${idUsuario}`);
+            if (!response.ok) {
+                setMostrarFiltroProximidade(false);
+                return;
+            }
+
+            const enderecos = await response.json();
+            if (Array.isArray(enderecos) && enderecos.length > 0) {
+                const endereco = enderecos[0];
+                if (endereco.latitude && endereco.longitude && 
+                    !isNaN(endereco.latitude) && !isNaN(endereco.longitude)) {
+                    setEnderecoUsuario({
+                        latitude: endereco.latitude,
+                        longitude: endereco.longitude
+                    });
+                    setMostrarFiltroProximidade(true);
+                } else {
+                    setMostrarFiltroProximidade(false);
+                }
+            } else {
+                setMostrarFiltroProximidade(false);
+            }
+        } catch (error) {
+            console.error("Erro ao carregar endereço do usuário:", error);
+            setMostrarFiltroProximidade(false);
+        }
+    };
 
     // --- FUNÇÕES ---
     async function handleFetch() {
-        const payload: SearchPayload = {};
-        if (entrada) payload.data = entrada;
-        if (servico) payload.tipoServico = servico;
         try {
-            const response = await fetch('http://localhost:8080/search', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            if (!response.ok) { throw new Error('Erro na busca'); }
-            const data = await response.json();
-            setServicosEncontrados(data.data?.servicos || []);
+            let todosServicos: Servico[] = [];
+            
+            // Se houver filtro de proximidade e endereço do usuário, buscar prestadores próximos primeiro
+            if (raioKm && enderecoUsuario) {
+                const raioMetros = parseInt(raioKm) * 1000; // Converter KM para metros
+                
+                console.log(`🔍 Buscando prestadores em um raio de ${raioKm}km...`);
+                
+                try {
+                    const responseProximos = await fetch(
+                        `http://localhost:8080/enderecos/proximos?latitude=${enderecoUsuario.latitude}&longitude=${enderecoUsuario.longitude}&raioMetros=${raioMetros}`
+                    );
+                    
+                    if (responseProximos.ok) {
+                        const prestadoresProximos = await responseProximos.json();
+                        const idUsuariosProximos = prestadoresProximos.map((p: any) => p.id_usuario);
+                        
+                        console.log(`📍 Prestadores próximos encontrados: ${idUsuariosProximos.length}`, idUsuariosProximos);
+                        
+                        // Se não encontrou prestadores próximos, retornar lista vazia
+                        if (idUsuariosProximos.length === 0) {
+                            console.log('⚠️ Nenhum prestador encontrado no raio especificado');
+                            setServicosEncontrados([]);
+                            return;
+                        }
+                        
+                        // Buscar todos os serviços com os filtros aplicados
+                        const payload: SearchPayload = {};
+                        if (entrada) payload.data = entrada;
+                        if (servico) payload.tipoServico = servico;
+                        
+                        const response = await fetch('http://localhost:8080/search', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            todosServicos = data.data?.servicos || [];
+                            
+                            // Filtrar apenas serviços dos prestadores próximos
+                            // Lembrando que idPrestador na verdade é idUsuario
+                            todosServicos = todosServicos.filter((s: Servico) => 
+                                idUsuariosProximos.includes(s.idPrestador)
+                            );
+                            
+                            console.log(`✅ Serviços filtrados por proximidade: ${todosServicos.length} de ${data.data?.servicos?.length || 0} serviços`);
+                        }
+                    } else {
+                        console.error(`⚠️ Erro ao buscar prestadores próximos (status: ${responseProximos.status})`);
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar prestadores próximos:", error);
+                }
+            } else {
+                // Se não tiver filtro de proximidade, buscar normalmente
+                const payload: SearchPayload = {};
+                if (entrada) payload.data = entrada;
+                if (servico) payload.tipoServico = servico;
+                
+                const response = await fetch('http://localhost:8080/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) { throw new Error('Erro na busca'); }
+                const data = await response.json();
+                todosServicos = data.data?.servicos || [];
+            }
+            
+            setServicosEncontrados(todosServicos);
         } catch (error) {
             console.error("Falha ao buscar serviços:", error);
             setServicosEncontrados([]);
@@ -107,6 +222,19 @@ export default function Pesquisa() {
         e.preventDefault();
         handleFetch();
     }
+
+    // Refazer busca quando o raio de proximidade mudar
+    useEffect(() => {
+        // Só fazer busca automática se o raio foi alterado (não na montagem inicial)
+        const timer = setTimeout(() => {
+            if (raioKm !== "" || servico || entrada) {
+                handleFetch();
+            }
+        }, 300); // Debounce de 300ms para evitar múltiplas buscas
+        
+        return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [raioKm]);
 
     const handleOpenModal = (service: Servico) => {
         const token = localStorage.getItem('authToken');
@@ -224,10 +352,24 @@ export default function Pesquisa() {
                                 <option value="PetSitting">Pet Sitter</option>
                             </select>
                         </label>
-                        <label htmlFor="enderecoId">
-                            <p className="busca-title">Endereço</p>
-                            <input type="text" placeholder="Endereço (não funcional)" />
-                        </label>
+                        {mostrarFiltroProximidade && (
+                            <label htmlFor="proximidadeId">
+                                <p className="busca-title">Prestadores próximos</p>
+                                <select 
+                                    id="proximidadeId" 
+                                    value={raioKm} 
+                                    onChange={(e) => setRaioKm(e.target.value)}
+                                >
+                                    <option value="">Todos</option>
+                                    <option value="1">Até 1 km</option>
+                                    <option value="3">Até 3 km</option>
+                                    <option value="5">Até 5 km</option>
+                                    <option value="10">Até 10 km</option>
+                                    <option value="15">Até 15 km</option>
+                                    <option value="20">Até 20 km</option>
+                                </select>
+                            </label>
+                        )}
                     </div>
                     <div className="opcoes-data">
                         <label htmlFor="entradaId">
@@ -247,6 +389,15 @@ export default function Pesquisa() {
                         </button>
                     )}
                 </form>
+                {servicosVisiveis.length > 0 && (
+                    <button
+                        type="button"
+                        className="btn-ver-mapa"
+                        onClick={() => setIsMapaOpen(true)}
+                    >
+                        Ver no Mapa
+                    </button>
+                )}
             </div>
             <div className="cardsContainer">
                 {servicosVisiveis.length > 0 ? (
@@ -283,6 +434,13 @@ export default function Pesquisa() {
                     idPrestador={prestadorProfile.id_prestador}
                     onClose={() => setIsCriarServicoModalOpen(false)}
                     onServiceCreated={handleServiceCreated}
+                />
+            )}
+
+            {isMapaOpen && (
+                <MapaPrestadores
+                    servicos={servicosVisiveis}
+                    onClose={() => setIsMapaOpen(false)}
                 />
             )}
         </div>
