@@ -64,7 +64,10 @@ const MapaTrajeto: React.FC<MapaTrajetoProps> = ({ idPasseio, onClose }) => {
                 let trajetoSimplificadoCarregado = false;
                 
                 // Carregar trajeto original (todos os pontos)
-                const trajetoOriginalResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/trajetos?idPasseio=${idPasseio}`);
+                const token = localStorage.getItem('authToken');
+                const trajetoOriginalResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/trajetos?idPasseio=${idPasseio}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
                 if (trajetoOriginalResponse.ok) {
                     const trajetosOriginais = await trajetoOriginalResponse.json();
                     if (Array.isArray(trajetosOriginais) && trajetosOriginais.length > 0) {
@@ -75,7 +78,10 @@ const MapaTrajeto: React.FC<MapaTrajetoProps> = ({ idPasseio, onClose }) => {
                 }
                 
                 // Carregar trajeto simplificado
-                const trajetoSimplificadoResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificado/${idPasseio}`);
+                const token = localStorage.getItem('authToken');
+                const trajetoSimplificadoResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificado/${idPasseio}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
                 if (trajetoSimplificadoResponse.ok) {
                     const dataSimplificado = await trajetoSimplificadoResponse.json();
                     if (dataSimplificado.trajeto_geojson) {

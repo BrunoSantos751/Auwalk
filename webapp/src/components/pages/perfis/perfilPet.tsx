@@ -25,7 +25,9 @@ const PerfilPet: React.FC = () => {
 
         if (!idUsuario) return;
 
-        const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets?idUsuario=${idUsuario}`);
+        const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets?idUsuario=${idUsuario}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
         const result = await response.json();
 
         if (result.success) {

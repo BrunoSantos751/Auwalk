@@ -85,7 +85,9 @@ export default function Pesquisa() {
             const payload = JSON.parse(atob(token.split(".")[1]));
             const idUsuario = parseInt(payload.sub, 10);
 
-            const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/enderecos?idUsuario=${idUsuario}`);
+            const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/enderecos?idUsuario=${idUsuario}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             if (!response.ok) {
                 setMostrarFiltroProximidade(false);
                 return;
@@ -125,8 +127,12 @@ export default function Pesquisa() {
                 console.log(`🔍 Buscando prestadores em um raio de ${raioKm}km...`);
                 
                 try {
+                    const token = localStorage.getItem('authToken');
                     const responseProximos = await fetch(
-                        `http://auwalk.us-east-2.elasticbeanstalk.com/enderecos/proximos?latitude=${enderecoUsuario.latitude}&longitude=${enderecoUsuario.longitude}&raioMetros=${raioMetros}`
+                        `http://auwalk.us-east-2.elasticbeanstalk.com/enderecos/proximos?latitude=${enderecoUsuario.latitude}&longitude=${enderecoUsuario.longitude}&raioMetros=${raioMetros}`,
+                        {
+                            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                        }
                     );
                     
                     if (responseProximos.ok) {
@@ -147,9 +153,13 @@ export default function Pesquisa() {
                         if (entrada) payload.data = entrada;
                         if (servico) payload.tipoServico = servico;
                         
+                        const token = localStorage.getItem('authToken');
                         const response = await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/search', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: { 
+                                'Content-Type': 'application/json',
+                                ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                            },
                             body: JSON.stringify(payload)
                         });
                         
@@ -177,9 +187,13 @@ export default function Pesquisa() {
                 if (entrada) payload.data = entrada;
                 if (servico) payload.tipoServico = servico;
                 
+                const token = localStorage.getItem('authToken');
                 const response = await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/search', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                    },
                     body: JSON.stringify(payload)
                 });
                 
@@ -266,7 +280,14 @@ export default function Pesquisa() {
 
             const payload = { idCliente, idServico: selectedService.idServico, idPet: petId, dataHora: horario, observacoes: 'Agendado pela plataforma.' };
 
-            const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const response = await fetch(endpoint, { 
+                method: 'POST', 
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }, 
+                body: JSON.stringify(payload) 
+            });
             await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/chats', {
               method: 'POST',
               headers: {
@@ -301,7 +322,10 @@ export default function Pesquisa() {
     const handleVerPerfil = async (idPrestador: number) => {
         try {
             // Buscar idUsuario a partir do idPrestador usando o endpoint que aceita idPrestador
-            const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/provider/profile?idPrestador=${idPrestador}`);
+            const token = localStorage.getItem('authToken');
+            const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/provider/profile?idPrestador=${idPrestador}`, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            });
             if (!response.ok) {
                 alert('Erro ao carregar perfil do prestador.');
                 return;

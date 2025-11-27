@@ -37,7 +37,10 @@ const DadosPet: React.FC = () => {
 
     const fetchPetData = async () => {
       try {
-        const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets/${petId}`);
+        const token = localStorage.getItem('authToken');
+        const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets/${petId}`, {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
         const result = await response.json();
 
         if (result.success) {
@@ -75,10 +78,12 @@ const DadosPet: React.FC = () => {
 
     try {
       // URL ALTERADA AQUI
+      const token = localStorage.getItem('authToken');
       const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets/update/${petId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(petDataParaEnviar),
       });

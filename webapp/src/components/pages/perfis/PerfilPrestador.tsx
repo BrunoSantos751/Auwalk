@@ -60,7 +60,10 @@ const PerfilPrestador: React.FC = () => {
             setError(null);
 
             // Buscar perfil do prestador
-            const perfilResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/provider/profile?idUsuario=${idUsuarioParam}`);
+            const token = localStorage.getItem('authToken');
+            const perfilResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/provider/profile?idUsuario=${idUsuarioParam}`, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            });
             if (!perfilResponse.ok) {
                 throw new Error('Perfil não encontrado');
             }
@@ -74,7 +77,10 @@ const PerfilPrestador: React.FC = () => {
                 const idPrestador = perfilData.data.id_prestador;
 
                 // Buscar serviços do prestador
-                const servicosResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/services?idPrestador=${idPrestador}`);
+                const token = localStorage.getItem('authToken');
+                const servicosResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/services?idPrestador=${idPrestador}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
                 if (servicosResponse.ok) {
                     const servicosData = await servicosResponse.json();
                     if (servicosData.success && servicosData.data) {
@@ -83,7 +89,10 @@ const PerfilPrestador: React.FC = () => {
                 }
 
                 // Buscar avaliações do prestador
-                const avaliacoesResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/avaliacoes-prestador?idUsuario=${idUsuarioParam}`);
+                const token = localStorage.getItem('authToken');
+                const avaliacoesResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/avaliacoes-prestador?idUsuario=${idUsuarioParam}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
                 if (avaliacoesResponse.ok) {
                     const avaliacoesData = await avaliacoesResponse.json();
                     if (Array.isArray(avaliacoesData)) {
@@ -92,7 +101,10 @@ const PerfilPrestador: React.FC = () => {
                 }
 
                 // Buscar média de avaliações
-                const mediaResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/avaliacoes-prestador/media?idUsuario=${idUsuarioParam}`);
+                const token = localStorage.getItem('authToken');
+                const mediaResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/avaliacoes-prestador/media?idUsuario=${idUsuarioParam}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
                 if (mediaResponse.ok) {
                     const mediaData = await mediaResponse.json();
                     // O backend retorna nota_media e total_avaliacoes

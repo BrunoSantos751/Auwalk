@@ -36,7 +36,9 @@ const AgendamentoModal: React.FC<ModalProps> = ({ service, onClose, onAgendar })
 
                 if (!idUsuario) return;
 
-                const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets?idUsuario=${idUsuario}`);
+                const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets?idUsuario=${idUsuario}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
                 if (!response.ok) { throw new Error('Falha ao buscar os pets.'); }
 
                 const result = await response.json();

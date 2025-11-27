@@ -134,7 +134,10 @@ const Historico: React.FC = () => {
             if (!agendamento.id_passeio) return null;
             
             try {
-                const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificado/${agendamento.id_passeio}`);
+                const token = localStorage.getItem("authToken");
+                const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificado/${agendamento.id_passeio}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
                 if (response.ok) {
                     const data = await response.json();
                     return data.trajeto_geojson ? agendamento.id_passeio : null;
@@ -157,10 +160,12 @@ const Historico: React.FC = () => {
             // O backend verifica se existem trajetos e trata os erros apropriadamente
             // Usando epsilon de 2.5 metros para simplificação mais conservadora
             // (mantém mais pontos e preserva melhor a forma do trajeto)
+            const token = localStorage.getItem("authToken");
             const simplificarResponse = await fetch(
                 `http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificar/${idPasseio}?epsilonMetros=2.5`,
                 {
-                    method: 'POST'
+                    method: 'POST',
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
                 }
             );
 
