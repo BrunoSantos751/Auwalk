@@ -37,7 +37,7 @@ const CriarServicoModal: React.FC<CriarServicoModalProps> = ({ idPrestador, onCl
         };
 
         try {
-            const response = await fetch('https://auwalk-redirect.santosmoraes79.workers.dev/services', {
+            const response = await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/services', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

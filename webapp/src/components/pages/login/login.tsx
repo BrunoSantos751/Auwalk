@@ -17,7 +17,7 @@ const Login: React.FC = () => {
     setError("");
 
     try {
-      const response = await fetch("https://auwalk-redirect.santosmoraes79.workers.dev/auth/login", {
+      const response = await fetch("http://auwalk.us-east-2.elasticbeanstalk.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha }),

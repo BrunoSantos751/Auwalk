@@ -42,10 +42,10 @@ const Historico: React.FC = () => {
 
             try {
                 const [resCliente, resPrestador] = await Promise.all([
-                    fetch('https://auwalk-redirect.santosmoraes79.workers.dev/schedule/my-appointments/client', {
+                    fetch('http://auwalk.us-east-2.elasticbeanstalk.com/schedule/my-appointments/client', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     }),
-                    fetch('https://auwalk-redirect.santosmoraes79.workers.dev/schedule/my-appointments/provider', {
+                    fetch('http://auwalk.us-east-2.elasticbeanstalk.com/schedule/my-appointments/provider', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     })
                 ]);
@@ -103,7 +103,7 @@ const Historico: React.FC = () => {
 
             const promises = idServicos.map(async (idServico) => {
                 try {
-                    const response = await fetch(`https://auwalk-redirect.santosmoraes79.workers.dev/avaliacoes-prestador?idServico=${idServico}`, {
+                    const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/avaliacoes-prestador?idServico=${idServico}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (response.ok) {
@@ -134,7 +134,7 @@ const Historico: React.FC = () => {
             if (!agendamento.id_passeio) return null;
             
             try {
-                const response = await fetch(`https://auwalk-redirect.santosmoraes79.workers.dev/trajetos/simplificado/${agendamento.id_passeio}`);
+                const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificado/${agendamento.id_passeio}`);
                 if (response.ok) {
                     const data = await response.json();
                     return data.trajeto_geojson ? agendamento.id_passeio : null;
@@ -158,7 +158,7 @@ const Historico: React.FC = () => {
             // Usando epsilon de 2.5 metros para simplificação mais conservadora
             // (mantém mais pontos e preserva melhor a forma do trajeto)
             const simplificarResponse = await fetch(
-                `https://auwalk-redirect.santosmoraes79.workers.dev/trajetos/simplificar/${idPasseio}?epsilonMetros=2.5`,
+                `http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificar/${idPasseio}?epsilonMetros=2.5`,
                 {
                     method: 'POST'
                 }
@@ -190,8 +190,8 @@ const Historico: React.FC = () => {
             }
 
             const endpoint = agendamento.tipo === 'Passeio'
-                ? `https://auwalk-redirect.santosmoraes79.workers.dev/schedule/walk/${agendamento.id}/status`
-                : `https://auwalk-redirect.santosmoraes79.workers.dev/schedule/sitter/${agendamento.id}/status`;
+                ? `http://auwalk.us-east-2.elasticbeanstalk.com/schedule/walk/${agendamento.id}/status`
+                : `http://auwalk.us-east-2.elasticbeanstalk.com/schedule/sitter/${agendamento.id}/status`;
 
             const response = await fetch(endpoint, {
                 method: 'PUT',
@@ -258,7 +258,7 @@ const Historico: React.FC = () => {
                 return;
             }
 
-            const response = await fetch('https://auwalk-redirect.santosmoraes79.workers.dev/avaliacoes-prestador', {
+            const response = await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/avaliacoes-prestador', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
