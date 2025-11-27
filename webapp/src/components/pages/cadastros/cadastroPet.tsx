@@ -52,7 +52,7 @@ const CadastroPet: React.FC = () => {
         observacoes: formData.observacoes, // Enviando o texto diretamente
       };
 
-      const response = await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/pets/register', {
+      const response = await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/pets/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

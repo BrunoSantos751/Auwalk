@@ -42,7 +42,7 @@ const ChatButton: React.FC = () => {
                 const token = localStorage.getItem("authToken");
                 if (!token) return;
                 try {
-                    const response = await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/chats', {
+                    const response = await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/chats', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     const result = await response.json();
@@ -59,7 +59,7 @@ const ChatButton: React.FC = () => {
                 const token = localStorage.getItem("authToken");
                 if (!token) return;
                 try {
-                    const response = await fetch(`http://http://auwalk.us-east-2.elasticbeanstalk.com/mensagens/${activeChat.id_chat}`, {
+                    const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/mensagens/${activeChat.id_chat}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     const result = await response.json();
@@ -97,7 +97,7 @@ const ChatButton: React.FC = () => {
         };
 
         try {
-            const response = await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/mensagens', {
+            const response = await fetch('http://auwalk.us-east-2.elasticbeanstalk.com/mensagens', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

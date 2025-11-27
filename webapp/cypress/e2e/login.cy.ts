@@ -37,7 +37,7 @@ describe('Página de Login', () => {
 
   it('deve exibir erro ao tentar login com credenciais inválidas', () => {
     // Mock da resposta de erro da API
-    cy.intercept('POST', 'http://http://auwalk.us-east-2.elasticbeanstalk.com/auth/login', {
+    cy.intercept('POST', 'http://auwalk.us-east-2.elasticbeanstalk.com/auth/login', {
       statusCode: 401,
       body: { success: false }
     }).as('loginRequest')

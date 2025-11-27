@@ -37,7 +37,7 @@ const DadosPet: React.FC = () => {
 
     const fetchPetData = async () => {
       try {
-        const response = await fetch(`http://http://auwalk.us-east-2.elasticbeanstalk.com/pets/${petId}`);
+        const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets/${petId}`);
         const result = await response.json();
 
         if (result.success) {
@@ -75,7 +75,7 @@ const DadosPet: React.FC = () => {
 
     try {
       // URL ALTERADA AQUI
-      const response = await fetch(`http://http://auwalk.us-east-2.elasticbeanstalk.com/pets/update/${petId}`, {
+      const response = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/pets/update/${petId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
