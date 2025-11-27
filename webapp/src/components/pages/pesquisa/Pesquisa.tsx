@@ -85,7 +85,7 @@ export default function Pesquisa() {
             const payload = JSON.parse(atob(token.split(".")[1]));
             const idUsuario = parseInt(payload.sub, 10);
 
-            const response = await fetch(`http://localhost:8080/enderecos?idUsuario=${idUsuario}`);
+            const response = await fetch(`http://http://auwalk.us-east-2.elasticbeanstalk.com/enderecos?idUsuario=${idUsuario}`);
             if (!response.ok) {
                 setMostrarFiltroProximidade(false);
                 return;
@@ -126,7 +126,7 @@ export default function Pesquisa() {
                 
                 try {
                     const responseProximos = await fetch(
-                        `http://localhost:8080/enderecos/proximos?latitude=${enderecoUsuario.latitude}&longitude=${enderecoUsuario.longitude}&raioMetros=${raioMetros}`
+                        `http://http://auwalk.us-east-2.elasticbeanstalk.com/enderecos/proximos?latitude=${enderecoUsuario.latitude}&longitude=${enderecoUsuario.longitude}&raioMetros=${raioMetros}`
                     );
                     
                     if (responseProximos.ok) {
@@ -147,7 +147,7 @@ export default function Pesquisa() {
                         if (entrada) payload.data = entrada;
                         if (servico) payload.tipoServico = servico;
                         
-                        const response = await fetch('http://localhost:8080/search', {
+                        const response = await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/search', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(payload)
@@ -177,7 +177,7 @@ export default function Pesquisa() {
                 if (entrada) payload.data = entrada;
                 if (servico) payload.tipoServico = servico;
                 
-                const response = await fetch('http://localhost:8080/search', {
+                const response = await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/search', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -202,7 +202,7 @@ export default function Pesquisa() {
             return;
         }
         try {
-            const response = await fetch('http://localhost:8080/provider/profile/me', {
+            const response = await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/provider/profile/me', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -262,12 +262,12 @@ export default function Pesquisa() {
             const idCliente = parseInt(payloadToken.sub, 10);
 
             const isPasseio = selectedService.tipoServico.toLowerCase().includes('passeio');
-            const endpoint = isPasseio ? 'http://localhost:8080/schedule/walk' : 'http://localhost:8080/schedule/sitter';
+            const endpoint = isPasseio ? 'http://http://auwalk.us-east-2.elasticbeanstalk.com/schedule/walk' : 'http://http://auwalk.us-east-2.elasticbeanstalk.com/schedule/sitter';
 
             const payload = { idCliente, idServico: selectedService.idServico, idPet: petId, dataHora: horario, observacoes: 'Agendado pela plataforma.' };
 
             const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            await fetch('http://localhost:8080/chats', {
+            await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/chats', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -301,7 +301,7 @@ export default function Pesquisa() {
     const handleVerPerfil = async (idPrestador: number) => {
         try {
             // Buscar idUsuario a partir do idPrestador usando o endpoint que aceita idPrestador
-            const response = await fetch(`http://localhost:8080/provider/profile?idPrestador=${idPrestador}`);
+            const response = await fetch(`http://http://auwalk.us-east-2.elasticbeanstalk.com/provider/profile?idPrestador=${idPrestador}`);
             if (!response.ok) {
                 alert('Erro ao carregar perfil do prestador.');
                 return;

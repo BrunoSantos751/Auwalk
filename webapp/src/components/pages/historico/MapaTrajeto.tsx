@@ -64,7 +64,7 @@ const MapaTrajeto: React.FC<MapaTrajetoProps> = ({ idPasseio, onClose }) => {
                 let trajetoSimplificadoCarregado = false;
                 
                 // Carregar trajeto original (todos os pontos)
-                const trajetoOriginalResponse = await fetch(`http://localhost:8080/trajetos?idPasseio=${idPasseio}`);
+                const trajetoOriginalResponse = await fetch(`http://http://auwalk.us-east-2.elasticbeanstalk.com/trajetos?idPasseio=${idPasseio}`);
                 if (trajetoOriginalResponse.ok) {
                     const trajetosOriginais = await trajetoOriginalResponse.json();
                     if (Array.isArray(trajetosOriginais) && trajetosOriginais.length > 0) {
@@ -75,7 +75,7 @@ const MapaTrajeto: React.FC<MapaTrajetoProps> = ({ idPasseio, onClose }) => {
                 }
                 
                 // Carregar trajeto simplificado
-                const trajetoSimplificadoResponse = await fetch(`http://localhost:8080/trajetos/simplificado/${idPasseio}`);
+                const trajetoSimplificadoResponse = await fetch(`http://http://auwalk.us-east-2.elasticbeanstalk.com/trajetos/simplificado/${idPasseio}`);
                 if (trajetoSimplificadoResponse.ok) {
                     const dataSimplificado = await trajetoSimplificadoResponse.json();
                     if (dataSimplificado.trajeto_geojson) {
