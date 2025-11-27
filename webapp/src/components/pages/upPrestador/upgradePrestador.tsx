@@ -37,7 +37,6 @@ const UpgradePrestador: React.FC = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
         },
         body: JSON.stringify(requestBody),
       });

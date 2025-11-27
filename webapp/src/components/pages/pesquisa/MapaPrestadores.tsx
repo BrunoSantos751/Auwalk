@@ -122,12 +122,8 @@ const MapaPrestadores: React.FC<MapaPrestadoresProps> = ({ servicos, onClose }) 
                 console.log(`🔍 Buscando endereço para usuário ${idUsuario}...`);
                 try {
                     // Buscar endereço diretamente pelo idUsuario (que vem no campo idPrestador)
-                    const token = localStorage.getItem('authToken');
                     const enderecoResponse = await fetch(
-                        `http://auwalk.us-east-2.elasticbeanstalk.com/enderecos?idUsuario=${idUsuario}`,
-                        {
-                            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-                        }
+                        `http://auwalk.us-east-2.elasticbeanstalk.com/enderecos?idUsuario=${idUsuario}`
                     );
                     if (!enderecoResponse.ok) {
                         console.warn(`⚠️ Endereço não encontrado para usuário ${idUsuario} (status: ${enderecoResponse.status})`);
