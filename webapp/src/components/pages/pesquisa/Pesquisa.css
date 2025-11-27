@@ -40,11 +40,99 @@
     margin: auto;
 }
 
-.formPesquisa{
+/* Estilos específicos para a página de pesquisa - maior especificidade */
+.pesquisaSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pesquisaSection .formPesquisa {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    /* Adicione mais estilos para o form se necessário */
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: auto;
+    max-width: 100%;
+    justify-content: center;
+}
+
+/* Resetar estilos conflitantes do Home.css */
+.pesquisaSection .formPesquisa .opcoes {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 20px !important;
+    align-items: flex-end !important;
+    border-radius: 0 !important; /* Resetar border-radius do Home.css */
+}
+
+.pesquisaSection .formPesquisa .opcoes-data {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+    border-radius: 0 !important; /* Resetar border-radius do Home.css */
+}
+
+.pesquisaSection .formPesquisa label {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto;
+}
+
+.pesquisaSection .formPesquisa .busca-title {
+    margin: 0 0 8px 0 !important;
+    font-size: 0.9rem !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin-bottom: 5px !important;
+    margin-left: 0 !important;
+}
+
+.pesquisaSection .formPesquisa select,
+.pesquisaSection .formPesquisa input[type="date"] {
+    padding: 10px 12px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    min-width: 150px;
+    box-sizing: border-box !important;
+    height: 42px !important; /* Altura fixa para garantir alinhamento */
+    line-height: normal !important;
+    margin: 0 !important;
+    width: auto !important;
+    outline: none !important;
+}
+
+.pesquisaSection .formPesquisa input[type="date"] {
+    min-width: 180px !important;
+    border-radius: 8px !important; /* Sobrescrever border-radius: 50px do Home.css */
+}
+
+.pesquisaSection .btn-buscar {
+    padding: 10px 20px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background-color: var(--cor-botao-destacado) !important;
+    color: white !important;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    height: 42px !important; /* Mesma altura dos inputs para alinhamento */
+    align-self: flex-end;
+    line-height: normal !important;
+}
+
+.pesquisaSection .btn-buscar:hover {
+    background-color: var(--cor-botao-destacado-hover) !important;
 }
 
 .cardsContainer {
@@ -173,6 +261,26 @@
 }
 
 .btn-criar-servico:hover {
+    background-color: #268a7e;
+}
+
+.pesquisaSection .btn-ver-mapa {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2a9d8f;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 20px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-ver-mapa:hover {
     background-color: #268a7e;
 }
 

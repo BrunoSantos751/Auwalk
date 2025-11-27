@@ -166,6 +166,110 @@ class TrajetoService(private val jdbcTemplate: JdbcTemplate) {
         return sqrt(distLongitudeMetros * distLongitudeMetros + distLatitudeMetros * distLatitudeMetros)
     }
 
+    // Adicionar pontos estratégicos quando a simplificação removeu muitos pontos
+    // (útil para trajetos que fazem "volta no quarteirão")
+    // GARANTE que o primeiro e último ponto original são sempre preservados
+    private fun adicionarPontosEstrategicos(
+        pontosOriginais: List<Ponto>,
+        pontosSimplificados: List<Ponto>,
+        numeroDesejado: Int
+    ): List<Ponto> {
+        // Primeiro e último ponto original (sempre devem ser preservados)
+        val primeiroOriginal = pontosOriginais.first()
+        val ultimoOriginal = pontosOriginais.last()
+        
+        // Separar pontos intermediários (excluindo primeiro e último)
+        val pontosIntermediarios = pontosSimplificados.filter { simplificado ->
+            calcularDistanciaEuclidiana(simplificado, primeiroOriginal) > 0.1 &&
+            calcularDistanciaEuclidiana(simplificado, ultimoOriginal) > 0.1
+        }
+        
+        // Calcular quantos pontos precisamos adicionar (já contando com primeiro e último)
+        val pontosParaAdicionar = numeroDesejado - pontosSimplificados.size
+        
+        if (pontosParaAdicionar <= 0) {
+            // Mesmo sem adicionar, garantir que primeiro e último estão presentes
+            // IMPORTANTE: Não usar distinctBy aqui porque pode remover o último se tiver coordenadas iguais ao primeiro
+            val resultado = mutableListOf<Ponto>()
+            resultado.add(primeiroOriginal) // Sempre primeiro
+            resultado.addAll(pontosIntermediarios) // Intermediários
+            resultado.add(ultimoOriginal) // Sempre último, mesmo se coordenadas iguais ao primeiro
+            return resultado // Retornar sem distinctBy para preservar primeiro e último
+        }
+        
+        // Selecionar pontos uniformemente distribuídos do trajeto original (sem primeiro e último)
+        val pontosOriginaisIntermediarios = pontosOriginais.drop(1).dropLast(1)
+        val pontosAdicionais = mutableListOf<Ponto>()
+        
+        if (pontosOriginaisIntermediarios.isNotEmpty()) {
+            val intervalo = pontosOriginaisIntermediarios.size.toDouble() / (pontosParaAdicionar + 1)
+            
+            for (i in 1..pontosParaAdicionar) {
+                val indice = (i * intervalo).toInt().coerceIn(0, pontosOriginaisIntermediarios.size - 1)
+                val ponto = pontosOriginaisIntermediarios[indice]
+                
+                // Verificar se o ponto não está muito próximo dos já simplificados (5 metros)
+                val estaMuitoProximo = pontosSimplificados.any { existente ->
+                    calcularDistanciaEuclidiana(ponto, existente) < 5.0
+                }
+                
+                // Verificar se não está na lista de adicionais
+                val jaEstaNaLista = pontosAdicionais.any { 
+                    calcularDistanciaEuclidiana(ponto, it) < 5.0
+                }
+                
+                if (!estaMuitoProximo && !jaEstaNaLista) {
+                    pontosAdicionais.add(ponto)
+                }
+            }
+        }
+        
+        // Combinar: primeiro + intermediários existentes + adicionais + último
+        val resultado = mutableListOf<Ponto>()
+        resultado.add(primeiroOriginal)
+        resultado.addAll(pontosIntermediarios)
+        resultado.addAll(pontosAdicionais)
+        resultado.add(ultimoOriginal)
+        
+        // Ordenar pela posição no trajeto original (mas garantir que primeiro e último são preservados)
+        val pontosIntermediariosComAdicionais = pontosIntermediarios + pontosAdicionais
+        
+        // Ordenar pontos intermediários pela ordem no trajeto original
+        val intermediariosOrdenados = pontosIntermediariosComAdicionais.sortedBy { ponto ->
+            val indice = pontosOriginais.indexOfFirst { original ->
+                calcularDistanciaEuclidiana(original, ponto) < 0.1
+            }
+            if (indice == -1) Int.MAX_VALUE else indice
+        }
+        
+        // Construir resultado final garantindo ordem: primeiro + intermediários + último
+        // CRÍTICO: O último ponto original DEVE ser sempre o último elemento
+        val resultadoFinal = mutableListOf<Ponto>()
+        resultadoFinal.add(primeiroOriginal) // Sempre primeiro
+        
+        // Adicionar pontos intermediários ordenados, removendo duplicatas consecutivas
+        var ultimoAdicionado = primeiroOriginal
+        for (pontoInter in intermediariosOrdenados) {
+            if (calcularDistanciaEuclidiana(pontoInter, ultimoAdicionado) > 0.1) {
+                resultadoFinal.add(pontoInter)
+                ultimoAdicionado = pontoInter
+            }
+        }
+        
+        // SEMPRE adicionar o último ponto original como último elemento
+        // Mesmo que tenha coordenadas iguais ao primeiro ou ao último adicionado
+        resultadoFinal.add(ultimoOriginal)
+        
+        return resultadoFinal
+    }
+    
+    // Calcular distância euclidiana simples entre dois pontos (em metros aproximados)
+    private fun calcularDistanciaEuclidiana(p1: Ponto, p2: Ponto): Double {
+        val dx = (p2.longitude - p1.longitude) * 111000 * cos(p1.latitude * PI / 180.0)
+        val dy = (p2.latitude - p1.latitude) * 111000
+        return sqrt(dx * dx + dy * dy)
+    }
+    
     // Algoritmo de Douglas-Peucker recursivo
     private fun douglasPeucker(pontos: List<Ponto>, epsilon: Double): List<Ponto> {
         if (pontos.size <= 2) {
@@ -204,7 +308,8 @@ class TrajetoService(private val jdbcTemplate: JdbcTemplate) {
     }
 
     // Buscar pontos de um passeio e criar polilinha simplificada
-    fun simplificarTrajeto(idPasseio: Int, epsilonMetros: Double = 10.0): Map<String, Any> {
+    // Epsilon padrão reduzido para 2.5 metros para simplificação mais conservadora
+    fun simplificarTrajeto(idPasseio: Int, epsilonMetros: Double = 1.0): Map<String, Any> {
         // Buscar todos os pontos do passeio ordenados
         val trajetos = listarTrajetos(idPasseio)
         
@@ -216,7 +321,79 @@ class TrajetoService(private val jdbcTemplate: JdbcTemplate) {
         val pontos = trajetos.map { Ponto(it.latitude, it.longitude) }
         
         // Aplicar algoritmo de Douglas-Peucker
-        val pontosSimplificados = douglasPeucker(pontos, epsilonMetros)
+        var pontosSimplificados = douglasPeucker(pontos, epsilonMetros)
+        
+        // Garantir que sempre temos o primeiro e último ponto
+        val primeiroPonto = pontos.first()
+        val ultimoPonto = pontos.last()
+        
+        // Garantir número mínimo de pontos para trajetos que fazem "volta no quarteirão"
+        // Se o trajeto simplificado tem muito poucos pontos, adicionar pontos estratégicos
+        val numeroMinimoPontos = maxOf(
+            5, // Mínimo absoluto de 5 pontos
+            (pontos.size * 0.15).toInt().coerceAtMost(30) // 15% dos pontos originais, máximo 30
+        )
+        
+        // Garantir que primeiro e último estão presentes
+        val temPrimeiro = pontosSimplificados.any { 
+            calcularDistanciaEuclidiana(it, primeiroPonto) < 0.1 
+        }
+        val temUltimo = pontosSimplificados.any { 
+            calcularDistanciaEuclidiana(it, ultimoPonto) < 0.1 
+        }
+        
+        // Se não tiver primeiro ou último, adicionar
+        if (!temPrimeiro) {
+            pontosSimplificados = listOf(primeiroPonto) + pontosSimplificados
+        }
+        if (!temUltimo) {
+            pontosSimplificados = pontosSimplificados + listOf(ultimoPonto)
+        }
+        
+        if (pontosSimplificados.size < numeroMinimoPontos && pontos.size >= numeroMinimoPontos) {
+            // Adicionar pontos estratégicos uniformemente distribuídos
+            pontosSimplificados = adicionarPontosEstrategicos(pontos, pontosSimplificados, numeroMinimoPontos)
+        }
+        
+        // Reconstruir lista final garantindo ordem correta e preservando primeiro e último ORIGINAIS
+        // CRÍTICO: O último ponto ORIGINAL DEVE ser o último elemento, mesmo se tiver coordenadas iguais ao primeiro
+        val resultadoFinal = mutableListOf<Ponto>()
+        
+        // Separar pontos intermediários (excluindo primeiro e último originais)
+        val pontosIntermediarios = pontosSimplificados.filter { ponto ->
+            val distPrimeiro = calcularDistanciaEuclidiana(ponto, primeiroPonto)
+            val distUltimo = calcularDistanciaEuclidiana(ponto, ultimoPonto)
+            distPrimeiro > 0.1 && distUltimo > 0.1
+        }
+        
+        // Ordenar pontos intermediários pela ordem no trajeto original
+        val pontosIntermediariosOrdenados = pontosIntermediarios.sortedBy { ponto ->
+            val indice = pontos.indexOfFirst { original ->
+                calcularDistanciaEuclidiana(original, ponto) < 0.1
+            }
+            if (indice == -1) Int.MAX_VALUE else indice
+        }
+        
+        // Construir lista final garantindo ordem: primeiro + intermediários + último
+        resultadoFinal.add(primeiroPonto) // SEMPRE o primeiro ponto original
+        
+        // Adicionar pontos intermediários ordenados, removendo duplicatas consecutivas
+        var ultimoAdicionado = primeiroPonto
+        for (pontoInter in pontosIntermediariosOrdenados) {
+            if (calcularDistanciaEuclidiana(pontoInter, ultimoAdicionado) > 0.1) {
+                resultadoFinal.add(pontoInter)
+                ultimoAdicionado = pontoInter
+            }
+        }
+        
+        // SEMPRE adicionar o último ponto ORIGINAL como último elemento
+        // CRÍTICO: O último ponto original DEVE estar presente como último elemento,
+        // mesmo que tenha coordenadas iguais ao primeiro ou ao último adicionado.
+        // Isso preserva a informação de que são momentos diferentes do passeio (início e fim)
+        // e permite fechar corretamente trajetos que começam e terminam no mesmo local.
+        resultadoFinal.add(ultimoPonto)
+        
+        pontosSimplificados = resultadoFinal
         
         // Criar polilinha usando PostGIS
         if (pontosSimplificados.size < 2) {

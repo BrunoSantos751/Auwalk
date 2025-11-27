@@ -10,7 +10,12 @@ class ProviderService(
 
     fun buscarPerfil(idUsuario: Int): Map<String, Any>? {
         return try {
-            val sql = "SELECT * FROM prestador_servico WHERE id_usuario = ?"
+            val sql = """
+                SELECT ps.*, u.nome as nome_usuario
+                FROM prestador_servico ps
+                JOIN usuario u ON ps.id_usuario = u.id_usuario
+                WHERE ps.id_usuario = ?
+            """
             println("Executando SQL: $sql com idUsuario=$idUsuario")
 
             val perfil = jdbcTemplate.queryForMap(sql, idUsuario)
@@ -20,6 +25,16 @@ class ProviderService(
             // É normal não encontrar um perfil, então podemos tratar isso de forma mais silenciosa
             // se for o caso de EmptyResultDataAccessException
             println("Perfil não encontrado para o usuário $idUsuario: ${e.message}")
+            null
+        }
+    }
+
+    fun buscarIdUsuarioPorIdPrestador(idPrestador: Int): Int? {
+        return try {
+            val sql = "SELECT id_usuario FROM prestador_servico WHERE id_prestador = ?"
+            jdbcTemplate.queryForObject(sql, Int::class.java, idPrestador)
+        } catch (e: Exception) {
+            println("Erro ao buscar idUsuario por idPrestador $idPrestador: ${e.message}")
             null
         }
     }

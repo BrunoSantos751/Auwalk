@@ -21,6 +21,7 @@ import Footer from "./components/pages/footer/footer";
 import Pesquisa from "./components/pages/pesquisa/Pesquisa";
 import Historico from "./components/pages/historico/historico";
 import ChatButton from "./components/pages/chat/chat"
+import PerfilPrestador from "./components/pages/perfis/PerfilPrestador";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
@@ -47,6 +48,7 @@ ReactDOM.createRoot(rootElement).render(
           <Route path="/termosdeprivacidade" element={<Termos />} />
           <Route path="/search" element={<Pesquisa />} />
           <Route path="/historico" element={<Historico />} />
+          <Route path="/perfilprestador/:idUsuario" element={<PerfilPrestador />} />
         </Routes>
         <ChatButton />
         <Footer />
