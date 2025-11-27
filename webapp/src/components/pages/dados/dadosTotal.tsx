@@ -88,7 +88,7 @@ const DadosTotal: React.FC<DadosTotalProps> = ({
         setIdUsuario(idUsuarioToken);
 
         // Buscar endereço existente
-        const enderecoResponse = await fetch(`http://auwalk.us-east-2.elasticbeanstalk.com/enderecos?idUsuario=${idUsuarioToken}`);
+        const enderecoResponse = await fetch(`https://api.auwalk.com.br/enderecos?idUsuario=${idUsuarioToken}`);
         if (enderecoResponse.ok) {
           const enderecos = await enderecoResponse.json();
           if (Array.isArray(enderecos) && enderecos.length > 0) {
@@ -428,8 +428,8 @@ const DadosTotal: React.FC<DadosTotalProps> = ({
       });
 
       const endpoint = idEndereco
-        ? `http://auwalk.us-east-2.elasticbeanstalk.com/enderecos/${idEndereco}`
-        : 'http://auwalk.us-east-2.elasticbeanstalk.com/enderecos';
+        ? `https://api.auwalk.com.br/enderecos/${idEndereco}`
+        : 'https://api.auwalk.com.br/enderecos';
       const method = idEndereco ? 'PUT' : 'POST';
 
       const response = await fetch(endpoint, {
