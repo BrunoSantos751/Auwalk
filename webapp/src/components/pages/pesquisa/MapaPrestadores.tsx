@@ -123,7 +123,7 @@ const MapaPrestadores: React.FC<MapaPrestadoresProps> = ({ servicos, onClose }) 
                 try {
                     // Buscar endereço diretamente pelo idUsuario (que vem no campo idPrestador)
                     const enderecoResponse = await fetch(
-                        `http://auwalk.us-east-2.elasticbeanstalk.com/enderecos?idUsuario=${idUsuario}`
+                        `https://auwalk-redirect.santosmoraes79.workers.dev/enderecos?idUsuario=${idUsuario}`
                     );
                     if (!enderecoResponse.ok) {
                         console.warn(`⚠️ Endereço não encontrado para usuário ${idUsuario} (status: ${enderecoResponse.status})`);

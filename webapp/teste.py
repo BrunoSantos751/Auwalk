@@ -3,7 +3,7 @@ import json
 
 # URL base da sua API.
 # Altere para o endereço correto se não estiver rodando localmente na porta 8080.
-BASE_URL = "http://auwalk.us-east-2.elasticbeanstalk.com"
+BASE_URL = "https://auwalk-redirect.santosmoraes79.workers.dev"
 
 def testar_rota_login():
     """
