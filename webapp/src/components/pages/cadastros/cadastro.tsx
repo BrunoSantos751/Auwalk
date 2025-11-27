@@ -13,7 +13,7 @@ const Cadastro: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/users/register", {
+      const response = await fetch("http://http://auwalk.us-east-2.elasticbeanstalk.com/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

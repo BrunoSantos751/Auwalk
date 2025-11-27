@@ -33,7 +33,7 @@ const UpgradePrestador: React.FC = () => {
       };
 
       // 4. Faz a requisição PUT para o backend (sem o cabeçalho Authorization)
-      const response = await fetch('http://localhost:8080/provider/profile', {
+      const response = await fetch('http://http://auwalk.us-east-2.elasticbeanstalk.com/provider/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
