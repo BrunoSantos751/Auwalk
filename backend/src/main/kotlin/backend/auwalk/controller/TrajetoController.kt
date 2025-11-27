@@ -51,7 +51,7 @@ class TrajetoController(private val trajetoService: TrajetoService) {
     @PostMapping("/simplificar/{idPasseio}")
     fun simplificarTrajeto(
         @PathVariable idPasseio: Int,
-        @RequestParam(defaultValue = "10.0") epsilonMetros: Double
+        @RequestParam(defaultValue = "2.5") epsilonMetros: Double
     ): ResponseEntity<Any> {
         return try {
             val resultado = trajetoService.simplificarTrajeto(idPasseio, epsilonMetros)

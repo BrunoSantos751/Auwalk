@@ -121,7 +121,8 @@
 
 /* Botões de ação */
 .btn-marcar-concluido,
-.btn-avaliar {
+.btn-avaliar,
+.btn-ver-trajeto {
   margin-top: 10px;
   padding: 8px 16px;
   border: none;
@@ -153,6 +154,17 @@
   background-color: #0b7fa8;
   transform: translateY(-2px);
   box-shadow: 0 2px 8px rgba(7, 159, 206, 0.3);
+}
+
+.btn-ver-trajeto {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-ver-trajeto:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
 }
 
 .avaliacao-feita {

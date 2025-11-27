@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './historico.css';
+import MapaTrajeto from './MapaTrajeto';
 
 // Interface unificada para representar qualquer tipo de agendamento
 interface Agendamento {
@@ -14,6 +15,8 @@ interface Agendamento {
   id_servico?: number; // ID do serviço
   id_usuario_prestador?: number; // ID do usuário prestador (quando papel é cliente)
   id_usuario_cliente?: number; // ID do usuário cliente (quando papel é prestador)
+  id_passeio?: number; // ID do passeio (quando tipo é "Passeio", este campo é igual ao id)
+  temTrajeto?: boolean; // Indica se o passeio tem trajeto simplificado disponível
 }
 
 const Historico: React.FC = () => {
@@ -25,6 +28,8 @@ const Historico: React.FC = () => {
         agendamento: null
     });
     const [avaliacoesExistentes, setAvaliacoesExistentes] = useState<Set<number>>(new Set());
+    const [mapaTrajetoAberto, setMapaTrajetoAberto] = useState<number | null>(null);
+    const [passeiosComTrajeto, setPasseiosComTrajeto] = useState<Set<number>>(new Set());
 
     useEffect(() => {
         const fetchHistorico = async () => {
@@ -52,13 +57,24 @@ const Historico: React.FC = () => {
                 const resultCliente = await resCliente.json();
                 const resultPrestador = await resPrestador.json();
 
-                const agendamentosCliente: Agendamento[] = resultCliente.data.map((item: any) => ({ ...item, papel: 'cliente' }));
-                const agendamentosPrestador: Agendamento[] = resultPrestador.data.map((item: any) => ({ ...item, papel: 'prestador' }));
+                const agendamentosCliente: Agendamento[] = resultCliente.data.map((item: any) => ({
+                    ...item,
+                    papel: 'cliente' as const,
+                    id_passeio: item.tipo === 'Passeio' ? item.id : undefined
+                }));
+                const agendamentosPrestador: Agendamento[] = resultPrestador.data.map((item: any) => ({
+                    ...item,
+                    papel: 'prestador' as const,
+                    id_passeio: item.tipo === 'Passeio' ? item.id : undefined
+                }));
 
                 const todosAgendamentos = [...agendamentosCliente, ...agendamentosPrestador];
                 todosAgendamentos.sort((a, b) => new Date(b.data_inicio).getTime() - new Date(a.data_inicio).getTime());
 
                 setAgendamentos(todosAgendamentos);
+
+                // Verificar quais passeios têm trajeto simplificado
+                verificarTrajetosDisponiveis(todosAgendamentos);
 
                 // Verificar avaliações existentes para serviços concluídos
                 const servicosConcluidos = todosAgendamentos
@@ -108,6 +124,63 @@ const Historico: React.FC = () => {
         }
     };
 
+    const verificarTrajetosDisponiveis = async (agendamentos: Agendamento[]) => {
+        // Filtrar apenas passeios com id_passeio
+        const passeios = agendamentos.filter(a => a.tipo === 'Passeio' && a.id_passeio);
+        
+        if (passeios.length === 0) return;
+
+        const promises = passeios.map(async (agendamento) => {
+            if (!agendamento.id_passeio) return null;
+            
+            try {
+                const response = await fetch(`http://localhost:8080/trajetos/simplificado/${agendamento.id_passeio}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.trajeto_geojson ? agendamento.id_passeio : null;
+                }
+            } catch (e) {
+                // Silenciosamente ignorar erros (passeio pode não ter trajeto)
+                console.debug(`Passeio ${agendamento.id_passeio} não tem trajeto simplificado disponível`);
+            }
+            return null;
+        });
+
+        const resultados = await Promise.all(promises);
+        const passeiosComTrajeto = resultados.filter(id => id !== null) as number[];
+        setPasseiosComTrajeto(new Set(passeiosComTrajeto));
+    };
+
+    const simplificarTrajetoPasseio = async (idPasseio: number) => {
+        try {
+            // Simplificar o trajeto diretamente
+            // O backend verifica se existem trajetos e trata os erros apropriadamente
+            // Usando epsilon de 2.5 metros para simplificação mais conservadora
+            // (mantém mais pontos e preserva melhor a forma do trajeto)
+            const simplificarResponse = await fetch(
+                `http://localhost:8080/trajetos/simplificar/${idPasseio}?epsilonMetros=2.5`,
+                {
+                    method: 'POST'
+                }
+            );
+
+            if (simplificarResponse.ok) {
+                console.log(`✅ Trajeto do passeio ${idPasseio} simplificado com sucesso`);
+                // Atualizar a lista de passeios com trajeto disponível
+                setPasseiosComTrajeto(prev => new Set([...prev, idPasseio]));
+            } else if (simplificarResponse.status === 400) {
+                // Passeio sem trajetos registrados - isso é esperado e não é um erro
+                console.debug(`ℹ️ Passeio ${idPasseio} não possui trajetos registrados para simplificar`);
+            } else {
+                const errorData = await simplificarResponse.json().catch(() => ({}));
+                console.warn(`⚠️ Erro ao simplificar trajeto do passeio ${idPasseio}:`, errorData.message || simplificarResponse.statusText);
+            }
+        } catch (error) {
+            console.error(`❌ Erro ao simplificar trajeto do passeio ${idPasseio}:`, error);
+            // Não mostrar erro ao usuário, pois a simplificação é um processo secundário
+        }
+    };
+
     const marcarComoConcluido = async (agendamento: Agendamento) => {
         try {
             const token = localStorage.getItem("authToken");
@@ -136,6 +209,15 @@ const Historico: React.FC = () => {
                         ? { ...a, status: 'concluido' }
                         : a
                 ));
+                
+                // Se for um passeio, tentar simplificar o trajeto automaticamente
+                if (agendamento.tipo === 'Passeio' && agendamento.id_passeio) {
+                    // Executar em background (não bloquear a resposta ao usuário)
+                    simplificarTrajetoPasseio(agendamento.id_passeio).catch(err => {
+                        console.error('Erro ao simplificar trajeto:', err);
+                    });
+                }
+                
                 alert('Status atualizado para concluído!');
             } else {
                 const data = await response.json();
@@ -270,6 +352,14 @@ const Historico: React.FC = () => {
                                     {temAvaliacao && (
                                         <span className="avaliacao-feita">✓ Avaliado</span>
                                     )}
+                                    {item.tipo === 'Passeio' && item.id_passeio && passeiosComTrajeto.has(item.id_passeio) && (
+                                        <button
+                                            className="btn-ver-trajeto"
+                                            onClick={() => setMapaTrajetoAberto(item.id_passeio!)}
+                                        >
+                                            📍 Ver Trajeto no Mapa
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         );
@@ -285,6 +375,14 @@ const Historico: React.FC = () => {
                     agendamento={avaliacaoModal.agendamento}
                     onClose={fecharModalAvaliacao}
                     onSalvar={salvarAvaliacao}
+                />
+            )}
+
+            {/* Modal de Mapa do Trajeto */}
+            {mapaTrajetoAberto !== null && (
+                <MapaTrajeto
+                    idPasseio={mapaTrajetoAberto}
+                    onClose={() => setMapaTrajetoAberto(null)}
                 />
             )}
         </div>
